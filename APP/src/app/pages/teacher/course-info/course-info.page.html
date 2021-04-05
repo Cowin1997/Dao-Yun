@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{courseInfo.courseName}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/teacher/list"  text="返回"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <ion-label style="color: grey;">成员总数{{total}}</ion-label>
+
+  <ion-list>
+    <ion-item *ngFor="let member of members"  routerLink="/tabs/teacher/member" 
+    [queryParams]="{No:member.No}">
+      <ion-thumbnail slot="start">
+        <img src="assets/img/c_goodspicture.png"  />
+      </ion-thumbnail>
+      <ion-label>
+        <ion-text>
+          <h2>{{member.name}}</h2>
+        </ion-text>
+        <ion-text >
+          <p>{{member.No}}</p>
+        </ion-text>
+      </ion-label>
+      <ion-note>经验值：{{member.exp}}</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button (click)="onClickRecord()" expand="block" fill="solid">
+          查看签到记录
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button  href="/tabs/teacher/action/main" expand="block" fill="solid">
+          发起签到
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

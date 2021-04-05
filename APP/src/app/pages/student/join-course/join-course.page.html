@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>添加班课</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/student/list" text="返回"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ng-container *ngFor="let course of testData">
+      <app-course-item [courseInfo]="course" [haveSigninBtn]="0" 
+      (infoClick)=onClickCourse($event) ></app-course-item>
+    </ng-container>
+  </ion-list>
+
+</ion-content>
