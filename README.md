@@ -6,8 +6,5 @@
 + # 到云前端：[https://github.com/Cowin1997/daoyun](https://github.com/Cowin1997/daoyun)
    - ### 列表页：[https://github.com/Cowin1997/daoyun/blob/main/src/components/common/Home.vue](https://github.com/Cowin1997/daoyun/blob/main/src/components/common/Home.vue)
    - ### 编辑页：[https://github.com/Cowin1997/daoyun/blob/main/src/components/pages/Student.vue](https://github.com/Cowin1997/daoyun/blob/main/src/components/pages/Student.vue)
-   - ### Setup
-   1.**依赖安装**,`npm i`
-   2.**运行**,`npm run dev`
 + # 到云后端：[https://github.com/Cowin1997/daoyun-SpringBoot](https://github.com/Cowin1997/daoyun-SpringBoot)
 + # 到云移动端：[https://github.com/LeonardYoung/cloudsign](https://github.com/LeonardYoung/cloudsign)	
