@@ -163,7 +163,7 @@ export default {
                 this.total = this.students.length;
                 }
             else{
-                this.$message.error("查无此人！")
+                this.$message.error("查无此人！ ")
             }
            });
        },
