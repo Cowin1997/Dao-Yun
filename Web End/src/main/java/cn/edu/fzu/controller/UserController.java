@@ -27,8 +27,9 @@ public class UserController {
         HashMap res= new HashMap();
         String username = (String) map.get("username");
         String password = (String) map.get("password");
+        Integer type = (Integer) map.get("type");
         if(username!=null && password!=null){
-            User user = this.userMapper.getUser(username,password);
+            User user = this.userMapper.getUser(username,password,type);
             if(user!=null){
                 res.put(StringUtils.STATUS, StringUtils.SUCCESS);
                 res.put(StringUtils.DATA,user);
