@@ -33,13 +33,20 @@
        
     </el-form>
     <el-table :data="studentPage" height="80%" border style="width: 100%;font-size:20px;">
-        <el-table-column prop="sid" label="学号" align="center"></el-table-column>
-        <el-table-column prop="sname" label="姓名" align="center"></el-table-column>
-        <el-table-column prop="phone" label="电话" align="center"></el-table-column>
-        <el-table-column prop="clocktimes" label="签到次数" align="center"></el-table-column>
-        <el-table-column prop="clockscore" label="签到分数" align="center"></el-table-column>
-        <el-table-column prop="lastclocktime" label="上次签到时间" align="center"></el-table-column>
-        <el-table-column prop="lastclocksite" label="上次签到地点" align="center"></el-table-column>
+        <el-table-column prop="st_id" label="学号" align="center"></el-table-column>
+        <el-table-column prop="st_sex" label="姓名" align="center"></el-table-column>
+        <el-table-column prop="st_name" label="性别" align="center"></el-table-column>
+        <el-table-column prop="st_phone" label="电话" align="center"></el-table-column>
+        <el-table-column prop="st_email" label="邮箱" align="center"></el-table-column>
+        <el-table-column prop="st_checkscore" label="签到分数" align="center"></el-table-column>
+        <el-table-column prop="st_checkcount" label="签到次数" align="center"></el-table-column>
+        <el-table-column prop="st_lastchecktime" label="上次签到时间" align="center"></el-table-column>
+        <el-table-column prop="st_lastcheckloc" label="上次签到地点" align="center"></el-table-column>
+        <el-table-column label="操作" style="width: 40%;" align="center" >
+            <template>
+                <el-button type="text" icon="el-icon-edit" >查看签到记录</el-button>
+            </template>
+        </el-table-column>
         <el-table-column label="操作" style="width: 40%;" align="center" >
             <template slot-scope="scope">
                 <el-button type="text" icon="el-icon-edit" @click="editStudent(scope.$index,scope.row)">编辑</el-button>
@@ -140,7 +147,7 @@ export default {
         majors:[],
         colleges:[],
         collegeid:'',
-
+   
 
       }
     },
@@ -148,15 +155,10 @@ export default {
     methods:{
        SearchStudent(){
            console.log("SearchStudent..");
-           console.log("Search StudentID:"+this.searchSid);
-            this.$http.get("/student/getStudentsByStudentId",{params:{
-                sid:this.searchSid
-            }}).then(res => {
-            console.log("res =>/student/getStudentsByStudentId");
-            console.log(res);
-            if(res.data.length > 0 ){
-                this.students = res.data;
-                this.studentPage = this.students.slice((this.currentPage -1) * this.pagesize,this.currentPage * this.pagesize);
+           console.log("/student/"+this.searchSid);
+            this.$http.get("/student/"+this.searchSid).then(res => {
+            if(res.data.status ===0 ){
+                this.studentPage = res.data.datas;
                 this.$message.success("查询成功！")
                 this.total = this.students.length;
                 }
@@ -177,12 +179,27 @@ export default {
         }
         ,
         ChangePage(page){
-            console.log("Current Page："+page);
-            console.log("ChangePage...");
             this.currentPage = page;
-            this.studentPage = this.students.slice((this.currentPage-1)*this.pagesize,this.currentPage * this.pagesize);
-            console.log("studentPage:");
-            console.log( this.studentPage)
+            this.getStudentPage();
+        },
+        getStudentPage(){
+            this.$http.get("/student",{params:{
+                "classid":this.classid,
+                "page":this.currentPage,
+                "size":this.pagesize
+            }}).then(res => {
+                console.log(res.status)
+                console.log(res.data)
+                if(res.data.datas.length > 0 ){
+                    this.studentPage = res.data.datas;
+                    this.total =  res.data.total;
+                    console.log("studentPage:");
+                    console.log( this.studentPage);
+                }
+                else{
+                    this.studentPage = null;
+                }
+           });
         },
         focusSchool(){
             console.log("focusSchool...");
@@ -248,30 +265,13 @@ export default {
                 }
            });
         },
-        ChangeClass(){
-            console.log("ChangeClass...");
+        SelectClass(){
+            console.log("SelectClass...");
             console.log(this.classid);
         },
         query(){
-             console.log("query...");
-             this.$http.get("/student/getStudentsByClassId",{params:{
-                "classid":this.classid,
-            }}).then(res => {
-                console.log("res => /student/getStudentsByClassId");
-                console.log(res);
-                if(res.data.length > 0 ){
-                    this.students = res.data;
-                    this.total = res.data.length;
-                    console.log("students:");
-                    console.log( this.students);
-                    this.studentPage = this.students.slice((this.currentPage -1) * this.pagesize,this.currentPage * this.pagesize);
-                    console.log("studentPage:");
-                    console.log( this.studentPage);
-                }
-                else{
-                    this.students = null;
-                }
-           });
+            console.log("query...");
+            this.getStudentPage();
         },
 
         editStudent(index, row){

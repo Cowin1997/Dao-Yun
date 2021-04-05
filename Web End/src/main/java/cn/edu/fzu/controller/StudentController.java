@@ -3,13 +3,17 @@ package cn.edu.fzu.controller;
 import cn.edu.fzu.dao.StudentMapper;
 import cn.edu.fzu.entity.Student;
 import cn.edu.fzu.utils.StringUtils;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Validate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = {"/student"})
@@ -36,7 +40,7 @@ public class StudentController {
     @RequestMapping(value = "/{st_id}",method = RequestMethod.GET)
     public ResponseEntity getStudent(@PathVariable("st_id") String st_id){
         HashMap res = new HashMap();
-        Student getres = this.studentMapper.getStudent(st_id);
+        List<Student> getres = this.studentMapper.getStudent(st_id);
         if(getres!=null){
             res.put(StringUtils.STATUS,StringUtils.SUCCESS);
             res.put(StringUtils.DATA,getres);
@@ -48,5 +52,41 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
         }
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "",method = RequestMethod.GET)
+    public ResponseEntity getStudentByClassId(@RequestParam(value = "classid",required = false) Integer classid,@RequestParam(value = "page",required = false) Integer page,@RequestParam(value = "size",required = false) Integer size){
+        System.out.println("AAA");
+        HashMap res = new HashMap();
+        Integer totalStudent = this.studentMapper.getStudentTotalNumber();
+        if(classid!=null && page!=null &&size!=null&& Math.ceil(Double.valueOf(totalStudent) /size) >= page&&page>=1&&size>=1) {
+                Integer from = (page - 1)*size;
+                List<Student> studentList = this.studentMapper.getStudentByPage(from,size,classid);
+                res.put(StringUtils.STATUS, StringUtils.SUCCESS);
+                res.put(StringUtils.MESSAGE, StringUtils.GET_SUCCESS);
+                res.put(StringUtils.DATA, studentList);
+                res.put("total", totalStudent);
+                res.put("page", Math.ceil(Double.valueOf(totalStudent)/size));
+                res.put("size", studentList.size());
+                return ResponseEntity.status(HttpStatus.OK).body(res);
+        }else{
+            res.put(StringUtils.STATUS, StringUtils.FAIL);
+            res.put(StringUtils.MESSAGE, StringUtils.PARAM_ERROR);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

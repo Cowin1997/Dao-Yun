@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.net.Inet4Address;
+import java.util.List;
+
 @Mapper
 public interface StudentMapper {
 
@@ -14,7 +17,15 @@ public interface StudentMapper {
 
 
     @Select("select * from student where st_id=#{st_id};")
-    public Student getStudent(String st_id);
+    public List<Student> getStudent(String st_id);
+
+    @Select("select * from student where st_classid=#{classid};")
+    public List<Student> getStudentByClassId(Integer classid);
+
+    @Select("select * from student where st_classid=#{classid} order by st_id limit #{from},#{size};")
+    public List<Student> getStudentByPage(Integer from, Integer size,Integer classid);
 
 
+    @Select("select count(*) from student;")
+    public Integer getStudentTotalNumber();
 }
