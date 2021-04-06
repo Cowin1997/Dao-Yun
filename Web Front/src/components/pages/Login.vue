@@ -22,8 +22,8 @@
                     <el-button type="primary" @click="submitForm()">登录</el-button>
                 </div>
                 <div  style="float:left;">              
-                <el-link class="login-tips"  @click="retrievePWD">忘记密码</el-link></div>
-                <div style="float:right;"><el-link class="login-tips" @click="regis">还没有账号？点击注册</el-link>              </div>	
+                <el-link class="login-tips"  >忘记密码</el-link></div>
+                <div style="float:right;"><el-link class="login-tips" >还没有账号？点击注册</el-link>              </div>	
             </el-form>
         </div>
     </div>
@@ -36,7 +36,7 @@ export default {
         return {
             param: {
                 username: 'admin',
-                password: '123123',
+                password: 'admin',
             },
             rules: {
                 username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -52,8 +52,6 @@ export default {
                         username:this.param.username,
                         password:md5(this.param.password)
                     }).then(res => {
-                        console.log("res")
-                        console.log(res)
                         if(res.data.status === 0){
                             this.$message.success('登录成功');
                             localStorage.setItem("user",res.data.datas);
@@ -61,7 +59,7 @@ export default {
                             return true;
                         }
                         else{
-                             this.$message.success('账号或密码错误');
+                             this.$message.error('账号或密码错误');
                              return false;
                         }
                     });

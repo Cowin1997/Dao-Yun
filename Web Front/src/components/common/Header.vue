@@ -34,7 +34,7 @@
                     <img src="../../assets/img/img.jpg" />
                 </div>
                 <!-- 用户名下拉菜单 -->
-                <el-dropdown class="user-name" trigger="click" @command="handleCommand">
+                <el-dropdown class="user-name" trigger="click">
                     <span class="el-dropdown-link">
                         {{username}}
                         <i class="el-icon-caret-bottom"></i>
@@ -43,7 +43,7 @@
                         <a href="http://github.com/cowin1997/daoyun" target="_blank">
                             <el-dropdown-item>项目仓库</el-dropdown-item>
                         </a>
-                        <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
+                        <el-dropdown-item divided @click.native="handleLoginOut">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
@@ -60,11 +60,15 @@ export default {
         return {
             collapse: false,
             fullscreen: false,
-            name: 'lxb',
+            username: 'admin',
             message: 2
         };
     },
     methods: {
+        handleLoginOut(){
+            localStorage.removeItem("user");
+            this.$router.push("/login")
+        },
         // 全屏事件
         handleFullScreen() {
             let element = document.documentElement;

@@ -68,22 +68,13 @@ export default {
     },
     computed:{
         onRoutes(){
-            this.$http.get("/index/getMenu").then(res => {
-            console.log("/index/getMenu")
-            console.log(res);
-            if(res.data.status === 'success'){
-                this.items = res.data.items;
-                console.log('success');
-                console.log(this.items)
+            this.$http.get("/menu").then(res => {
+            if(res.status === 200){
+                this.items = res.data;
             }
             else{
-                this.$message.success('数据获取失败');
-                console.log('fail');
+                this.$message.success('数据获取失败');     
             }});
-        let path = this.$route.path.replace('/', '');
-        console.log(this.$route.path)
-        console.log('OnRoutes：'+path)
-
             return this.$route.path.replace('/', '');
         }
 

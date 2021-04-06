@@ -104,7 +104,6 @@ export default {
         var day = date.getDate();
         var nowDay = date.getFullYear() + "-" + (mon<10?"0"+mon:mon) + "-" +(day<10?"0"+day:day);
         this.today = nowDay;
-        console.log(this.today)
   },
   methods:{
       
@@ -142,7 +141,6 @@ export default {
             title:value,
             status:status
         });
-          console.log(this.todoList);
           this.$message({
             type: 'success',
             message: '编辑待办事项: ' + value,

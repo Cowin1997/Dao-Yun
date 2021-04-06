@@ -7,7 +7,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 import axios from 'axios' // 导入axios http请求库
 import VueCookies from 'vue-cookies'
-
+//import '../config/axios'
 
 axios.defaults.baseURL = 'http://localhost:6677/' // 设置默认请求的url
 axios.defaults.withCredentials = true; // 允许前端访问后端时携带cookies信息

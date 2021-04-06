@@ -33,21 +33,21 @@
        
     </el-form>
     <el-table :data="studentPage" height="80%" border style="width: 100%;font-size:20px;">
-        <el-table-column prop="st_id" label="学号" align="center"></el-table-column>
-        <el-table-column prop="st_sex" label="姓名" align="center"></el-table-column>
-        <el-table-column prop="st_name" label="性别" align="center"></el-table-column>
-        <el-table-column prop="st_phone" label="电话" align="center"></el-table-column>
-        <el-table-column prop="st_email" label="邮箱" align="center"></el-table-column>
-        <el-table-column prop="st_checkscore" label="签到分数" align="center"></el-table-column>
-        <el-table-column prop="st_checkcount" label="签到次数" align="center"></el-table-column>
-        <el-table-column prop="st_lastchecktime" label="上次签到时间" align="center"></el-table-column>
-        <el-table-column prop="st_lastcheckloc" label="上次签到地点" align="center"></el-table-column>
-        <el-table-column label="操作" style="width: 40%;" align="center" >
-            <template>
-                <el-button type="text" icon="el-icon-edit" >查看签到记录</el-button>
+        <el-table-column prop="st_id" label="学号" align="center"  style="width: 8%;"></el-table-column>
+        <el-table-column prop="st_name" label="姓名" align="center" style="width: 8%;"></el-table-column>
+        <el-table-column prop="st_sex" label="性别" align="center" style="width: 8%;"></el-table-column>
+        <el-table-column prop="st_phone" label="电话" align="center" style="width: 8%;"></el-table-column>
+        <el-table-column prop="st_email" label="邮箱" align="center" style="width: 15%;"></el-table-column>
+        <el-table-column prop="st_checkscore" label="签到分数" align="center" style="width: 8%;"></el-table-column>
+        <el-table-column prop="st_checkcount" label="签到次数" align="center" style="width: 8%;"></el-table-column>
+        <el-table-column prop="st_lastchecktime" label="上次签到时间" align="center" style="width: 8%;"></el-table-column>
+        <el-table-column prop="st_lastcheckloc" label="上次签到地点" align="center" style="width: 8%;"></el-table-column>
+        <el-table-column label="操作" style="width: 10%;" align="center" >
+            <template  slot-scope="scope">
+                <el-button type="text" icon="el-icon-edit" @click="checkLogDetail(scope.row)">查看签到记录</el-button>
             </template>
         </el-table-column>
-        <el-table-column label="操作" style="width: 40%;" align="center" >
+        <el-table-column label="操作" style="width: 20%;" align="center" >
             <template slot-scope="scope">
                 <el-button type="text" icon="el-icon-edit" @click="editStudent(scope.$index,scope.row)">编辑</el-button>
                 <el-button type="text" icon="el-icon-delete" class="red" @click="deleteStudent(scope.$index,scope.row)">删除</el-button>
@@ -106,7 +106,14 @@
         </span>
     </el-dialog>
 
-
+     <!-- 编辑弹出框 -->
+    <el-dialog title="签到记录" :visible.sync="checkDetailShow" width="40%">
+        <el-table :data="checklog">
+            <el-table-column prop="ch_checktime" label="签到时间" align="center"></el-table-column>
+            <el-table-column prop="ch_checkloc" label="签到地点" align="center"></el-table-column>
+            <el-table-column prop="ch_checkscore" label="签到分数" align="center"></el-table-column>
+        </el-table>
+    </el-dialog>
 
 
 
@@ -127,7 +134,12 @@ export default {
             id:'',
             name:'',
         },
-       
+        checklog:[{
+            ch_checktime:'',
+            ch_checkloc:'',
+            ch_checkscore:''
+        }],
+        checkDetailShow:false,
         searchSid:'',
         schoolLoading:false,
         editVisible:false,
@@ -147,12 +159,28 @@ export default {
         majors:[],
         colleges:[],
         collegeid:'',
+        sid:'',
    
 
       }
     },
 
     methods:{
+       checkLogDetail(row){
+           console.log(row);
+        this.$http.get("/check-log",{params:{
+                "sid":row.st_id,
+                "cid":row.st_classid
+            }}).then(res => {
+                if(res.data.status === 0 ){
+                    this.checklog = res.data.datas;
+                }
+                else{
+                    this.checklog = null;
+                }
+           });
+           this.checkDetailShow = ! this.checkDetailShow;
+        },
        SearchStudent(){
            console.log("SearchStudent..");
            console.log("/student/"+this.searchSid);

@@ -17,7 +17,10 @@ export default new Router({
   routes: [
     {
       path:'/',
-      redirect:'/index'
+      redirect:'/index',
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path:'/login',
