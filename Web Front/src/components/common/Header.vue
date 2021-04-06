@@ -40,7 +40,7 @@
                         <i class="el-icon-caret-bottom"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <a href="http://github.com/cowin1997/daoyun" target="_blank">
+                        <a href="http://github.com/cowin1997/Dao-Yun" target="_blank">
                             <el-dropdown-item>项目仓库</el-dropdown-item>
                         </a>
                         <el-dropdown-item divided @click.native="handleLoginOut">退出登录</el-dropdown-item>
