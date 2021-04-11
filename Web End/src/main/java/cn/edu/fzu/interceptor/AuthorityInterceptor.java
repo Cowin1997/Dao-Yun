@@ -1,7 +1,5 @@
 package cn.edu.fzu.interceptor;
 
-import cn.edu.fzu.entity.User;
-import org.apache.ibatis.plugin.Intercepts;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,21 +26,21 @@ public class AuthorityInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("AuthorityInterceptor：" + request.getRequestURI());
         String uri = request.getRequestURI();
-        if (!NOT_INTERCEPT_URI.contains(uri)) {
-            System.out.println("不拦截" + uri);
+        //System.out.println(request.getMethod());
+        if(request.getMethod().equals("OPTIONS")) return true;
+        if (NOT_INTERCEPT_URI.contains(uri)) {
+         //   System.out.println("不拦截" + uri);
             return true;
         }else {
-            System.out.println("拦截" + uri);
+         //   System.out.println("拦截" + uri);
             HttpSession session = request.getSession(false); //如果不存在则不会产生一个session,而是返回null
+           // System.out.println(session);
             if(session==null) {
-                throw new RuntimeException("用户未登陆");
-            }
-            User user = (User) session.getAttribute("user");
-            if (user == null) {
                 throw new RuntimeException("用户未登陆");
             }
             return true;
         }
+
     }
 
     @Override

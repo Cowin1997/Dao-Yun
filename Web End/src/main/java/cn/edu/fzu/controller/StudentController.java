@@ -57,7 +57,7 @@ public class StudentController {
     @ResponseBody
     @RequestMapping(value = "",method = RequestMethod.GET)
     public ResponseEntity getStudentByClassId(@RequestParam(value = "classid",required = false) Integer classid,@RequestParam(value = "page",required = false) Integer page,@RequestParam(value = "size",required = false) Integer size){
-        System.out.println("AAA");
+
         HashMap res = new HashMap();
         Integer totalStudent = this.studentMapper.getStudentTotalNumber();
         if(classid!=null && page!=null &&size!=null&& Math.ceil(Double.valueOf(totalStudent) /size) >= page&&page>=1&&size>=1) {
@@ -78,7 +78,35 @@ public class StudentController {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value = "/{sid}",method = RequestMethod.DELETE)
+    public ResponseEntity delStudentBySid(@PathVariable(value = "sid",required = true) Integer sid ){
+        HashMap res = new HashMap();
+        Boolean delResult = this.studentMapper.delStudentBySid(sid);
+        if(delResult==true){
+            res.put(StringUtils.STATUS, StringUtils.SUCCESS);
+            res.put(StringUtils.MESSAGE, StringUtils.DEL_SUCCESS);
+        }else{
+            res.put(StringUtils.STATUS, StringUtils.FAIL);
+            res.put(StringUtils.MESSAGE, StringUtils.DEL_FAIL);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
 
+    @ResponseBody
+    @RequestMapping(value = "",method = RequestMethod.PUT)
+    public ResponseEntity updateStudentBySid(@RequestBody Student student){
+        HashMap res = new HashMap();
+        Boolean delResult = this.studentMapper.updateStudent(student);
+        if(delResult==true){
+            res.put(StringUtils.STATUS, StringUtils.SUCCESS);
+            res.put(StringUtils.MESSAGE, StringUtils.UPDATE_SUCCESS);
+        }else{
+            res.put(StringUtils.STATUS, StringUtils.FAIL);
+            res.put(StringUtils.MESSAGE, StringUtils.UPDATE_FAIL);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
 
 
 

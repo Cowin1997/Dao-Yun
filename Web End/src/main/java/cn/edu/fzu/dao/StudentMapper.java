@@ -1,9 +1,7 @@
 package cn.edu.fzu.dao;
 
 import cn.edu.fzu.entity.Student;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 
 import java.util.List;
@@ -28,4 +26,12 @@ public interface StudentMapper {
 
     @Select("select count(*) from student;")
     public Integer getStudentTotalNumber();
+
+
+    @Delete("delete  from student where st_id=#{sid};")
+    public Boolean delStudentBySid(Integer sid);
+
+
+    @Update("update student set st_name=#{st_name}, st_sex=#{st_sex},st_phone=#{st_phone},st_email=#{st_email} where st_id=#{st_id};")
+    public Boolean updateStudent(Student student);
 }
