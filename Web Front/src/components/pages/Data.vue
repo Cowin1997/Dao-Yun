@@ -2,7 +2,7 @@
     <div style="height:100%;width:100%;"> 
          <el-form :inline="true"  class="demo-form-inline" style="border-radius: 30px;"> 
              <el-form-item label="分类名">
-                <el-input placeholder="请输入分类名" v-model="input_name" clearable ></el-input>
+                <el-input placeholder="请输入分类码" v-model="code" clearable ></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="Search">查询</el-button>
@@ -15,13 +15,14 @@
             </el-form-item>
          </el-form>
           <el-table :data="items" height="80%" border style="width: 100%;font-size:20px;">
-            <el-table-column prop="key" label="分类名" align="center"></el-table-column>
-            <el-table-column prop="value" label="值" align="center">
-            </el-table-column>
+            <el-table-column prop="key" label="键" align="center"></el-table-column>
+            <el-table-column prop="code" label="分类码" align="center"></el-table-column>
+            <el-table-column prop="value" label="值" align="center"></el-table-column>
+            <el-table-column prop="info" label="说明" align="center"></el-table-column>
             <el-table-column label="操作" style="width: 40%;" align="center" >
                 <template slot-scope="scope">
                     <el-button type="text" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-button>
-                    <el-button type="text" icon="el-icon-delete" class="red">删除</el-button>
+                    <el-button type="text" icon="el-icon-delete" class="red" @click="del(scope.$index,scope.row)">删除</el-button>
                 </template>
             </el-table-column>
        </el-table>
@@ -30,9 +31,18 @@
         :visible.sync="dialogVisible"
         width="30%"
         >
-        <el-form>
+        <el-form :model="row">
+        <el-form-item label="分类码">
+            <el-input v-model="row.code" disabled='true'></el-input>
+        </el-form-item>
+        <el-form-item label="键">
+            <el-input v-model="row.key"></el-input>
+        </el-form-item>
         <el-form-item label="值">
-            <el-input v-model="newValue"></el-input>
+            <el-input v-model="row.value"></el-input>
+        </el-form-item>
+        <el-form-item label="说明">
+            <el-input v-model="row.info"></el-input>
         </el-form-item>
         </el-form>
     <span slot="footer" class="dialog-footer">
@@ -49,11 +59,14 @@ import qs from 'qs'
 export default {
     data(){
         return {
+
             input_name:'',
             items:[],
             newValue:'',
             dialogVisible:false,
-            code:''
+            code:'',
+            row:'',
+            id:''
 
         }
     },
@@ -61,17 +74,14 @@ export default {
         edit(row){//row.code
             this.dialogVisible = !this.dialogVisible;
             console.log(this.newValue)
-            this.code = row.code
+            this.id = row.id
+            this.row = row
         },
         submitEdit(){
             this.dialogVisible = !this.dialogVisible;
-             this.$http.post("/data-config",qs.stringify({
-                "code":this.code,
-                "value":this.newValue
-            }),{
-                headers:{"Content-Type":"application/x-www-form-urlencoded"}
-            }).then(res => {
+             this.$http.post("/data-config",this.row).then(res => {
                 if(res.status === 200 ){
+                    console.log(this.row)
                    this.$message.success("修改成功")
                    this.SearchAll()
                    
@@ -81,7 +91,6 @@ export default {
                 }
            });
         },
-        Search(){},
         add(){},
         SearchAll(){
             this.$http.get("/data-config").then(res => {
@@ -92,6 +101,19 @@ export default {
                 this.items = null;
             }
            });
+        },
+        del(index,row){
+            this.$confirm('确定要删除吗？', '提示', {
+                type: 'warning'
+            }).then(() => {
+            this.$http.delete("/data-config/"+row.id).then(res =>{
+                if(res.status==200 && res.data.status==0){
+                    this.$message.success("删除成功!")
+                    this.SearchAll()
+                }
+            })
+            }).catch((e) => {})
+        
         }
     }
 

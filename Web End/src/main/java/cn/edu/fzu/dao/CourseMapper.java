@@ -1,10 +1,7 @@
 package cn.edu.fzu.dao;
 
 import cn.edu.fzu.entity.Course;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -14,6 +11,9 @@ public interface CourseMapper {
 
 
     @Select("select * from course where cl_schoolcode=#{code} and cl_collegeid=#{colid} and cl_majorid=#{majid};")
+    @Results({
+            @Result(property = "teacher",column = "cl_teachid",one = @One(select = "cn.edu.fzu.dao.TeacherMapper.getTeacherById"))
+    })
     public List<Course> getCourseBySchCode_ColId_MajorId(Integer code,Integer colid,Integer majid);
 
 
@@ -29,4 +29,11 @@ public interface CourseMapper {
 
     @Select("select * from course where cl_teachid=#{tid};")
     public List<Course> getCourseByTid(Integer tid);
+
+    @Select("update course,teacher set course.cl_classname=#{cl_classname},course.cl_classloc=#{cl_classloc},course.info=#{info},teacher.te_teachname=#{teacher.te_teachname},teacher.te_phone=#{teacher.te_phone} where teacher.id=#{teacher.id} and  course.id=#{id} ;")
+    public Boolean update(Course course);
+
+
+    @Delete("delete from course where id=#{id};")
+    public Boolean delete(Integer id);
 }

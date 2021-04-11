@@ -13,4 +13,7 @@ public interface TeacherMapper {
     @Select("select * from teacher where te_uid=#{id};")
     public Teacher getTeacherByUseId(Integer id);
 
+
+    @Select("select * from teacher where id=#{id};")
+    public Teacher getTeacherById(Integer id);
 }

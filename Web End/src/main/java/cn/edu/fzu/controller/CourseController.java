@@ -5,6 +5,7 @@ import cn.edu.fzu.dao.MajorMapper;
 import cn.edu.fzu.entity.Course;
 import cn.edu.fzu.entity.Major;
 import cn.edu.fzu.utils.StringUtils;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,27 @@ public class CourseController {
         List<Course> courseList = this.courseMapper.getCourseByTid(id);
         res.put(StringUtils.STATUS,StringUtils.SUCCESS);
         res.put(StringUtils.DATA,courseList);
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "",method = RequestMethod.POST)
+    public ResponseEntity updateCourse(@RequestBody Course course) {
+        HashMap res = new HashMap();
+        Boolean aBoolean = this.courseMapper.update(course);
+        res.put(StringUtils.STATUS,StringUtils.SUCCESS);
+        res.put(StringUtils.DATA,aBoolean);
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity delteCourse(@PathVariable("id") Integer id) {
+        HashMap res = new HashMap();
+        Boolean aBoolean = this.courseMapper.delete(id);
+        res.put(StringUtils.STATUS,StringUtils.SUCCESS);
+        res.put(StringUtils.DATA,aBoolean);
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
