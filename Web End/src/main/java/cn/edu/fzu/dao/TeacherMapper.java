@@ -10,6 +10,7 @@ public interface TeacherMapper {
     @Select("select * from teacher where te_teachid=#{tid};")
     public Teacher getTeacherByTeaID(Integer tid);
 
-
+    @Select("select * from teacher where te_uid=#{id};")
+    public Teacher getTeacherByUseId(Integer id);
 
 }

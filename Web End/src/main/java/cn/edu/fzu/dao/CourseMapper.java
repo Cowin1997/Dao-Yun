@@ -25,4 +25,8 @@ public interface CourseMapper {
 
     @Delete("delete from course where cl_classid=#{classId};")
     public Boolean delCourse(Integer classId);
+
+
+    @Select("select * from course where cl_teachid=#{tid};")
+    public List<Course> getCourseByTid(Integer tid);
 }

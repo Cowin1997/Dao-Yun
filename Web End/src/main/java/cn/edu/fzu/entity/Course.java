@@ -1,5 +1,7 @@
 package cn.edu.fzu.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Course {
@@ -9,9 +11,12 @@ public class Course {
     private Integer cl_teachid;
     private String cl_teachname;
     private String cl_classloc;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
     private Date cl_begin;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
     private Date cl_end;
     private String cl_info;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
     private Date cl_createtime;
     private Integer cl_creatorid;
     private String cl_creatorname;

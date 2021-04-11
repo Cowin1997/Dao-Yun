@@ -1,5 +1,7 @@
 package cn.edu.fzu.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Student {
@@ -15,6 +17,7 @@ public class Student {
     private Integer st_classid;
     private Integer st_checkscore;
     private Integer st_checkcount;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
     private Date st_lastchecktime;
     private String st_lastcheckloc;
     private String st_checklevel;

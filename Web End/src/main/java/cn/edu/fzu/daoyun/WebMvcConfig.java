@@ -1,5 +1,6 @@
 package cn.edu.fzu.daoyun;
 
+import cn.edu.fzu.interceptor.AuthorityInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -7,6 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration  //既保留了所有的自动配置，也能用我们扩展的配置；
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AuthorityInterceptor());
+    }
 
     @Override
     /*请求跨域*/

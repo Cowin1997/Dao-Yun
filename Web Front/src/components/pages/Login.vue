@@ -22,8 +22,8 @@
                     <el-button type="primary" @click="submitForm()">登录</el-button>
                 </div>
                 <div  style="float:left;">              
-                <el-link class="login-tips"  @click="retrievePWD">忘记密码</el-link></div>
-                <div style="float:right;"><el-link class="login-tips" @click="regis">还没有账号？点击注册</el-link>              </div>	
+                <el-link class="login-tips"  >忘记密码</el-link></div>
+                <div style="float:right;"><el-link class="login-tips" >还没有账号？点击注册</el-link>              </div>	
             </el-form>
         </div>
     </div>
@@ -36,7 +36,7 @@ export default {
         return {
             param: {
                 username: 'admin',
-                password: '123123',
+                password: 'admin',
             },
             rules: {
                 username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -48,20 +48,50 @@ export default {
         submitForm() {
             this.$refs.login.validate(valid => {
                 if (valid) {
-                    this.$http.post("/admin/login",{
+                    this.$http.post("/user/login",{
                         username:this.param.username,
-                        password:md5(this.param.password)
+                        password:(this.param.password)
                     }).then(res => {
-                        console.log("res")
-                        console.log(res)
                         if(res.data.status === 0){
                             this.$message.success('登录成功');
-                            localStorage.setItem("user",res.data.datas);
-                            this.$router.push('/index');
+                            localStorage.setItem("user",JSON.stringify(res.data.datas));
+                         this.$http.get("/menu").then(res => {
+                            if(res.status === 200){
+                               global.items = res.data;
+                                if(!localStorage.getItem("route")){
+                                var plist = []
+                                for(var i=0;i<res.data.length;i++){
+                                    var m = {
+                                        "index":res.data[i]['index'],
+                                        "title":res.data[i]['title']
+                                    }
+                                    plist.push(m)
+                                    if("subs" in res.data[i]){
+                                        for(var j=0;j<res.data[i]['subs'].length;j++){
+                                            var m = {
+                                                "index":res.data[i]['subs'][j]['uri'],
+                                                "title":res.data[i]['subs'][j]['title']
+                                            }
+                                    plist.push(m)
+                                        }
+                                    }
+
+                                }
+                                        global.permitList = plist;
+                                        localStorage.setItem("route",JSON.stringify(plist))
+                                }
+                                        this.$router.push('/index');
+                            }
+                         });
+
+
+
+
+                            
                             return true;
                         }
                         else{
-                             this.$message.success('账号或密码错误');
+                             this.$message.error('账号或密码错误');
                              return false;
                         }
                     });

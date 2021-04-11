@@ -1,7 +1,6 @@
 package cn.edu.fzu.controller;
 
 import cn.edu.fzu.dao.SchoolMapper;
-import cn.edu.fzu.entity.Admin;
 import cn.edu.fzu.entity.School;
 import cn.edu.fzu.utils.StringUtils;
 import org.springframework.http.HttpStatus;

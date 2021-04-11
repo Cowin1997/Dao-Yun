@@ -61,12 +61,12 @@ import bus from './bus';
                 const isExist = this.tagsList.some(item => {
                     return item.path === route.fullPath;
                 })
-                console.log(isExist);
+               
                 if(!isExist){
                     if(this.tagsList.length >= 8){
                         this.tagsList.shift();
                     }
-                    console.log(route);
+                  
                     this.tagsList.push({
                         title: route.meta.title,
                         path: route.fullPath,
@@ -90,7 +90,7 @@ import bus from './bus';
             }
         },
         created(){
-            console.log('create...setTags');
+          
             this.setTags(this.$route);
             // 监听关闭当前页面的标签页
             bus.$on('close_current_tags', () => {

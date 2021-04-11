@@ -18,4 +18,5 @@ public class StringUtils {
     public static String UPDATE_FAIL= "更新失败";
     public static String GET_SUCCESS= "获取成功";
     public static String GET_FAIL= "获取失败";
+    public static String PARAM_ERROR= "参数错误";
 }

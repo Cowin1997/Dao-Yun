@@ -13,6 +13,7 @@ public class Teacher {
     private String te_info;
     private String te_rank;
     private String te_edu;
+    private Integer te_uid;
 
     @Override
     public String toString() {
@@ -29,7 +30,16 @@ public class Teacher {
                 ", te_info='" + te_info + '\'' +
                 ", te_rank='" + te_rank + '\'' +
                 ", te_edu='" + te_edu + '\'' +
+                ", te_uid=" + te_uid +
                 '}';
+    }
+
+    public Integer getTe_uid() {
+        return te_uid;
+    }
+
+    public void setTe_uid(Integer te_uid) {
+        this.te_uid = te_uid;
     }
 
     public Integer getId() {
