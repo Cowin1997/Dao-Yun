@@ -1,5 +1,6 @@
 <template>
-    <div style="height:100%;width:100%;"> 
+    <div style="height:100%;width:100%;">
+    <div v-if="isAdmin">
         <el-form :inline="true"  class="demo-form-inline" style="border-radius: 30px;">
             <el-form-item label="学校">
                 <el-select v-model="schoolcode" placeholder="请选择学校" @change="ChangeSchool" @focus="focusSchool">
@@ -35,6 +36,28 @@
       :total="total">
       </el-pagination> 
     </div>
+     <div v-if="!isAdmin">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    </div>
+   
 </template>
 
 <script>
@@ -50,9 +73,17 @@ data() {
         total:0,
         pagesize:10,
         currentPage:1,
+        isAdmin:true
       }
 },
-methods:{
+    beforeCreate(){
+        this
+
+    },
+    methods:{
+     
+
+
      ChangeSize(size){
             this.pagesize = size;
             this.classPage = this.classes.slice((this.currentPage-1)*this.pagesize,this.currentPage * this.pagesize);

@@ -48,14 +48,46 @@ export default {
         submitForm() {
             this.$refs.login.validate(valid => {
                 if (valid) {
-                    this.$http.post("/admin/login",{
+                    this.$http.post("/user/login",{
                         username:this.param.username,
-                        password:md5(this.param.password)
+                        password:(this.param.password)
                     }).then(res => {
                         if(res.data.status === 0){
                             this.$message.success('登录成功');
-                            localStorage.setItem("user",res.data.datas);
-                            this.$router.push('/index');
+                            localStorage.setItem("user",JSON.stringify(res.data.datas));
+                         this.$http.get("/menu").then(res => {
+                            if(res.status === 200){
+                               global.items = res.data;
+                                if(!localStorage.getItem("route")){
+                                var plist = []
+                                for(var i=0;i<res.data.length;i++){
+                                    var m = {
+                                        "index":res.data[i]['index'],
+                                        "title":res.data[i]['title']
+                                    }
+                                    plist.push(m)
+                                    if("subs" in res.data[i]){
+                                        for(var j=0;j<res.data[i]['subs'].length;j++){
+                                            var m = {
+                                                "index":res.data[i]['subs'][j]['uri'],
+                                                "title":res.data[i]['subs'][j]['title']
+                                            }
+                                    plist.push(m)
+                                        }
+                                    }
+
+                                }
+                                        global.permitList = plist;
+                                        localStorage.setItem("route",JSON.stringify(plist))
+                                }
+                                        this.$router.push('/index');
+                            }
+                         });
+
+
+
+
+                            
                             return true;
                         }
                         else{

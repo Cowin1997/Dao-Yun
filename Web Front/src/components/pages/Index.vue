@@ -6,8 +6,15 @@
                     <div class="user-info">
                         <img src="../../assets/img/img.jpg" class="user-avator-2" alt />
                         <div class="user-info-cont">
-                            <div class="user-info-name">{{name}}</div>
-                            <div>{{role}}</div>
+                            <div class="user-info-name">
+                                {{user.us_username}}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span>
+                                <el-button  type="primary" @click="changePassword">修改密码</el-button>
+                                </span>
+                                </div>
+                            
                         </div>
                     </div>
                     <div class="user-info-list">
@@ -59,42 +66,46 @@
                 </el-card>
         </el-col>
       </el-row>
+
+    <el-dialog title="修改密码" :visible.sync="changePasswordVisible" width="40%">
+      <el-form :model="Pwd" label-width="150px">
+        <el-form-item label="请输入旧密码">
+                <el-input v-model="Pwd.oldPassword" type="password"></el-input>
+        </el-form-item>
+        <el-form-item label="请输入新密码">
+                <el-input v-model="Pwd.newPassword" type="password"></el-input>
+        </el-form-item>
+        <el-form-item label="请再次输入新密码">
+                <el-input v-model="Pwd.newPasswordAgain" type="password"></el-input>
+        </el-form-item>
+      </el-form>
+           <span slot="footer" class="dialog-footer">
+            <el-button @click="changePasswordVisible = false">取 消</el-button>
+            <el-button type="primary" @click="doChangePassword">确 定</el-button>
+        </span>
+    </el-dialog>
+
+
   </div>
 </template>
 
 <script>
+import user_MangerVue from './user_Manger.vue';
 export default {
   data() {
 
     return {
-            name: 'admin',
+            changePasswordVisible:false,
+            user:JSON.parse(localStorage.getItem("user")),
+            // name: 'admin',
             today:new Date().getMonth()+ '-' + new Date().getDate(),
-            role:'超级管理员',
+            Pwd:{
+                newPassword:'',
+                newPasswordAgain:'',
+                oldPassword:'',
+                userid:this.user.id
+            },
             todoList: [
-                {
-                    title: '今天要修复100个bug',
-                    status: false
-                },
-                {
-                    title: '今天要修复100个bug',
-                    status: false
-                },
-                {
-                    title: '今天要修复100个bug',
-                    status: false
-                },
-                {
-                    title: '今天要修复100个bug',
-                    status: false
-                },{
-                    title: '今天要修复100个bug',
-                    status: false
-                },
-                {
-                    title: '今天要修复100个bug',
-                    status: false
-                },
-              
             ]
           };    
   },
@@ -105,8 +116,30 @@ export default {
         var nowDay = date.getFullYear() + "-" + (mon<10?"0"+mon:mon) + "-" +(day<10?"0"+day:day);
         this.today = nowDay;
   },
+  beforeCreate(){
+      this.user=JSON.parse(localStorage.getItem("user")),
+     
+      console.log(this.user)
+  },
   methods:{
-      
+     doChangePassword(){
+        console.log(this.Pwd)
+        if(this.Pwd.oldPassword!=this.user.us_password) {alert("旧密码错误!");return;}
+        if(this.Pwd.newPassword!=this.Pwd.newPasswordAgain){alert("密码不一致!");return;}
+
+       this.$http.post("/user/"+this.Pwd.userid,this.Pwd).then(res =>{
+         if(res.status==200 &&res.data.datas==true){
+           this.$message({type: 'success',  message: '修改成功!'});
+         }else{
+            this.$message({type: 'error',  message: '修改失败!'});
+         }
+       });
+        this.changePasswordVisible=!this.changePasswordVisible
+     },
+      changePassword(){
+          this.changePasswordVisible=!this.changePasswordVisible;
+        
+      },
       deleteTodo(e){
         var index = e.$index;
         var title = e.row.title;
