@@ -62,6 +62,9 @@ public class StudentController {
         Integer totalStudent = this.studentMapper.getStudentTotalNumber();
         if(classid!=null && page!=null &&size!=null&& Math.ceil(Double.valueOf(totalStudent) /size) >= page&&page>=1&&size>=1) {
                 Integer from = (page - 1)*size;
+                System.out.println("-------------------------------------------------");
+                System.out.println(from+","+size+","+classid);
+                System.out.println("-------------------------------------------------");
                 List<Student> studentList = this.studentMapper.getStudentByPage(from,size,classid);
                 res.put(StringUtils.STATUS, StringUtils.SUCCESS);
                 res.put(StringUtils.MESSAGE, StringUtils.GET_SUCCESS);

@@ -16,6 +16,7 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 
     static {
         NOT_INTERCEPT_URI.add("/user/login");
+        NOT_INTERCEPT_URI.add("/check/task");
     }
 
 
@@ -24,23 +25,23 @@ public class AuthorityInterceptor implements HandlerInterceptor {
     // 否则就放行（return true）
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("AuthorityInterceptor：" + request.getRequestURI());
-        String uri = request.getRequestURI();
-        //System.out.println(request.getMethod());
-        if(request.getMethod().equals("OPTIONS")) return true;
-        if (NOT_INTERCEPT_URI.contains(uri)) {
-         //   System.out.println("不拦截" + uri);
-            return true;
-        }else {
-         //   System.out.println("拦截" + uri);
-            HttpSession session = request.getSession(false); //如果不存在则不会产生一个session,而是返回null
-           // System.out.println(session);
-            if(session==null) {
-                throw new RuntimeException("用户未登陆");
-            }
-            return true;
-        }
-
+//        System.out.println("AuthorityInterceptor：" + request.getRequestURI());
+//        String uri = request.getRequestURI();
+//        //System.out.println(request.getMethod());
+//        if(request.getMethod().equals("OPTIONS")) return true;
+//        if (NOT_INTERCEPT_URI.contains(uri)) {
+//            System.out.println("不拦截" + uri);
+//            return true;
+//        }else {
+//         //   System.out.println("拦截" + uri);
+//            HttpSession session = request.getSession(false); //如果不存在则不会产生一个session,而是返回null
+//           // System.out.println(session);
+//            if(session==null) {
+//                throw new RuntimeException("用户未登陆");
+//            }
+//            return true;
+//        }
+    return true;
     }
 
     @Override

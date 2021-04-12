@@ -21,6 +21,9 @@ public interface ConfigDataMapper {
     @Insert("insert into configdata (id,code,key,value,info) values (#{id},#{code},#{key},#{value},#{info});")
     public Boolean addConfigData(ConfigData data);
 
-    @Select("delete from config where id=#{id};")
+    @Select("delete from configdata where id=#{id};")
     public Boolean delete(Integer id);
+
+    @Select("select * from configdata where code=#{code};")
+    public ConfigData getByCode(Integer code);
 }

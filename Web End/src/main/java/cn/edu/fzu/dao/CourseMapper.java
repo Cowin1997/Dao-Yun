@@ -36,4 +36,9 @@ public interface CourseMapper {
 
     @Delete("delete from course where id=#{id};")
     public Boolean delete(Integer id);
+
+
+
+    @Select("select * from course where cl_classid=#{cid};")
+    public List<Course> getCourseByClassId(Integer cid);
 }
