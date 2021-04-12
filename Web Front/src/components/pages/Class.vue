@@ -120,8 +120,7 @@ data() {
         query(){
             this.$http.get("/course",{params:{"sch_code":this.school,"col_id":this.college,"maj_id":this.major}}).then(res => {
                 if(res.data.status=== 0 ){
-                    this.classList = res.data.datas;
-                 
+                    this.classList = res.data.datas; 
                 }});
         },
         editClass(index,row){

@@ -38,16 +38,13 @@
         
         </div>
 
-
-
-
         <el-form-item v-if="permissionList.includes(1004)">
             <el-input placeholder="请输入学生学号" v-model="searchSid" clearable @keyup.native="proving"></el-input>
         </el-form-item>
         <el-form-item>
-             <el-button v-if="permissionList.includes(1004)" type="primary"  @click="SearchStudent" :disabled="!searchSid">查询学生</el-button>
+             <el-button v-if="permissionList.includes(1004)" type="primary"  @click="SearchStudent" >查询学生</el-button>
         </el-form-item>
-       <el-form-item  v-if="permissionList.includes(1001)"><el-button type="primary" @click="add_student2">添加学生</el-button> </el-form-item>
+      <!-- <el-form-item  v-if="permissionList.includes(1001)"><el-button type="primary" @click="add_student">添加学生</el-button> </el-form-item> -->
     </el-form>
     <el-table :data="studentPage" height="80%" border style="width: 100%;font-size:20px;">
         <el-table-column prop="st_id" label="学号" align="center"  style="width: 8%;"></el-table-column>
@@ -124,12 +121,37 @@
     </el-dialog>
 
      <!-- 编辑弹出框 -->
-    <el-dialog title="签到记录" :visible.sync="checkDetailShow" width="40%">
+    <el-dialog title="签到记录" :visible.sync="checkDetailShow" width="80%">
         <el-table :data="checklog">
-            <el-table-column prop="ch_checktime" label="签到时间" align="center"></el-table-column>
-            <el-table-column prop="ch_checkloc" label="签到地点" align="center"></el-table-column>
-            <el-table-column prop="ch_checkscore" label="签到分数" align="center"></el-table-column>
-        </el-table>
+            <el-table-column prop="id" label="签到任务ID" align="center"></el-table-column>
+            <el-table-column prop="create_time" label="签到创建时间" align="center"></el-table-column>
+            <el-table-column prop="ch_checkscore" label="签到分数" align="center">
+                 <template slot-scope="scope">
+                        <el-tag v-if="scope.row.log!=null">{{scope.row.log!=null?"+"+scope.row.log.ch_checkscore:""}}</el-tag>
+                 </template>
+            </el-table-column>
+             <el-table-column prop="status" label="是否停止签到" align="center">
+                 <template slot-scope="scope">
+                        <el-tag :type="scope.row.status===true?'success':'danger'">{{scope.row.status===true?'正常':'停止'}}</el-tag>
+                    </template>
+             </el-table-column>
+            <el-table-column prop="status" label="是否签到" align="center">
+                 <template slot-scope="scope">
+                        <el-tag :type="scope.row.check===true?'success':'danger'">{{scope.row.check===true?'已签到':'未签到'}}</el-tag>
+                 </template>
+             </el-table-column>
+             <el-table-column prop="log" label="签到时间" align="center">
+                 <template slot-scope="scope">
+                        <el-tag v-if="scope.row.log!=null">{{scope.row.log!=null?scope.row.log.ch_checktime:""}}</el-tag>
+                 </template>
+             </el-table-column>
+             <el-table-column label="补签" align="center">
+                <template slot-scope="scope">
+                    <el-button  :disabled="scope.row.check" @click="reCheck(scope.$index,scope.row)">补签</el-button>
+                </template>
+             </el-table-column>
+
+            </el-table>
     </el-dialog>
     <el-dialog :visible.sync="addShow" title="添加学生" width="40%">
       <el-form ref="ruleForm" :model="student" :rules="rules"  label-width="120px"  width="70%"> 
@@ -234,11 +256,12 @@ export default {
             id:'',
             name:'',
         },
-        checklog:[{
-            ch_checktime:'',
-            ch_checkloc:'',
-            ch_checkscore:''
-        }],
+        // checklog:[{
+        //     ch_checktime:'',
+        //     ch_checkloc:'',
+        //     ch_checkscore:''
+        // }],
+        checklog:[],
         checkDetailShow:false,
         searchSid:'',
         schoolLoading:false,
@@ -293,6 +316,31 @@ export default {
         }
     },
     methods:{
+        reCheck(index,row){
+            console.log(this.student)
+            console.log(row)
+            this.$http.post("/check",{
+                   "studentId":this.student.st_id,
+                   "taskId":row.id,
+                   "classId":row.class_id,
+                   "location":"",
+                   "password":""
+            }).then(res => {
+                if(res.status==200&&res.data.status==0){
+                    this.$message.success("补签成功!");
+            //        this.$http.get("/check/task-list",{params:{
+            //         "sid":row.st_id,
+            //         "cid":row.st_classid
+            //     }}).then(res => {
+            //         if(res.data.status === 0 ){
+            //             this.checklog = res.data.datas;
+            //         }
+            // });
+                }else{
+                    this.$message.erroe("补签失败!");
+                }
+            })
+        },
         query2(){   
             
         },
@@ -374,20 +422,17 @@ export default {
             this.addShow =!this.addShow
            },
        checkLogDetail(row){
-           console.log(row);
-        this.$http.get("/check-log",{params:{
-                "sid":row.st_id,
-                "cid":row.st_classid
-            }}).then(res => {
-                if(res.data.status === 0 ){
-                    this.checklog = res.data.datas;
-                }
-                else{
-                    this.checklog = null;
-                }
-           });
-           this.checkDetailShow = ! this.checkDetailShow;
-        },
+           this.student = row
+            this.$http.get("/check/task-list",{params:{
+                    "sid":row.st_id,
+                    "cid":row.st_classid
+                }}).then(res => {
+                    if(res.data.status === 0 ){
+                        this.checklog = res.data.datas;
+                    }
+            });
+            this.checkDetailShow = ! this.checkDetailShow;
+            },
        SearchStudent(){
            console.log("SearchStudent..");
            console.log("/student/"+this.searchSid);
