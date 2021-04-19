@@ -2,146 +2,36 @@ package cn.edu.fzu.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.ToString;
+import org.springframework.context.annotation.Primary;
 
 import java.util.Date;
+@Data
+@ApiModel
 @JsonIgnoreProperties(value = {"handler"})
+@ToString
 public class CheckTask {
+    @ApiModelProperty(hidden = true)
+
     private Integer id;
-    private Integer class_id;
+    @ApiModelProperty(value = "需要签到的班课id")
+    private String class_id;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
+    @ApiModelProperty(value = "发起时间",hidden = true)
     private Date create_time;
+    @ApiModelProperty(value = "签到密码,若type为0则为限时签到,不需要密码。为1则为手势签到,需要密码。")
     private String password;
+    @ApiModelProperty(value = "限时签到的时间,单位:秒")
     private Integer time_limit;
+    @ApiModelProperty(value = "发起签到的教师工号")
     private Integer teacher_id;
+    @ApiModelProperty(value = "签到类型,0为限时签到,1为手势签到")
     private Integer type;
+    @ApiModelProperty(value = "签到说明")
     private String info;
-    private Course course;
-    private Teacher teacher;
+    @ApiModelProperty(value = "签到是否结束,0未结束,1结束",hidden = true)
     private Boolean status;
-    private Boolean isCheck;
-    private CheckLog log;
-
-    @Override
-    public String toString() {
-        return "CheckTask{" +
-                "id=" + id +
-                ", class_id=" + class_id +
-                ", create_time=" + create_time +
-                ", password='" + password + '\'' +
-                ", time_limit=" + time_limit +
-                ", teacher_id=" + teacher_id +
-                ", type=" + type +
-                ", info='" + info + '\'' +
-                ", course=" + course +
-                ", teacher=" + teacher +
-                ", status=" + status +
-                ", isCheck=" + isCheck +
-                ", log=" + log +
-                '}';
-    }
-
-    public CheckLog getLog() {
-        return log;
-    }
-
-    public void setLog(CheckLog log) {
-        this.log = log;
-    }
-
-    public Boolean getCheck() {
-        return isCheck;
-    }
-
-    public void setCheck(Boolean check) {
-        isCheck = check;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getClass_id() {
-        return class_id;
-    }
-
-    public void setClass_id(Integer class_id) {
-        this.class_id = class_id;
-    }
-
-    public Date getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getTime_limit() {
-        return time_limit;
-    }
-
-    public void setTime_limit(Integer time_limit) {
-        this.time_limit = time_limit;
-    }
-
-    public Integer getTeacher_id() {
-        return teacher_id;
-    }
-
-    public void setTeacher_id(Integer teacher_id) {
-        this.teacher_id = teacher_id;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
 }

@@ -9,18 +9,14 @@ import Index from '../components/pages/Index.vue'
 import Admin from '../components/pages/Admin.vue'
 import Class from '../components/pages/Class.vue'
 import Teacher from '../components/pages/Teacher.vue'
-import Data from '../components/pages/Data.vue'
+import Sys_param from '../components/pages/Sys_param.vue'
+import Dict_param from '../components/pages/Dict_param'
 import Student from '../components/pages/Student.vue'
 import user_Manger from '../components/pages/user_Manger'
+
+
+
 Vue.use(Router)
-
-
-// var constantRouterMap=[]
-// export default new Router({
-//   routes: constantRouterMap
- 
-// })
-
 
 
 export default new Router({
@@ -28,9 +24,6 @@ export default new Router({
     {
       path:'/',
       redirect:'/login',
-      // meta: {
-      //   requireAuth: true
-      // }
     },
     {
       path:'/login',
@@ -44,10 +37,7 @@ export default new Router({
         {
           path:'/index',
           component:Index,
-          meta: { title: '系统首页' ,
-          requireAuth: true
-        }
-          
+          meta: { title: '系统首页' ,requireAuth: true}
         },
         {
           path:'/user-manger',
@@ -62,7 +52,7 @@ export default new Router({
         {
           path:'/admin',
           component:Admin,
-           meta: { title: '管理员设置' ,requireAuth: true}
+          meta: { title: '管理员设置' ,requireAuth: true}
         },
         {
           path:'/class',
@@ -75,8 +65,13 @@ export default new Router({
           meta: { title: '教师管理',requireAuth: true }
         },
         {
-          path:'/data',
-          component:Data,
+          path:'/sys-param',
+          component:Sys_param,
+          meta: { title: '系统参数' ,requireAuth: true}
+        },
+        {
+          path:'/dict-param',
+          component:Dict_param,
           meta: { title: '数据字典' ,requireAuth: true}
         }
       ]

@@ -90,7 +90,6 @@
 </template>
 
 <script>
-import user_MangerVue from './user_Manger.vue';
 export default {
   data() {
 

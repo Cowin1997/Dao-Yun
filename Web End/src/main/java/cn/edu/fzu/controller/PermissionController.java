@@ -4,8 +4,10 @@ import cn.edu.fzu.dao.MenuMapper;
 import cn.edu.fzu.dao.PermissionMapper;
 import cn.edu.fzu.entity.Permission;
 import cn.edu.fzu.entity.User;
+import cn.edu.fzu.utils.ResultModel;
+import cn.edu.fzu.utils.ResultUtils;
 import cn.edu.fzu.utils.StringUtils;
-import fzu.edu.cn.entity.Menu;
+import cn.edu.fzu.entity.Menu;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,42 +25,17 @@ import java.util.List;
 public class PermissionController {
     @Resource
     private PermissionMapper permissionMapper;
-
     @Resource
     private MenuMapper menuMapper;
     @ResponseBody
     @RequestMapping(value = "",method = RequestMethod.GET)
-    public ResponseEntity getPermissionByUri(@RequestParam(value = "uri",required = false)String uri, HttpServletRequest request){
-        HashMap res = new HashMap();
-        if(uri!=null) {
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                User user = (User) session.getAttribute("user");
-                if (user != null) {
-                    List<Permission> permissionList = this.permissionMapper.getPermissionByUriAndRoleId(
-                            user.getUs_roleid() + "|", uri);
-                    res.put(StringUtils.STATUS, StringUtils.SUCCESS);
-                    res.put(StringUtils.MESSAGE, StringUtils.GET_SUCCESS);
-                    List<Integer> codeList = new ArrayList<>();
-                    for (Permission p : permissionList) {
-                        codeList.add(p.getCode());
-                    }
-                    res.put(StringUtils.DATA, codeList);
-                    return ResponseEntity.status(HttpStatus.OK).body(res);
-                }
-            }
-        } else {
-            List<Permission> permissionList = this.permissionMapper.getAllPermission();
-            List<Integer> codeList = new ArrayList<>();
-            for (Permission p:permissionList) {
-                codeList.add(p.getId());
-            }
-            res.put(StringUtils.STATUS, StringUtils.SUCCESS);
-            res.put(StringUtils.MESSAGE, StringUtils.GET_SUCCESS);
-            res.put(StringUtils.DATA,codeList);
-            return ResponseEntity.status(HttpStatus.OK).body(res);
+    public ResultModel<List<Integer>> getPermissionByUri(@RequestParam(value = "uri")String uri, @RequestParam("type") Integer type) {
+        List<Permission> permissionList = this.permissionMapper.getPermissionByUriAndRoleId(type + "|", uri);
+        List<Integer> codeList = new ArrayList<>();
+        for (Permission p : permissionList) {
+            codeList.add(p.getCode());
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+        return new ResultModel<>(ResultUtils.STATUS.SUCCESS, ResultUtils.MESSAGE.GET_SUCCESS, codeList);
     }
 
 

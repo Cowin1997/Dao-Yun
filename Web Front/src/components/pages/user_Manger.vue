@@ -1,10 +1,10 @@
 <template>
   <div style="height:100%;width:100%;">
-      <el-form :inline="true"  class="demo-form-inline" style="border-radius: 30px;">
+      <!-- <el-form :inline="true"  class="demo-form-inline" style="border-radius: 30px;">
         <el-form-item>
             <el-button type="primary"  @click="searchAllRole" >查询所有角色</el-button>
         </el-form-item>
-      </el-form>
+      </el-form> -->
     <el-table :data="roleList" height="80%" border style="width: 100%;font-size:20px;">
         <el-table-column prop="id" label="ID" align="center" ></el-table-column>
         <el-table-column prop="role_name" label="角色名称" align="center" ></el-table-column>
@@ -97,6 +97,13 @@ export default {
            
         }
     },
+    beforeCreate(){
+        this.$http.get("/role").then(res =>{
+            if(res.status==200&&res.data.status ===0){
+                this.roleList = res.data.datas;               
+            }
+        })
+    },
     methods:{
         closeDialog(){
             this.menuPermissionList=[]
@@ -185,12 +192,7 @@ export default {
              
         },
         searchAllRole(){
-            this.$http.get("/role").then(res =>{
-                if(res.status==200&&res.data.status ===0){
-                    this.roleList = res.data.datas;
-  //                  console.log(this.roleList)
-                }
-            })
+        
         },
         permissionSet(row){
             this.row = row;
@@ -246,7 +248,6 @@ export default {
                      "roleid":this.row.id
                  }
              }).then(res => {
-                console.log("/permission/menudddd");
                 console.log(res.data.datas)
                 if(res.status==200 && res.data.status==0){
                     this.funcPermissionList = res.data.datas;

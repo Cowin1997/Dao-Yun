@@ -1,16 +1,13 @@
 package cn.edu.fzu.controller;
 
 import cn.edu.fzu.dao.MenuMapper;
-import cn.edu.fzu.entity.User;
-import fzu.edu.cn.entity.Menu;
+import cn.edu.fzu.entity.Menu;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,13 +21,13 @@ public class MenuController {
     @ResponseBody
     @RequestMapping(value = {"/role/{roleid}","/role"}, method = RequestMethod.GET)
     public List getMenusByRoleId(@PathVariable(value = "roleid",required = false) Integer roleid) {
-        List<fzu.edu.cn.entity.Menu> Menus = null;
+        List<Menu> Menus = null;
         List<HashMap> list = new ArrayList<>();
         if(roleid!=null) { Menus = this.menuMapper.getMenus(roleid + "|");}
         else{
             Menus = this.menuMapper.getAllMenus();
         }
-        for (fzu.edu.cn.entity.Menu m : Menus) {
+        for (Menu m : Menus) {
             System.out.println(m);
             if (m.getParentid() == null) {
                 HashMap hm = new HashMap();
@@ -53,12 +50,10 @@ public class MenuController {
 
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List getMenusByCurrentUser(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        User user = (User) session.getAttribute("user");
+    public List getMenu(@RequestParam("type") Integer type) {
         List<HashMap> list = new ArrayList<>();
-        List<fzu.edu.cn.entity.Menu> Menus = this.menuMapper.getMenus(user.getUs_roleid()+"|");
-        for (fzu.edu.cn.entity.Menu m : Menus) {
+        List<Menu> Menus = this.menuMapper.getMenus(type+"|");
+        for (Menu m : Menus) {
             if (m.getParentid() == null){
                 HashMap hm = new HashMap();
                 hm.put("icon",m.getIcon());
@@ -69,7 +64,7 @@ public class MenuController {
             }
         }
         for(int i=0;i<list.size();i++) {
-            Menus = menuMapper.getMenusWithParentIdAndroleid((Integer) list.get(i).get("id"),user.getUs_roleid()+"|");
+            Menus = menuMapper.getMenusWithParentIdAndroleid((Integer) list.get(i).get("id"),type+"|");
             if (Menus.size() > 0) list.get(i).put("subs", Menus);
         }
         return list;

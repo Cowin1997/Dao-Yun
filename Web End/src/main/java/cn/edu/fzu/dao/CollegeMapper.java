@@ -10,10 +10,12 @@ import java.util.List;
 public interface CollegeMapper {
 
 
-    @Select("select * from college where co_schoolcode = #{code};")
-    public List<College> getCollegeBySchoolCode(Integer code);
+    @Select("select * from college where co_school = #{code} limit #{from},#{to};")
+    public List<College> getCollegeBySchoolCode(Integer code,Integer from, Integer to);
 
 
-    @Select("select * from college where co_collegeid = #{id};")
-    public List<College> getCollegeByCollegeId(Integer id);
+    @Select("select * from college where co_code = #{code};")
+    public College getCollegeByCollegeCode(Integer code);
+    @Select("select count(*) from college where co_school = #{code};")
+    public Integer getTotalBySchool(Integer code);
 }

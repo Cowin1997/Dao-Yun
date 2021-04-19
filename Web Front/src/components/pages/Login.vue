@@ -35,8 +35,8 @@ export default {
     data: function() {
         return {
             param: {
-                username: 'admin',
-                password: 'admin',
+                username: '123456',
+                password: '123456',
             },
             rules: {
                 username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -50,44 +50,28 @@ export default {
                 if (valid) {
                     this.$http.post("/user/login",{
                         username:this.param.username,
-                        password:(this.param.password)
+                        password:this.param.password,
+                        type:1
                     }).then(res => {
-                        if(res.data.status === 0){
+                        console.log(res)
+                        if(res.data.code === 0){
                             this.$message.success('登录成功');
-                            localStorage.setItem("user",JSON.stringify(res.data.datas));
-                         this.$http.get("/menu").then(res => {
+                            let Base64 = require('js-base64').Base64
+                            localStorage.setItem("token",res.data.data.token)
+                            var user = Base64.decode(res.data.data.token.split(".")[1])
+                            localStorage.setItem("user",user);
+                            var user = JSON.parse(user)
+                            console.log(user.type)
+                         this.$http.get("/menu",{params:{
+                             type:user.type
+                         }}).then(res => {
                             if(res.status === 200){
-                               global.items = res.data;
-                                if(!localStorage.getItem("route")){
-                                var plist = []
-                                for(var i=0;i<res.data.length;i++){
-                                    var m = {
-                                        "index":res.data[i]['index'],
-                                        "title":res.data[i]['title']
-                                    }
-                                    plist.push(m)
-                                    if("subs" in res.data[i]){
-                                        for(var j=0;j<res.data[i]['subs'].length;j++){
-                                            var m = {
-                                                "index":res.data[i]['subs'][j]['uri'],
-                                                "title":res.data[i]['subs'][j]['title']
-                                            }
-                                    plist.push(m)
-                                        }
-                                    }
 
-                                }
-                                        global.permitList = plist;
-                                        localStorage.setItem("route",JSON.stringify(plist))
-                                }
-                                        this.$router.push('/index');
+                                localStorage.setItem("route",JSON.stringify(res.data))
+                                this.$router.push('/index');
                             }
                          });
 
-
-
-
-                            
                             return true;
                         }
                         else{

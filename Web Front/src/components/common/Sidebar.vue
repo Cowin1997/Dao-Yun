@@ -12,7 +12,7 @@
         >
             <template v-for="item in items">
                 <template v-if="item.subs">
-                    <el-submenu :index="item.index" :key="item.title">
+                    <el-submenu :index="item.id" :key="item.id">
                         <template slot="title">
                             <i :class="item.icon"></i>
                             <span slot="title">{{ item.title }}</span>
@@ -39,7 +39,7 @@
                     </el-submenu>
                 </template>
                 <template v-else>
-                    <el-menu-item :index="item.index" :key="item.uri">
+                    <el-menu-item :index="item.index" :key="item.id">
                         <i :class="item.icon"></i>
                         <span slot="title">{{ item.title }}</span>
                     </el-menu-item>
@@ -67,16 +67,8 @@ export default {
     },
     computed:{
         onRoutes(){
-        //    if(localStorage.getItem("route")) this.items=JSON.parse(localStorage.getItem("route"));
-
-            this.$http.get("/menu").then(res => {
-            if(res.status === 200){
-                this.items = res.data;   
-            }
-            else{
-                this.$message.success('数据获取失败');     
-            }});
-            return "/"+this.$route.path.replace('/', '');
+           if(localStorage.getItem("route")) this.items=JSON.parse(localStorage.getItem("route"));
+           return "/"+this.$route.path.replace('/', '');
         }
 
     }

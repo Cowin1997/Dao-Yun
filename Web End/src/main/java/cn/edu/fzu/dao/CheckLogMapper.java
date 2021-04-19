@@ -1,6 +1,7 @@
 package cn.edu.fzu.dao;
 
 import cn.edu.fzu.entity.CheckLog;
+import cn.edu.fzu.param.checkReq;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -11,16 +12,22 @@ import java.util.List;
 @Mapper
 public interface CheckLogMapper {
 
-    @Select("select * from checklog where ch_checksid=#{sid} and ch_checkcouseid=#{cid};")
-    public List<CheckLog> getCheckLogsBySidAndCid(Integer sid,Integer cid);
 
 
-    @Select("select * from checklog where ch_checksid=#{sid} and ch_checkcouseid=#{Classid} and taskid=#{taskId};")
-    public CheckLog isCheck(String sid,Integer taskId,Integer Classid);
 
-    @Select("select * from checklog where ch_checksid=#{sid} and ch_checkcouseid=#{cid} and taskid=#{tid};")
-    public CheckLog getCheckLogsBySid_Cid_Taskid(String sid,Integer cid,Integer tid);
 
-    @Insert("insert into checklog (taskid,ch_checksid,ch_checkcouseid,ch_checkloc,ch_checkscore,ch_checktime) values(#{taskId},#{StudentId},#{classId},#{location},#{score},#{date});")
-    public Boolean check(Integer taskId, String StudentId, Integer classId, String location, Integer score, Date date);
+
+    @Insert("insert into checklog (ch_sid,ch_taskid,ch_checktime,ch_checkscore,ch_loc,ch_info) values(#{ch_sid},#{ch_taskid},#{ch_checktime},#{ch_checkscore},#{ch_loc},#{ch_info});")
+    public Boolean check(checkReq req);
+
+    @Select("select sum(checklog.ch_checkscore) from checklog,checktask where checklog.ch_sid=#{sid} and checktask.class_id=#{cid} and checktask.id=checklog.ch_taskid;")
+    public Integer getSum(String sid,String cid);
+
+    @Select("select checklog.id,checklog.ch_sid,checklog.ch_taskid,checklog.ch_checktime,checklog.ch_checkscore,checklog.ch_loc,checklog.ch_info from checklog,checktask where checklog.ch_sid=#{sid} and checktask.class_id=#{cid} and checktask.id=checklog.ch_taskid;")
+    public List<CheckLog> getLogs(String sid,String cid);
+
+
+    @Select("select * from checklog where ch_sid=#{sid} and ch_taskid=#{tid};")
+    public CheckLog getLog(Integer tid,String sid);
+
 }
