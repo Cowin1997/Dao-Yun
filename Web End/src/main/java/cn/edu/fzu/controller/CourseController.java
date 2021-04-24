@@ -1,20 +1,13 @@
 package cn.edu.fzu.controller;
 
 import cn.edu.fzu.dao.CourseMapper;
-import cn.edu.fzu.dao.MajorMapper;
 import cn.edu.fzu.entity.Course;
-import cn.edu.fzu.entity.Major;
-import cn.edu.fzu.entity.School;
 import cn.edu.fzu.entity.selectCourse;
 import cn.edu.fzu.param.CourseReq;
 import cn.edu.fzu.utils.ResultModel;
 import cn.edu.fzu.utils.ResultUtils;
-import cn.edu.fzu.utils.StringUtils;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +27,7 @@ public class CourseController {
     @ApiOperation(value = "getCourseByTid",notes="根据教师工号,获取该教师的所有班课列表")
     public ResultModel<List<Course>> getCourseByTid(@RequestParam("tid") String tid) {
         List<Course> courseList = this.courseMapper.getCourseByTid(tid);
-        return new ResultModel<List<Course>>(ResultUtils.STATUS.SUCCESS,ResultUtils.MESSAGE.GET_SUCCESS,courseList);
+        return ResultUtils.success(courseList,ResultUtils.MESSAGE.GET_SUCCESS);
     }
 
     @ResponseBody
@@ -42,10 +35,10 @@ public class CourseController {
     @ApiOperation(value = "addCourse",notes="添加班课")
     public ResultModel<Boolean> addCourse(@RequestBody CourseReq course) {
         Course isExist = this.courseMapper.getCourseByCid(course.getCs_id());
-        if(isExist!=null) return new ResultModel<>(ResultUtils.STATUS.ERROR,ResultUtils.MESSAGE.CLASS_IS_EXIST,false);
+        if(isExist!=null) return ResultUtils.error(false,ResultUtils.MESSAGE.CLASS_IS_EXIST);
         else{
             Boolean aBoolean = this.courseMapper.addCourse(course);
-            if(aBoolean==true) return new ResultModel<>(ResultUtils.STATUS.SUCCESS,ResultUtils.MESSAGE.ADD_SUCCESS,true);
+            if(aBoolean==true) return ResultUtils.success(true,ResultUtils.MESSAGE.ADD_SUCCESS);
         }
         return new ResultModel<>(ResultUtils.STATUS.ERROR,ResultUtils.MESSAGE.ADD_ERROR,false);
     }

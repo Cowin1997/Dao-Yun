@@ -2,27 +2,19 @@ package cn.edu.fzu.controller;
 
 import cn.edu.fzu.dao.CourseMapper;
 import cn.edu.fzu.dao.StudentMapper;
-import cn.edu.fzu.entity.PageResult;
+import cn.edu.fzu.utils.PageResult;
 import cn.edu.fzu.entity.Student;
-import cn.edu.fzu.param.LoginRes;
-import cn.edu.fzu.param.StudentsRes;
 import cn.edu.fzu.utils.ResultModel;
 import cn.edu.fzu.utils.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Validate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindException;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -31,8 +23,7 @@ import java.util.List;
 public class StudentController {
     @Resource
     private StudentMapper studentMapper;
-    @Resource
-    private CourseMapper courseMapper;
+
     @ResponseBody
     @RequestMapping(value = "",method = RequestMethod.GET)
     @ApiOperation(value = "getStudent",notes = "获取学生列表")
@@ -111,7 +102,7 @@ public class StudentController {
     @ApiOperation(value = "getStudent",notes = "通过学生学号查找学生")
     public ResultModel<Student> getStudent(@PathVariable("st_id") String st_id){
          Student student = this.studentMapper.getStudent(st_id);
-         return new ResultModel<>(ResultUtils.STATUS.SUCCESS,ResultUtils.MESSAGE.GET_SUCCESS,student);
+         return ResultUtils.success(student,ResultUtils.MESSAGE.GET_SUCCESS);
 
     }
 

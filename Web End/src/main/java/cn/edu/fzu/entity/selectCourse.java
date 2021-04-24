@@ -16,7 +16,6 @@ import javax.validation.constraints.Null;
 @AllArgsConstructor
 @NoArgsConstructor
 public class selectCourse {
-
     private Integer id;
     @NotNull
     @ApiModelProperty(value = "学生学号")
@@ -24,4 +23,8 @@ public class selectCourse {
     @NotNull
     @ApiModelProperty(value = "所选班课ID")
     private String cs_id;
+
+    @ApiModelProperty(value = "该课程签到分")
+    private Integer score;
+
 }

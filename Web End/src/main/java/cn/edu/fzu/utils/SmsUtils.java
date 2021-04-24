@@ -34,13 +34,11 @@ public class SmsUtils {
             String[] templateParamSet1 = {smsCode};
             req.setTemplateParamSet(templateParamSet1);
             SendSmsResponse resp = client.SendSms(req);
-            System.out.println(SendSmsResponse.toJsonString(resp));
             return SendSmsResponse.toJsonString(resp);
-
         } catch (TencentCloudSDKException e) {
-            System.out.println(e.toString());
-        }
             return null;
+        }
+
     }
 
 

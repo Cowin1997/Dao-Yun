@@ -39,6 +39,14 @@ public class ResultUtils {
         public static String REQUEST_PARAM_ERROR = "请求参数错误";
         public static String SESSION_ERROR="会话错误";
         public static String ACCOUNT_NOT_EXIST="账号不存在";
+        public static String BAD_REQUEST="请求参数错误";
     }
 
+
+    public static ResultModel success(Object data,String msg){
+        return new ResultModel(ResultUtils.STATUS.SUCCESS,msg,data);
+    }
+    public static ResultModel error(Object data, String msg){
+        return new ResultModel(ResultUtils.STATUS.ERROR,msg,data);
+    }
 }

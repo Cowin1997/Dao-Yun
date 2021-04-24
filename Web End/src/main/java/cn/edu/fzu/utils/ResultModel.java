@@ -24,4 +24,9 @@ public class ResultModel<T> implements Serializable {
     // 数据对象
     @ApiModelProperty(required=false,position=2,value="响应数据",example = "data")
     private T data;
+
+
+
+
+
 }

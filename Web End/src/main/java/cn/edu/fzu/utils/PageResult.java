@@ -1,4 +1,4 @@
-package cn.edu.fzu.entity;
+package cn.edu.fzu.utils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
