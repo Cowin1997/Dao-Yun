@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { StuSigninOneKeyPage } from './stu-signin-one-key.page';
+import {StuSigninOneKeyPage} from './stu-signin-one-key.page';
 
 describe('StuSigninOneKeyPage', () => {
   let component: StuSigninOneKeyPage;
@@ -9,7 +9,7 @@ describe('StuSigninOneKeyPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StuSigninOneKeyPage ],
+      declarations: [StuSigninOneKeyPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -1,15 +1,13 @@
-import { signupVO } from './signupvo';
-import { PassportServiceService } from './../services/passport-service.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import {signupVO} from './signupvo';
+import {PassportServiceService} from './../services/passport-service.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {IonSlides} from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
-
-
 
 
 export class SignupPage implements OnInit {
@@ -23,17 +21,22 @@ export class SignupPage implements OnInit {
   confirmPassword: string = ''
   code: string = ''
 
-  constructor(private passportServicec: PassportServiceService) { }
-  @ViewChild('signupSlides', { static: true }) signupSlides: IonSlides;
+  constructor(private passportServicec: PassportServiceService) {
+  }
+
+  @ViewChild('signupSlides', {static: true}) signupSlides: IonSlides;
 
   ngOnInit() {
   }
+
   onNext() {
     this.signupSlides.slideNext()
   }
+
   getCode() {
     this.passportServicec.sendCodeRequest(this.signup.phone)
   }
+
   onSubmit() {
     this.passportServicec.signupRequest(this.signup)
     this.signupSlides.slideNext()

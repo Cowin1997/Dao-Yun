@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 
 @Injectable({
@@ -7,12 +7,14 @@ import { Injectable } from '@angular/core';
 
 export class LocalStorageService {
   private localStorage = window.localStorage;
-  constructor() { }
+
+  constructor() {
+  }
 
   get(key: string, defaultValue: any): any {
     this.checkKey(key);
     let value: any = this.localStorage.getItem(key);
-    try{
+    try {
       value = JSON.parse(value);
     } catch (error) {
       value = null;
@@ -37,11 +39,12 @@ export class LocalStorageService {
     this.checkKey(key);
     this.localStorage.removeItem(key);
   }
-  checkKey(key: string){
-    if (key === 'undefined'){
+
+  checkKey(key: string) {
+    if (key === 'undefined') {
       throw new Error('null key passed');
     }
-    if (key.length === 0){
+    if (key.length === 0) {
       throw new Error('lenth of key is 0');
     }
   }

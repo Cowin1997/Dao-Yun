@@ -27,9 +27,10 @@ public class PermissionController {
     private PermissionMapper permissionMapper;
     @Resource
     private MenuMapper menuMapper;
+
     @ResponseBody
-    @RequestMapping(value = "",method = RequestMethod.GET)
-    public ResultModel<List<Integer>> getPermissionByUri(@RequestParam(value = "uri")String uri, @RequestParam("type") Integer type) {
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResultModel<List<Integer>> getPermissionByUri(@RequestParam(value = "uri") String uri, @RequestParam("type") Integer type) {
         List<Permission> permissionList = this.permissionMapper.getPermissionByUriAndRoleId(type + "|", uri);
         List<Integer> codeList = new ArrayList<>();
         for (Permission p : permissionList) {
@@ -40,87 +41,86 @@ public class PermissionController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/menu",method = RequestMethod.GET)
-    public ResponseEntity getPermissionByMenuIdAndRoleid(@RequestParam(value = "menuid",required = false)Integer menuid, @RequestParam(value = "roleid",required = false) Integer roleid,HttpServletRequest request){
+    @RequestMapping(value = "/menu", method = RequestMethod.GET)
+    public ResponseEntity getPermissionByMenuIdAndRoleid(@RequestParam(value = "menuid", required = false) Integer menuid, @RequestParam(value = "roleid", required = false) Integer roleid, HttpServletRequest request) {
         System.out.println(menuid);
         System.out.println(roleid);
         HashMap res = new HashMap();
         List list = new ArrayList();
-        if(menuid == null && roleid== null){
+        if (menuid == null && roleid == null) {
             List<Menu> menuList = this.menuMapper.getAllMenusOrderByIdAsc();
-            for(int i=0;i<menuList.size();i++){
+            for (int i = 0; i < menuList.size(); i++) {
                 HashMap hm = new HashMap();
-                hm.put("name",menuList.get(i).getTitle());
-                hm.put("id",menuList.get(i).getId());
+                hm.put("name", menuList.get(i).getTitle());
+                hm.put("id", menuList.get(i).getId());
 //                hm.put("disabled",true);
                 List<Permission> permissionList = this.permissionMapper.getPermissionByMenuId(menuList.get(i).getId());
-                if(permissionList.size() > 0) hm.put("subs",permissionList);
+                if (permissionList.size() > 0) hm.put("subs", permissionList);
                 list.add(hm);
             }
-            res.put(StringUtils.STATUS,StringUtils.SUCCESS);
-            res.put(StringUtils.DATA,list);
+            res.put(StringUtils.STATUS, StringUtils.SUCCESS);
+            res.put(StringUtils.DATA, list);
             return ResponseEntity.status(HttpStatus.OK).body(res);
-        }else if(menuid != null && roleid!=null){
-            List<Menu> menuList = this.menuMapper.getMenus(roleid+"|");
-            for(int i=0;i<menuList.size();i++){
+        } else if (menuid != null && roleid != null) {
+            List<Menu> menuList = this.menuMapper.getMenus(roleid + "|");
+            for (int i = 0; i < menuList.size(); i++) {
                 HashMap hm = new HashMap();
-                hm.put("name",menuList.get(i).getTitle());
-                hm.put("id",menuList.get(i).getId());
+                hm.put("name", menuList.get(i).getTitle());
+                hm.put("id", menuList.get(i).getId());
 //                hm.put("disabled",true);
-                List<Permission> permissionList = this.permissionMapper.getPermissionByMenuIdAndRoleId(menuList.get(i).getId(),roleid+"|");
-                if(permissionList.size() > 0) hm.put("subs",permissionList);
+                List<Permission> permissionList = this.permissionMapper.getPermissionByMenuIdAndRoleId(menuList.get(i).getId(), roleid + "|");
+                if (permissionList.size() > 0) hm.put("subs", permissionList);
                 list.add(hm);
             }
-            res.put(StringUtils.STATUS,StringUtils.SUCCESS);
-            res.put(StringUtils.DATA,list);
+            res.put(StringUtils.STATUS, StringUtils.SUCCESS);
+            res.put(StringUtils.DATA, list);
             return ResponseEntity.status(HttpStatus.OK).body(res);
-        }else if(menuid == null && roleid!=null){
-                res.put(StringUtils.STATUS,StringUtils.SUCCESS);
-                list = this.permissionMapper.getPermissionIdByRoleId(roleid+"|");
-                res.put(StringUtils.DATA,list);
-                return ResponseEntity.status(HttpStatus.OK).body(res);
-        }
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+        } else if (menuid == null && roleid != null) {
+            res.put(StringUtils.STATUS, StringUtils.SUCCESS);
+            list = this.permissionMapper.getPermissionIdByRoleId(roleid + "|");
+            res.put(StringUtils.DATA, list);
+            return ResponseEntity.status(HttpStatus.OK).body(res);
+        } else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
 
 
     @ResponseBody
-    @RequestMapping(value = "",method = RequestMethod.POST)
-    public ResponseEntity setPermission(@RequestBody HashMap map){
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public ResponseEntity setPermission(@RequestBody HashMap map) {
         HashMap res = new HashMap();
         List<Integer> setList = (List<Integer>) map.get("setList");
         List<Integer> unSetList = (List<Integer>) map.get("unSetList");
         Integer roleid = (Integer) map.get("roleid");
-        System.out.println("roleid:"+roleid);
-        System.out.println("setList:"+setList);
-        System.out.println("unSetList:"+unSetList);
-        for (Integer e:setList) {
-           Permission p = this.permissionMapper.getPermissionById(e);
-           if(p!=null){
-               String currentRoleId = p.getRoleid();
-               if(currentRoleId==null) currentRoleId="";
-               if(currentRoleId.contains(roleid+"|")) continue;
-               else {
-                   currentRoleId += (roleid+"|");
-                   this.permissionMapper.setPermission(e,currentRoleId);
-               }
-           }
-        }
-
-        for (Integer e:unSetList
-        ) {
+        System.out.println("roleid:" + roleid);
+        System.out.println("setList:" + setList);
+        System.out.println("unSetList:" + unSetList);
+        for (Integer e : setList) {
             Permission p = this.permissionMapper.getPermissionById(e);
-            if(p!=null){
+            if (p != null) {
                 String currentRoleId = p.getRoleid();
-                if(currentRoleId==null) currentRoleId="";
-                if(!currentRoleId.contains(roleid+"|")) continue;
+                if (currentRoleId == null) currentRoleId = "";
+                if (currentRoleId.contains(roleid + "|")) continue;
                 else {
-                    currentRoleId = currentRoleId.replace(roleid+"|","");
-                    this.permissionMapper.setPermission(e,currentRoleId);
+                    currentRoleId += (roleid + "|");
+                    this.permissionMapper.setPermission(e, currentRoleId);
                 }
             }
         }
-        res.put(StringUtils.STATUS,StringUtils.SUCCESS);
+
+        for (Integer e : unSetList
+        ) {
+            Permission p = this.permissionMapper.getPermissionById(e);
+            if (p != null) {
+                String currentRoleId = p.getRoleid();
+                if (currentRoleId == null) currentRoleId = "";
+                if (!currentRoleId.contains(roleid + "|")) continue;
+                else {
+                    currentRoleId = currentRoleId.replace(roleid + "|", "");
+                    this.permissionMapper.setPermission(e, currentRoleId);
+                }
+            }
+        }
+        res.put(StringUtils.STATUS, StringUtils.SUCCESS);
         return ResponseEntity.status(HttpStatus.OK).body(res);
 
     }

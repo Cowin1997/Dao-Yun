@@ -13,21 +13,17 @@ import java.util.List;
 public interface CheckLogMapper {
 
 
-
-
-
-
-    @Insert("insert into checklog (ch_sid,ch_taskid,ch_checktime,ch_checkscore,ch_loc,ch_info) values(#{ch_sid},#{ch_taskid},#{ch_checktime},#{ch_checkscore},#{ch_loc},#{ch_info});")
+    @Insert("insert into checklog (checksid,taskid,checkcid,checktime,checkscore,checkloc,info,longitude,latitude) values(#{checksid},#{taskid},#{checkcid},#{checktime},#{checkscore},#{loc},#{info},#{longitude},#{latitude});")
     public Boolean check(checkReq req);
 
-    @Select("select sum(checklog.ch_checkscore) from checklog,checktask where checklog.ch_sid=#{sid} and checktask.class_id=#{cid} and checktask.id=checklog.ch_taskid;")
-    public Integer getSum(String sid,String cid);
+    @Select("select sum(checklog.checkscore) from checklog,checktask where checklog.checksid=#{sid} and checktask.class_id=#{cid} and checktask.id=checklog.taskid;")
+    public Integer getSum(String sid, String cid);
 
-    @Select("select checklog.id,checklog.ch_sid,checklog.ch_taskid,checklog.ch_checktime,checklog.ch_checkscore,checklog.ch_loc,checklog.ch_info from checklog,checktask where checklog.ch_sid=#{sid} and checktask.class_id=#{cid} and checktask.id=checklog.ch_taskid;")
-    public List<CheckLog> getLogs(String sid,String cid);
+    @Select("select checklog.id,checklog.checksid,checklog.taskid,checklog.checktime,checklog.checkscore,checklog.loc,checklog.info checklog.longitude checklog.latitude from checklog,checktask where checklog.checksid=#{sid} and checktask.class_id=#{cid} and checktask.id=checklog.taskid;")
+    public List<CheckLog> getLogs(String sid, String cid);
 
 
-    @Select("select * from checklog where ch_sid=#{sid} and ch_taskid=#{tid};")
-    public CheckLog getLog(Integer tid,String sid);
+    @Select("select * from checklog where checksid=#{sid} and taskid=#{tid};")
+    public CheckLog getLog(Integer tid, String sid);
 
 }

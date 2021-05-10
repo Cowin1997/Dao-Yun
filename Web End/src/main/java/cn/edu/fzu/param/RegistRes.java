@@ -9,7 +9,7 @@ import lombok.Data;
 @ApiModel
 @AllArgsConstructor
 public class RegistRes {
-    @ApiModelProperty(value="教工号/学号",example="123456")
+    @ApiModelProperty(value = "教工号/学号", example = "123456")
     private String indentity;
 
 }

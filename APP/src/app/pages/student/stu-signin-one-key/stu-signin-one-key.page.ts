@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-stu-signin-one-key',
@@ -7,11 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StuSigninOneKeyPage implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
-  onClickSignin(){
+
+  onClickSignin() {
     console.log("一键签到")
   }
 

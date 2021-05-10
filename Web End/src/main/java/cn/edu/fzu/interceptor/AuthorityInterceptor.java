@@ -41,7 +41,7 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 //            }
 //            return true;
 //        }
-    return true;
+        return true;
     }
 
     @Override

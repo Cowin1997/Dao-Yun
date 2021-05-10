@@ -1,16 +1,17 @@
 
-    ion-toolbar {
-        --background: transparent;
-        --border-color: transparent;
-      }
-      .fixed-bottom{
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          z-index: 10;
-        }
-    .forgot-btn{
-        float: right;
-    }
-  
+ion-toolbar {
+  --background: transparent;
+  --border-color: transparent;
+}
+
+.fixed-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.forgot-btn {
+  float: right;
+}

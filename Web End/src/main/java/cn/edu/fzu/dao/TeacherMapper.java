@@ -11,6 +11,7 @@ public interface TeacherMapper {
 
     @Select("select * from teacher where te_id=#{tid};")
     public Teacher getTeacherByTid(Integer tid);
+
     @Delete("delete from teacher where te_id=#{tid};")
     public Boolean deleteTeacherByTid(Integer tid);
 
@@ -18,7 +19,7 @@ public interface TeacherMapper {
     @Update("update teacher set te_name=#{te_name},te_phone=#{te_phone},te_email=#{te_email},te_sex=#{te_sex},te_info=#{te_info},te_rank=#{te_rank},te_edu=#{te_edu} where te_id=#{te_id};")
     public Boolean updateTeacher(Teacher teacher);
 
-//
+    //
 //    @Select("select * from teacher where te_schoolcode=#{school} and te_collegeid=#{college} and te_majorid=#{major};")
 //    public List<Teacher> getTeacherList(Integer school,Integer college,Integer major);
 //

@@ -2,7 +2,7 @@
   <ion-toolbar color="primary">
     <ion-title>{{courseInfo.courseName}}</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/teacher/list"  text="返回"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/teacher/list" text="返回"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -11,16 +11,16 @@
   <ion-label style="color: grey;">成员总数{{total}}</ion-label>
 
   <ion-list>
-    <ion-item *ngFor="let member of members"  routerLink="/tabs/teacher/member" 
-    [queryParams]="{No:member.No}">
+    <ion-item *ngFor="let member of members" routerLink="/tabs/teacher/member"
+              [queryParams]="{No:member.No}">
       <ion-thumbnail slot="start">
-        <img src="assets/img/c_goodspicture.png"  />
+        <img src="assets/img/c_goodspicture.png"/>
       </ion-thumbnail>
       <ion-label>
         <ion-text>
           <h2>{{member.name}}</h2>
         </ion-text>
-        <ion-text >
+        <ion-text>
           <p>{{member.No}}</p>
         </ion-text>
       </ion-label>
@@ -36,7 +36,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="6">
-        <ion-button  href="/tabs/teacher/action/main" expand="block" fill="solid">
+        <ion-button href="/tabs/teacher/action/main" expand="block" fill="solid">
           发起签到
         </ion-button>
       </ion-col>

@@ -18,13 +18,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.annotation.Resource;
 
 
 @Slf4j
 @Controller
 @RequestMapping("/org")
-@Api(tags={"学校,学院,专业组织接口"})
+@Api(tags = {"学校,学院,专业组织接口"})
 public class OrganizationController {
     @Resource
     private OrganizationService organizationService;
@@ -54,7 +55,7 @@ public class OrganizationController {
     ) {
         if (schCode <= 0) // 学校代码不能为负数
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultUtils.error(null, ResultUtils.MESSAGE.REQUEST_PARAM_ERROR));
-        School school  = this.organizationService.getSchool(schCode);
+        School school = this.organizationService.getSchool(schCode);
         return ResponseEntity.status(HttpStatus.OK).body(ResultUtils.success(school, ResultUtils.MESSAGE.GET_SUCCESS));
     }
 
@@ -64,13 +65,13 @@ public class OrganizationController {
             @ApiResponse(code = org.apache.http.HttpStatus.SC_BAD_REQUEST, message = "bad request", response = ResultModel.class)
     })
     public ResponseEntity<ResultModel<PageResult<College>>> getCollegeList(
-            @RequestParam(value = "schCode",required = true) Integer schCode,
-            @RequestParam(value = "page",required = true) Integer page ,
-            @RequestParam(value = "size",required = true) Integer size
-    ){
-        if (schCode <= 0 || page <=0 || size<=0 ) // 页数或条数或学校代码不能为负数
+            @RequestParam(value = "schCode", required = true) Integer schCode,
+            @RequestParam(value = "page", required = true) Integer page,
+            @RequestParam(value = "size", required = true) Integer size
+    ) {
+        if (schCode <= 0 || page <= 0 || size <= 0) // 页数或条数或学校代码不能为负数
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultUtils.error(null, ResultUtils.MESSAGE.REQUEST_PARAM_ERROR));
-        PageResult<College> pageResult = this.organizationService.getCollegeList(schCode,page, size);
+        PageResult<College> pageResult = this.organizationService.getCollegeList(schCode, page, size);
         return ResponseEntity.status(HttpStatus.OK).body(ResultUtils.success(pageResult, ResultUtils.MESSAGE.GET_SUCCESS));
     }
 
@@ -81,17 +82,14 @@ public class OrganizationController {
             @ApiResponse(code = org.apache.http.HttpStatus.SC_BAD_REQUEST, message = "bad request", response = ResultModel.class)
     })
     public ResponseEntity<ResultModel<College>> getCollege(
-            @RequestParam(value = "schCode",required = true) Integer schCode,
-            @RequestParam(value = "colCode",required = true) Integer colCode
-            ){
-        if (schCode <= 0 || colCode <=0 ) // 学校或学院代码不能为负数
+            @RequestParam(value = "schCode", required = true) Integer schCode,
+            @RequestParam(value = "colCode", required = true) Integer colCode
+    ) {
+        if (schCode <= 0 || colCode <= 0) // 学校或学院代码不能为负数
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultUtils.error(null, ResultUtils.MESSAGE.REQUEST_PARAM_ERROR));
-        College college = this.organizationService.getCollege(schCode,colCode);
+        College college = this.organizationService.getCollege(schCode, colCode);
         return ResponseEntity.status(HttpStatus.OK).body(ResultUtils.success(college, ResultUtils.MESSAGE.GET_SUCCESS));
     }
-
-
-
 
 
     @RequestMapping(value = "/major-list", method = RequestMethod.GET)
@@ -100,13 +98,13 @@ public class OrganizationController {
             @ApiResponse(code = org.apache.http.HttpStatus.SC_BAD_REQUEST, message = "bad request", response = ResultModel.class)
     })
     public ResponseEntity<ResultModel<PageResult<Major>>> getMajorList(
-            @RequestParam(value = "colCode",required = true) Integer colCode,
-            @RequestParam(value = "page",required = true) Integer page,
-            @RequestParam(value = "size",required = true) Integer size
-    ){
-        if (colCode<=0 || page <=0 || size<=0 ) // 页数或条数或学校代码不能为负数
+            @RequestParam(value = "colCode", required = true) Integer colCode,
+            @RequestParam(value = "page", required = true) Integer page,
+            @RequestParam(value = "size", required = true) Integer size
+    ) {
+        if (colCode <= 0 || page <= 0 || size <= 0) // 页数或条数或学校代码不能为负数
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultUtils.error(null, ResultUtils.MESSAGE.REQUEST_PARAM_ERROR));
-        PageResult<Major> pageResult = this.organizationService.getMajorList(colCode,page, size);
+        PageResult<Major> pageResult = this.organizationService.getMajorList(colCode, page, size);
         return ResponseEntity.status(HttpStatus.OK).body(ResultUtils.success(pageResult, ResultUtils.MESSAGE.GET_SUCCESS));
     }
 
@@ -117,18 +115,14 @@ public class OrganizationController {
             @ApiResponse(code = org.apache.http.HttpStatus.SC_BAD_REQUEST, message = "bad request", response = ResultModel.class)
     })
     public ResponseEntity<ResultModel<Major>> getMajor(
-            @RequestParam(value = "colCode",required = true) Integer colCode,
-            @RequestParam(value = "majCode",required = true) Integer majCode
-    ){
-        if (colCode<=0 || majCode<=0 ) //学院代码或者专业代码不能为负数
+            @RequestParam(value = "colCode", required = true) Integer colCode,
+            @RequestParam(value = "majCode", required = true) Integer majCode
+    ) {
+        if (colCode <= 0 || majCode <= 0) //学院代码或者专业代码不能为负数
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultUtils.error(null, ResultUtils.MESSAGE.REQUEST_PARAM_ERROR));
-        Major major = this.organizationService.getMajor(colCode,majCode);
+        Major major = this.organizationService.getMajor(colCode, majCode);
         return ResponseEntity.status(HttpStatus.OK).body(ResultUtils.success(major, ResultUtils.MESSAGE.GET_SUCCESS));
     }
-
-
-
-
 
 
 }

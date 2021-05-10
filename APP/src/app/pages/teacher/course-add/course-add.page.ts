@@ -1,6 +1,6 @@
-import { CourseInfo } from './../vo/course-info';
-import { TeacherService } from './../service/teacher.service';
-import { Component, OnInit } from '@angular/core';
+import {CourseInfo} from './../vo/course-info';
+import {TeacherService} from './../service/teacher.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-course-add',
@@ -16,30 +16,31 @@ export class CourseAddPage implements OnInit {
     startTime: '',
     endTime: '',
   };
-  stime:string = ''
-  etime:string = ''
+  stime: string = ''
+  etime: string = ''
 
-  constructor(private teacherService:TeacherService) { }
+  constructor(private teacherService: TeacherService) {
+  }
 
   ngOnInit() {
   }
-  sTimeChange(){
+
+  sTimeChange() {
     const dTime = new Date(Date.parse(this.stime));
-    this.courseAddVo.startTime = this.dateFormat("HH:MM",dTime)
+    this.courseAddVo.startTime = this.dateFormat("HH:MM", dTime)
   }
 
-  eTimeChange(){
+  eTimeChange() {
 
     const dTime = new Date(Date.parse(this.etime));
-    this.courseAddVo.endTime = this.dateFormat("HH:MM",dTime)
+    this.courseAddVo.endTime = this.dateFormat("HH:MM", dTime)
   }
 
-  onSubmit(form){
+  onSubmit(form) {
     console.log(form)
-    if(form.valid){
+    if (form.valid) {
       this.teacherService.courseAddReq();
-    }
-    else{
+    } else {
       console.log('表单错误,pass')
     }
   }
@@ -48,21 +49,23 @@ export class CourseAddPage implements OnInit {
   dateFormat(fmt, date) {
     let ret;
     const opt = {
-        "Y+": date.getFullYear().toString(),        // 年
-        "m+": (date.getMonth() + 1).toString(),     // 月
-        "d+": date.getDate().toString(),            // 日
-        "H+": date.getHours().toString(),           // 时
-        "M+": date.getMinutes().toString(),         // 分
-        "S+": date.getSeconds().toString()          // 秒
-        // 有其他格式化字符需求可以继续添加，必须转化成字符串
+      "Y+": date.getFullYear().toString(),        // 年
+      "m+": (date.getMonth() + 1).toString(),     // 月
+      "d+": date.getDate().toString(),            // 日
+      "H+": date.getHours().toString(),           // 时
+      "M+": date.getMinutes().toString(),         // 分
+      "S+": date.getSeconds().toString()          // 秒
+      // 有其他格式化字符需求可以继续添加，必须转化成字符串
     };
     for (let k in opt) {
-        ret = new RegExp("(" + k + ")").exec(fmt);
-        if (ret) {
-            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
-        };
-    };
+      ret = new RegExp("(" + k + ")").exec(fmt);
+      if (ret) {
+        fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+      }
+      ;
+    }
+    ;
     return fmt;
-}
+  }
 
 }

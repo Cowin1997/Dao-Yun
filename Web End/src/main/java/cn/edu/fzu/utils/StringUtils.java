@@ -13,10 +13,10 @@ public class StringUtils {
     public static String ADD_SUCCESS = "添加成功";
     public static String ADD_FAIL = "添加失败";
     public static String DEL_SUCCESS = "删除成功";
-    public static String DEL_FAIL= "删除失败";
+    public static String DEL_FAIL = "删除失败";
     public static String UPDATE_SUCCESS = "更新成功";
-    public static String UPDATE_FAIL= "更新失败";
-    public static String GET_SUCCESS= "获取成功";
-    public static String GET_FAIL= "获取失败";
-    public static String PARAM_ERROR= "参数错误";
+    public static String UPDATE_FAIL = "更新失败";
+    public static String GET_SUCCESS = "获取成功";
+    public static String GET_FAIL = "获取失败";
+    public static String PARAM_ERROR = "参数错误";
 }

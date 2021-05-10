@@ -1,6 +1,6 @@
-import { signupVO } from './../signup/signupvo';
-import { LocalStorageService } from './../../../shared/services/local-storage.service';
-import { Injectable } from '@angular/core';
+import {signupVO} from './../signup/signupvo';
+import {LocalStorageService} from './../../../shared/services/local-storage.service';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +13,17 @@ export class PassportServiceService {
 
   /**
    * 向服务端发送验证码请求
-   * @param phone 
+   * @param phone
    */
-  sendCodeRequest(phone: string){
-    console.log('sendCodeReq ',phone);
+  sendCodeRequest(phone: string) {
+    console.log('sendCodeReq ', phone);
   }
+
   /**
    * 向服务端发送注册请求
    * @param data 用户数据
    */
-  signupRequest(data: signupVO){
-    console.log('signupRequest ',data);
+  signupRequest(data: signupVO) {
+    console.log('signupRequest ', data);
   }
 }

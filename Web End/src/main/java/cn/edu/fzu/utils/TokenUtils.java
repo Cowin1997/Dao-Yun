@@ -26,7 +26,7 @@ public class TokenUtils {
      **/
     private static final long EXPIRATION = 3600L;
 
-    public static String getToken(User user){
+    public static String getToken(User user) {
         String token = "";
         Map<String, Object> map = new HashMap<>();
         map.put("alg", "HS256");
@@ -37,8 +37,8 @@ public class TokenUtils {
                 // 放入用户的id
                 .withAudience(String.valueOf(user.getId()))
                 // 可以将基本信息放到claims中
-                .withClaim("username",user.getUs_username())
-                .withClaim("type",String.valueOf(user.getUs_roleid()))
+                .withClaim("username", user.getUs_username())
+                .withClaim("type", String.valueOf(user.getUs_roleid()))
                 // 超时设置,设置过期的日期
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION * 100000))
                 // 签发时间
@@ -48,8 +48,8 @@ public class TokenUtils {
         return token;
     }
 
-    public static Boolean verify(String token){
-        if(token == null) throw new RuntimeException("无token,请重新登录");
+    public static Boolean verify(String token) {
+        if (token == null) throw new RuntimeException("无token,请重新登录");
         // 验证 token
         JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
         try {
@@ -61,16 +61,15 @@ public class TokenUtils {
     }
 
 
-
     @Test
-    void test(){
+    void test() {
         User user = new User();
         user.setId(1);
         user.setUs_username("username");
         user.setUs_roleid(1);
         String token = TokenUtils.getToken(user);
         log.info(token);
-        Boolean aBoolean  = TokenUtils.verify(token);
+        Boolean aBoolean = TokenUtils.verify(token);
         log.info(String.valueOf(aBoolean));
     }
 }

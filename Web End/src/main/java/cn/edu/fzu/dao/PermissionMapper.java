@@ -12,7 +12,8 @@ import java.util.List;
 public interface PermissionMapper {
 
     @Select("select * from permission where roleid like '%${roleid}%' and menuuri=#{uri};")
-    public List<Permission> getPermissionByUriAndRoleId(String roleid,String uri);
+    public List<Permission> getPermissionByUriAndRoleId(String roleid, String uri);
+
     @Select("select id from permission where roleid like '%${roleid}%';")
     public List<Integer> getPermissionIdByRoleId(String roleid);
 
@@ -23,16 +24,14 @@ public interface PermissionMapper {
     public List<Permission> getPermissionByMenuId(Integer menuId);
 
     @Select("select * from permission where menuid=#{menuId} and roleid like '%${roleid}%';")
-    public List<Permission> getPermissionByMenuIdAndRoleId(Integer menuId,String roleid);
+    public List<Permission> getPermissionByMenuIdAndRoleId(Integer menuId, String roleid);
 
 
     @Update("update permission set Roleid= #{Roleid} where id=#{permissionId}")
-    public Boolean setPermission(Integer permissionId,String Roleid);
+    public Boolean setPermission(Integer permissionId, String Roleid);
 
     @Select("select * from permission where id=#{id};")
     public Permission getPermissionById(Integer id);
-
-
 
 
 }

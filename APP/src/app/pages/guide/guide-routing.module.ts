@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
-import { GuidePage } from './guide.page';
+import {GuidePage} from './guide.page';
 
 const routes: Routes = [
   {
@@ -14,4 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class GuidePageRoutingModule {}
+export class GuidePageRoutingModule {
+}

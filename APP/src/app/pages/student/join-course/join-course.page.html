@@ -10,8 +10,8 @@
 <ion-content>
   <ion-list>
     <ng-container *ngFor="let course of testData">
-      <app-course-item [courseInfo]="course" [haveSigninBtn]="0" 
-      (infoClick)=onClickCourse($event) ></app-course-item>
+      <app-course-item [courseInfo]="course" [haveSigninBtn]="0"
+                       (infoClick)=onClickCourse($event)></app-course-item>
     </ng-container>
   </ion-list>
 

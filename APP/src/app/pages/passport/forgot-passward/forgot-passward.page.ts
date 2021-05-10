@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {IonSlides} from '@ionic/angular';
 
 @Component({
   selector: 'app-forgot-passward',
@@ -11,18 +11,23 @@ export class ForgotPasswardPage implements OnInit {
   phone: string = '';
   code: string = '';
 
-  password:string = '';
-  confirmPassword:string = '';
-  constructor() { }
-  @ViewChild('signupSlides', { static: true }) signupSlides: IonSlides;
+  password: string = '';
+  confirmPassword: string = '';
+
+  constructor() {
+  }
+
+  @ViewChild('signupSlides', {static: true}) signupSlides: IonSlides;
 
   ngOnInit() {
   }
-  onNext(){
+
+  onNext() {
     this.signupSlides.slideNext()
   }
-  onConfirm(){
-    
+
+  onConfirm() {
+
   }
 
 }

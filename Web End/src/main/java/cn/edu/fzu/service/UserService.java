@@ -3,14 +3,12 @@ package cn.edu.fzu.service;
 import cn.edu.fzu.dao.StudentMapper;
 import cn.edu.fzu.dao.TeacherMapper;
 import cn.edu.fzu.dao.UserMapper;
+import cn.edu.fzu.entity.School;
 import cn.edu.fzu.entity.Student;
 import cn.edu.fzu.entity.Teacher;
 import cn.edu.fzu.entity.User;
 import cn.edu.fzu.param.*;
-import cn.edu.fzu.utils.ResultModel;
-import cn.edu.fzu.utils.ResultUtils;
-import cn.edu.fzu.utils.SmsUtils;
-import cn.edu.fzu.utils.TokenUtils;
+import cn.edu.fzu.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +17,8 @@ import org.thymeleaf.util.StringUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
+
 @Slf4j
 @Service
 public class UserService {
@@ -43,15 +43,15 @@ public class UserService {
                 return new ResultModel<>(ResultUtils.STATUS.ERROR, ResultUtils.MESSAGE.INVLID_CODE, null);
             req.setRegistTime(new Date()); //设置注册时间
             if (req.getType() == 1 || req.getType() == 2) req.setIdentity(null); //管理员不设置学工号
-            Boolean aboolean = this.userMapper.addUser(req);
+            Boolean aboolean = this.userMapper.registUser(req);
             if (aboolean) {
-                if (req.getType() == 3&& req.getIdentity()!=null) { //教师注册
+                if (req.getType() == 3 && req.getIdentity() != null) { //教师注册
                     Teacher teacher = new Teacher();
                     teacher.setTe_id(req.getIdentity());
                     teacher.setTe_phone(req.getPhone());
                     teacher.setTe_email(req.getEmail());
                     this.teacherMapper.addTeacher(teacher);
-                } else if (req.getType() == 4 && req.getIdentity()!=null) {
+                } else if (req.getType() == 4 && req.getIdentity() != null) {
                     Student student = new Student();
                     student.setSt_id(req.getIdentity());
                     student.setSt_phone(req.getPhone());
@@ -114,16 +114,29 @@ public class UserService {
         }
     }
 
-    public ResultModel<LoginRes> loginByPhone(LoginReq loginReq,String smsCode){
-        if(!StringUtils.equals(loginReq.getCode(),smsCode)) return new ResultModel<>(ResultUtils.STATUS.ERROR,ResultUtils.MESSAGE.INVLID_CODE,new LoginRes(null,null,null));
-        else{
+    public ResultModel<LoginRes> loginByPhone(LoginReq loginReq, String smsCode) {
+        if (!StringUtils.equals(loginReq.getCode(), smsCode))
+            return new ResultModel<>(ResultUtils.STATUS.ERROR, ResultUtils.MESSAGE.INVLID_CODE, new LoginRes(null, null, null));
+        else {
             User user = this.userMapper.getUserByPhone(loginReq.getPhone());
-            if(user==null)  return new ResultModel<>(ResultUtils.STATUS.ERROR,ResultUtils.MESSAGE.ACCOUNT_NOT_EXIST,null);
+            if (user == null)
+                return new ResultModel<>(ResultUtils.STATUS.ERROR, ResultUtils.MESSAGE.ACCOUNT_NOT_EXIST, null);
             String token = TokenUtils.getToken(user);
-            return new ResultModel<>(ResultUtils.STATUS.SUCCESS,ResultUtils.MESSAGE.LOGIN_SUCCESS,new LoginRes(token,user.getUs_roleid(),user.getUs_id()));
+            return new ResultModel<>(ResultUtils.STATUS.SUCCESS, ResultUtils.MESSAGE.LOGIN_SUCCESS, new LoginRes(token, user.getUs_roleid(), user.getUs_id()));
         }
     }
 
+
+    public PageResult<User> getUserPage(Integer page, Integer size){
+
+        Integer from = (page - 1) * size;
+        Integer to = page * size;
+        List<User> userList = this.userMapper.getUserList(from, to);
+        Integer totalSize = this.userMapper.getTotalUser(); //总条数
+        Integer totalPage = (int) Math.ceil((double) totalSize / size); //总页数
+        PageResult pageResult = new PageResult(userList, totalSize, totalPage);
+        return pageResult;
+    }
 
 }
 

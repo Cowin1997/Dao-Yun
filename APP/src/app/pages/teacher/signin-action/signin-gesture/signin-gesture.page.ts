@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastController} from '@ionic/angular';
 import PatternLock from 'patternlock';
 
 declare var BMap;
@@ -12,13 +12,13 @@ declare var BMap;
 })
 
 
-
 export class SigninGesturePage implements OnInit {
 
   constructor(private router: Router,
-    public toastController: ToastController,
-    // private localStorageService: LocalStorageService,
-    private activatedRoute: ActivatedRoute) { }
+              public toastController: ToastController,
+              // private localStorageService: LocalStorageService,
+              private activatedRoute: ActivatedRoute) {
+  }
 
   public post_geature_url = '';
   public sign_in_number: any;
@@ -82,8 +82,7 @@ export class SigninGesturePage implements OnInit {
         if (this.getStatus() == 0) {
           // console.log('获取位置成功：', r.point.lat, r.point.lng);
           reslove(r);
-        }
-        else {
+        } else {
           // console.log('获取位置失败:', this.getStatus());
           reject(this.getStatus());
         }

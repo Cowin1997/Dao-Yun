@@ -1,10 +1,9 @@
-import { CourseItemComponent } from './component/course-item/course-item.component';
-import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
-import { LocalStorageService } from './services/local-storage.service';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import {CourseItemComponent} from './component/course-item/course-item.component';
+import {IonicModule} from '@ionic/angular';
+import {FormsModule} from '@angular/forms';
+import {LocalStorageService} from './services/local-storage.service';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 
 @NgModule({
@@ -16,7 +15,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     IonicModule
   ],
-  providers:[
+  providers: [
     LocalStorageService
   ],
   exports: [
@@ -26,4 +25,5 @@ import { CommonModule } from '@angular/common';
     CourseItemComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}

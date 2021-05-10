@@ -29,9 +29,11 @@ public interface MenuMapper {
 
 
     @Select("select * from menu where parentid=#{parentid} and roleid like '%${roleid}%' order by ord;")
-    public List<Menu> getMenusWithParentIdAndroleid (Integer parentid, String roleid);
+    public List<Menu> getMenusWithParentIdAndroleid(Integer parentid, String roleid);
+
     @Select("select * from menu where id=#{mid};")
     public Menu getMenuPermission(Integer mid);
+
     @Update("update menu set roleid=#{roleid} where id=#{mid};")
-    public Boolean updateMenuPermission(Integer mid,String roleid);
+    public Boolean updateMenuPermission(Integer mid, String roleid);
 }

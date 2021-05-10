@@ -2,7 +2,7 @@
   <ion-toolbar color="primary">
     <ion-title>手势签到</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/teacher/action/main"  text="返回"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/teacher/action/main" text="返回"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -17,12 +17,13 @@
           <div id='patternHolder' class="div2"></div>
         </div>
       </ion-item>
-      <ion-button class="ion-margin" shape='round' color="success" expand="block" mode='ios' type="submit" [disabled]="postForm.invalid">
+      <ion-button class="ion-margin" shape='round' color="success" expand="block" mode='ios' type="submit"
+                  [disabled]="postForm.invalid">
         开始签到
       </ion-button>
     </form>
   </div>
-  
+
 </ion-content>
 
 <!-- <ion-content color="light">

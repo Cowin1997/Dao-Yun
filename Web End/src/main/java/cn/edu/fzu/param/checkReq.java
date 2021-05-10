@@ -18,18 +18,23 @@ import java.util.Date;
 @ToString
 public class checkReq {
     @ApiModelProperty(value = "学生学号")
-    private String ch_sid;
+    private String checksid;
     @ApiModelProperty(value = "任务id")
-    private Integer ch_taskid;
-    @ApiModelProperty(value = "签到时间",hidden = true)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
-    private Date ch_checktime;
-    @ApiModelProperty(value = "本次签到经验值",hidden = true)
-    private Integer ch_checkscore;
+    private Integer taskid;
+    @ApiModelProperty(value = "班级id")
+    private Integer checkcid;
+    @ApiModelProperty(value = "签到时间", hidden = true)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
+    private Date checktime;
+    @ApiModelProperty(value = "本次签到经验值", hidden = true)
+    private Integer checkscore;
     @ApiModelProperty(value = "签到位置")
-    private String ch_loc;
+    private String loc;
     @ApiModelProperty(value = "签到说明")
-    private String ch_info;
+    private String info;
 
-
+    @ApiModelProperty(value = "发起签到任务的经度")
+    private Double longitude;
+    @ApiModelProperty(value = "发起签到任务的维度")
+    private Double latitude;
 }

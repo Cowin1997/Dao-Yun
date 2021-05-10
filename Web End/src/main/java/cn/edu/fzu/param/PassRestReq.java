@@ -9,10 +9,10 @@ import lombok.Data;
 @ApiModel
 @AllArgsConstructor
 public class PassRestReq {
-    @ApiModelProperty(value="账户id",example="1")
+    @ApiModelProperty(value = "账户id", example = "1")
     private Integer id;
-    @ApiModelProperty(value="旧密码",example="oldPass")
+    @ApiModelProperty(value = "旧密码", example = "oldPass")
     private String oldPass;
-    @ApiModelProperty(value="新密码",example="newPass")
+    @ApiModelProperty(value = "新密码", example = "newPass")
     private String newPass;
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CourseInfo } from '../../teacher/vo/course-info';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {CourseInfo} from '../../teacher/vo/course-info';
 
 @Component({
   selector: 'app-join-course',
@@ -32,8 +32,10 @@ export class JoinCoursePage implements OnInit {
       endTime: '18:00',
     },
   ]
+
   // deleteFlag = false
-  constructor(private router:Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
   }
@@ -44,12 +46,12 @@ export class JoinCoursePage implements OnInit {
    * @param {*} course 点击的班课
    * @memberof CourseListPage
    */
-   onClickCourse(course: CourseInfo){
+  onClickCourse(course: CourseInfo) {
     console.log(course);
-    this.router.navigate(['/tabs/student/detail'],{
-      queryParams:{
-        id:'test',
-        name:course.courseName
+    this.router.navigate(['/tabs/student/detail'], {
+      queryParams: {
+        id: 'test',
+        name: course.courseName
       }
     })
   }

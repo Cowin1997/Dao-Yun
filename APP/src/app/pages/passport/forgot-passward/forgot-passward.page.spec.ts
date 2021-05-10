@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { ForgotPasswardPage } from './forgot-passward.page';
+import {ForgotPasswardPage} from './forgot-passward.page';
 
 describe('ForgotPasswardPage', () => {
   let component: ForgotPasswardPage;
@@ -9,7 +9,7 @@ describe('ForgotPasswardPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForgotPasswardPage ],
+      declarations: [ForgotPasswardPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

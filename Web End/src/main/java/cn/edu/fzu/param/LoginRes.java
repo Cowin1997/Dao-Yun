@@ -9,10 +9,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class LoginRes {
-    @ApiModelProperty(value="登录成功返回token",example = "a.b.c")
+    @ApiModelProperty(value = "登录成功返回token", example = "a.b.c")
     public String token;
-    @ApiModelProperty(value="登录成功返回,身份类型{1:超级管理员,2:普通管理员,3:教师,4:学生")
+    @ApiModelProperty(value = "登录成功返回,身份类型{1:超级管理员,2:普通管理员,3:教师,4:学生")
     public Integer type;
-    @ApiModelProperty(value="登录成功返回工号")
+    @ApiModelProperty(value = "登录成功返回工号")
     public String uid;
 }

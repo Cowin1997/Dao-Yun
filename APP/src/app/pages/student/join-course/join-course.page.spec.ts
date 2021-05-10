@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { JoinCoursePage } from './join-course.page';
+import {JoinCoursePage} from './join-course.page';
 
 describe('JoinCoursePage', () => {
   let component: JoinCoursePage;
@@ -9,7 +9,7 @@ describe('JoinCoursePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ JoinCoursePage ],
+      declarations: [JoinCoursePage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

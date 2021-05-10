@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { SigninTotalPage } from './signin-total.page';
+import {SigninTotalPage} from './signin-total.page';
 
 describe('SigninTotalPage', () => {
   let component: SigninTotalPage;
@@ -9,7 +9,7 @@ describe('SigninTotalPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SigninTotalPage ],
+      declarations: [SigninTotalPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

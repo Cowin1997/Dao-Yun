@@ -19,14 +19,15 @@ import java.util.List;
 public class RoleController {
     @Resource
     private RoleMapper roleMapper;
+
     @ResponseBody
-    @RequestMapping(value = "",method = RequestMethod.GET)
-    public ResponseEntity getAllRole(){
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity getAllRole() {
         HashMap res = new HashMap();
         List<Role> roleList = this.roleMapper.getAllRole();
         res.put(StringUtils.STATUS, StringUtils.SUCCESS);
         res.put(StringUtils.MESSAGE, StringUtils.GET_SUCCESS);
-        res.put(StringUtils.DATA,roleList);
+        res.put(StringUtils.DATA, roleList);
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 }

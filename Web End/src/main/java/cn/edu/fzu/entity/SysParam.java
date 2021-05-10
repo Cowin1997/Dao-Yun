@@ -35,7 +35,7 @@ public class SysParam {
     private String creator;
     @ApiModelProperty(value = "修改者,添加更新不需要该字段")
     private String reviser;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @ApiModelProperty(value = "最后修改时间,添加更新不需要该字段")
     private Date last_revise_time;
 }

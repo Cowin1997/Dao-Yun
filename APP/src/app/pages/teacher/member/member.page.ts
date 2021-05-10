@@ -1,6 +1,6 @@
-import { ActivatedRoute } from '@angular/router';
-import { MemberInfo } from './../vo/member-info';
-import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {MemberInfo} from './../vo/member-info';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-member',
@@ -19,6 +19,7 @@ export class MemberPage implements OnInit {
     actualExp: null,
     level: '',
   }
+
   constructor(private activateRoute: ActivatedRoute) {
     this.activateRoute.queryParams.subscribe(queryParsm => {
       this.member.No = queryParsm.No

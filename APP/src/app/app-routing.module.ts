@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { StartAppGuard } from './core/start-app.guard';
+import {NgModule} from '@angular/core';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {StartAppGuard} from './core/start-app.guard';
 
 const routes: Routes = [
   {
@@ -9,27 +9,28 @@ const routes: Routes = [
   },
   {
     path: 'guide',
-    loadChildren: () => import('./pages/guide/guide.module').then( m => m.GuidePageModule),
+    loadChildren: () => import('./pages/guide/guide.module').then(m => m.GuidePageModule),
     canActivate: [StartAppGuard]
   },
   {
-    path:'tabs',
+    path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
 
 
   {
     path: 'passport',
-    loadChildren: () => import('./pages/passport/passport.module').then( m => m.PassportPageModule)
+    loadChildren: () => import('./pages/passport/passport.module').then(m => m.PassportPageModule)
   },
- 
 
 
 ];
+
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

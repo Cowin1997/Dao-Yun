@@ -2,6 +2,7 @@ package cn.edu.fzu.utils;
 
 import com.cloopen.rest.sdk.BodyType;
 import com.cloopen.rest.sdk.CCPRestSmsSDK;
+
 import java.util.HashMap;
 import java.util.Random;
 
@@ -15,10 +16,11 @@ import com.tencentcloudapi.sms.v20190711.models.*;
 import org.junit.jupiter.api.Test;;
 
 public class SmsUtils {
-    private static String SecretId="AKIDlhQt7FZj8dvxlJvfRyHjS2NT1qPj3j8I";
-    private static String SecretKey="3OH0QZVCfHfdKmyxA6nEOIyO9euwiKvI";
-    public static String getSmsCode(String phone,String smsCode){
-        try{
+    private static String SecretId = "AKIDlhQt7FZj8dvxlJvfRyHjS2NT1qPj3j8I";
+    private static String SecretKey = "3OH0QZVCfHfdKmyxA6nEOIyO9euwiKvI";
+
+    public static String getSmsCode(String phone, String smsCode) {
+        try {
             Credential cred = new Credential(SecretId, SecretKey);
             HttpProfile httpProfile = new HttpProfile();
             httpProfile.setEndpoint("sms.tencentcloudapi.com");
@@ -26,7 +28,7 @@ public class SmsUtils {
             clientProfile.setHttpProfile(httpProfile);
             SmsClient client = new SmsClient(cred, "", clientProfile);
             SendSmsRequest req = new SendSmsRequest();
-            String[] phoneNumberSet1 = {"+86"+phone};
+            String[] phoneNumberSet1 = {"+86" + phone};
             req.setPhoneNumberSet(phoneNumberSet1);
             req.setTemplateID("928310");
             req.setSign("Spring学习2");
@@ -42,16 +44,13 @@ public class SmsUtils {
     }
 
 
-     public static String genSmsCode(){
-        Integer r = (int) (Math.random()*9000)+1000;
+    public static String genSmsCode() {
+        Integer r = (int) (Math.random() * 9000) + 1000;
         return String.valueOf(r);
     }
 
 
-
-
-
-    public static String sendCode (String to) {
+    public static String sendCode(String to) {
         //生产环境请求地址：app.cloopen.com
         String serverIp = "app.cloopen.com";
         //请求端口
@@ -67,7 +66,7 @@ public class SmsUtils {
         sdk.setAppId(appId);
         sdk.setBodyType(BodyType.Type_JSON);
         String code = "4893"; //String.valueOf((int)(Math.random() * 9000 + 1000));  //可选 扩展码，四位数字 0~9999
-        String[] datas = {code,"2"};
+        String[] datas = {code, "2"};
         String templateId = "1";
         //HashMap<String, Object> result = sdk.sendTemplateSMS(to,templateId,datas);
         HashMap<String, Object> result = sdk.sendTemplateSMS(to, templateId, datas, null, null);

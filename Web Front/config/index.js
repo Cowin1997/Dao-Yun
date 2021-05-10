@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/': {
-        target: 'http://api.myard.cn:6677/',  //目标接口域名
+        target: 'http://127.0.0.1:6677/',  //目标接口域名
         changeOrigin: true,  //是否跨域
         // pathRewrite: {
         //   '^/api': '/'   //重写接口 后台接口指向不统一  所以指向所有/
@@ -27,7 +27,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */

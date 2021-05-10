@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@ApiModel(value="Student",description="Student" )
+@ApiModel(value = "Student", description = "Student")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

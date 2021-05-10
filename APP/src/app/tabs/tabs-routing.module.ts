@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {TabsPage} from './tabs.page';
 
 const routes: Routes = [
   {
@@ -21,11 +21,11 @@ const routes: Routes = [
       },
       {
         path: 'teacher',
-        loadChildren: () => import('../pages/teacher/teacher.module').then( m => m.TeacherModule)
+        loadChildren: () => import('../pages/teacher/teacher.module').then(m => m.TeacherModule)
       },
       {
         path: 'student',
-        loadChildren: () => import('../pages/student/student.module').then( m => m.StudentModule)
+        loadChildren: () => import('../pages/student/student.module').then(m => m.StudentModule)
       },
       {
         path: '',
@@ -44,4 +44,5 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule {
+}

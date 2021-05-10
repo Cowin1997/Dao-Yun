@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { StuSigninGesturePage } from './stu-signin-gesture.page';
+import {StuSigninGesturePage} from './stu-signin-gesture.page';
 
 describe('StuSigninGesturePage', () => {
   let component: StuSigninGesturePage;
@@ -9,7 +9,7 @@ describe('StuSigninGesturePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StuSigninGesturePage ],
+      declarations: [StuSigninGesturePage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

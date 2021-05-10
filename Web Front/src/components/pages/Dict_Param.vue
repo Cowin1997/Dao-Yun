@@ -65,8 +65,14 @@ export default {
     }
   },
   beforeCreate(){
-      this.$http.get("/data-config/dict-param-list").then(res=>{
-         if(res.status==200 && res.data.code==0) this.dictList = res.data.data;
+      this.$http.get("/data-config/dict-param-list",{
+        params:{
+          page:1,
+          size:20
+        }
+      }).then(res=>{
+        console.log(res)
+         if(res.status==200 && res.data.code==0) this.dictList = res.data.data.pageData;
       })
   },
   methods: {

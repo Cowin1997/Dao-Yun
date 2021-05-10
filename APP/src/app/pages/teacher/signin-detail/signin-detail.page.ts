@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { signinDetail } from '../vo/signin-detail';
+import {Component, OnInit} from '@angular/core';
+import {signinDetail} from '../vo/signin-detail';
 
 @Component({
   selector: 'app-signin-detail',
@@ -8,7 +8,7 @@ import { signinDetail } from '../vo/signin-detail';
 })
 export class SigninDetailPage implements OnInit {
 
-  detail: signinDetail[]= [
+  detail: signinDetail[] = [
     {
       date: '2021/3/30',
       type: '手势签到',
@@ -28,7 +28,9 @@ export class SigninDetailPage implements OnInit {
       status: '已签到',
     }
   ]
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

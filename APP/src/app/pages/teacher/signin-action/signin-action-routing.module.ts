@@ -1,20 +1,20 @@
-import { SigninGesturePage } from './signin-gesture/signin-gesture.page';
-import { SigninOneKeyPage } from './signin-one-key/signin-one-key.page';
-import { SigninMainPage } from './signin-main/signin-main.page';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {SigninGesturePage} from './signin-gesture/signin-gesture.page';
+import {SigninOneKeyPage} from './signin-one-key/signin-one-key.page';
+import {SigninMainPage} from './signin-main/signin-main.page';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
   {
-    path:'main',
-    component: SigninMainPage 
+    path: 'main',
+    component: SigninMainPage
   },
   {
-    path:'onekey',
+    path: 'onekey',
     component: SigninOneKeyPage
   },
   {
-    path:'gesture',
+    path: 'gesture',
     component: SigninGesturePage
   }
 ];
@@ -23,4 +23,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SigninActionRoutingModule { }
+export class SigninActionRoutingModule {
+}

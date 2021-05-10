@@ -72,8 +72,13 @@ export default {
         }
     },
     beforeCreate(){
-        this.$http.get("/data-config/sys-param-list").then(res =>{
-        if(res.status==200 && res.data.code==0) this.sysParamList = res.data.data;})
+        this.$http.get("/data-config/sys-param-list",{
+            params:{
+                page:1,
+                size:20
+            }
+        }).then(res =>{
+        if(res.status==200 && res.data.code==0) this.sysParamList = res.data.data.pageData;})
     },
     methods:{
         Edit(row){
@@ -108,8 +113,15 @@ export default {
                  if(res.status==200 && res.data.code==0){
                     this.addVisiable=!this.addVisiable;
                     this.$message.success("添加参数成功!");
-                     this.$http.get("/data-config/sys-param-list").then(res =>{
-                        if(res.status==200 && res.data.code==0) this.sysParamList = res.data.data;})
+                     this.$http.get("/data-config/sys-param-list",{
+                         params:{
+                             page:1,
+                             size:20
+                         }
+                     }).then(res =>{
+                    if(res.status==200 && res.data.code==0) {
+                        this.sysParamList = res.data.data;
+                     }})
                 }else{
                      this.$message.error();("添加参数失败!")
                 }

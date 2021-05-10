@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { SigninMainPage } from './signin-main.page';
+import {SigninMainPage} from './signin-main.page';
 
 describe('SigninMainPage', () => {
   let component: SigninMainPage;
@@ -9,7 +9,7 @@ describe('SigninMainPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SigninMainPage ],
+      declarations: [SigninMainPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

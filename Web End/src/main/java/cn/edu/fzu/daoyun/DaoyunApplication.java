@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages="cn.edu.fzu.*")
+@ComponentScan(basePackages = "cn.edu.fzu.*")
 @MapperScan("cn.edu.fzu.dao")
 //@CrossOrigin(origins = {"http://localhost:8083"},allowCredentials = "true",
 //        allowedHeaders = "*"

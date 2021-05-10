@@ -16,16 +16,16 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 public class PassForgetReq {
-    @ApiModelProperty(value = "电话号码",required = true)
+    @ApiModelProperty(value = "电话号码", required = true)
     @NotNull
     private String phone;
-    @ApiModelProperty(value = "短信验证码",required = true)
+    @ApiModelProperty(value = "短信验证码", required = true)
     @NotNull
     private String code;
-    @ApiModelProperty(value = "新密码",required = true)
+    @ApiModelProperty(value = "新密码", required = true)
     @NotNull
     private String newPass;
-    @ApiModelProperty(value = "重复新密码",required = true)
+    @ApiModelProperty(value = "重复新密码", required = true)
     @NotNull
     private String newPassAgain;
 }

@@ -30,7 +30,7 @@ public class DictParam {
     private String detail;
     @ApiModelProperty(value = "字典项数据值")
     private Integer value;
-    @ApiModelProperty(value = "所属类型",hidden = true)
+    @ApiModelProperty(value = "所属类型", hidden = true)
     private Integer type_id;
 
     @ApiModelProperty(value = "创建者ID")
@@ -42,7 +42,7 @@ public class DictParam {
     @ApiModelProperty(value = "修改者,添加修改不需要传参")
     private String reviser;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @ApiModelProperty(value = "最后修改时间,添加修改不需要传参")
     private Date last_revise_time;
 

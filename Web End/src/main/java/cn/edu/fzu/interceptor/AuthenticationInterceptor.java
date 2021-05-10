@@ -17,12 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 @Component
-public class AuthenticationInterceptor  implements HandlerInterceptor {
+public class AuthenticationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");// 从 http 请求头中取出 token
         // 如果不是映射到方法直接通过
-        if(!(handler instanceof HandlerMethod)){
+        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -35,9 +35,9 @@ public class AuthenticationInterceptor  implements HandlerInterceptor {
             }
         }
         //检查有没有需要用户权限的注解
-        if (method.isAnnotationPresent(UserLoginToken.class)){
+        if (method.isAnnotationPresent(UserLoginToken.class)) {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
-            if (userLoginToken.required()){
+            if (userLoginToken.required()) {
                 // 执行认证
                 return TokenUtils.verify(token);
             }

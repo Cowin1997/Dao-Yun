@@ -1,28 +1,33 @@
-.div1{
-    // background-color: red($color: #000000);
-    width: 300px;
-    // height: 300px;
-    margin: auto;
+.div1 {
+  // background-color: red($color: #000000);
+  width: 300px;
+  // height: 300px;
+  margin: auto;
 }
-.div2{
-    text-align: center;
-    // margin-top: 50%;
-    background: rgba($color: #3880ff, $alpha: 1.0);
+
+.div2 {
+  text-align: center;
+  // margin-top: 50%;
+  background: rgba($color: #3880ff, $alpha: 1.0);
 }
-.div3{
-    width: 100%;
-    margin: auto;
+
+.div3 {
+  width: 100%;
+  margin: auto;
 }
-.div4{
-    width: auto;
-    margin-left: 18%;
-    margin-right: 18%;
-    margin-top: 40px;
+
+.div4 {
+  width: auto;
+  margin-left: 18%;
+  margin-right: 18%;
+  margin-top: 40px;
 }
-.mybutton{
-    margin-left: 10%;
-    margin-right: 10%;
+
+.mybutton {
+  margin-left: 10%;
+  margin-right: 10%;
 }
+
 // #patternHolder .patt-wrap {
 //     z-index: 10;
 // }

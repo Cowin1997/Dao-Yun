@@ -22,9 +22,9 @@ public class Course {
     private String cs_tid;
     @ApiModelProperty(value = "上课地点")
     private String cs_loc;
-    @ApiModelProperty(value = "上课时间",example = "5-8节")
+    @ApiModelProperty(value = "上课时间", example = "5-8节")
     private String cs_time;
-    @ApiModelProperty(value = "是否还可以加入班课",example = "true")
+    @ApiModelProperty(value = "是否还可以加入班课", example = "true")
     private Boolean cs_status;
     @ApiModelProperty(value = "任课教师详细信息")
     private Teacher teacher;

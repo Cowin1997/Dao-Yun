@@ -1,7 +1,7 @@
-import { MemberInfo } from './../vo/member-info';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CourseInfo } from '../vo/course-info';
+import {MemberInfo} from './../vo/member-info';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {CourseInfo} from '../vo/course-info';
 
 @Component({
   selector: 'app-signin-record',

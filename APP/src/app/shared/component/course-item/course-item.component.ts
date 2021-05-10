@@ -1,5 +1,5 @@
-import { CourseInfo } from './../../../pages/teacher/vo/course-info';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {CourseInfo} from './../../../pages/teacher/vo/course-info';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-course-item',
@@ -15,7 +15,8 @@ export class CourseItemComponent implements OnInit {
   @Output() private signinClick = new EventEmitter<CourseInfo>()
   @Output() private deleteClick = new EventEmitter<CourseInfo>()
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     // console.log(this.courseInfo)
@@ -28,29 +29,30 @@ export class CourseItemComponent implements OnInit {
    * @param {*} course 点击的班课
    * @memberof CourseListPage
    */
-   onClickCourse(course: CourseInfo){
+  onClickCourse(course: CourseInfo) {
     this.infoClick.emit(course)
-    
+
   }
+
   /**
    * 监听“签到”按钮，发送给父组件
    *
    * @param {*} course 点击的班课
    * @memberof CourseListPage
    */
-   onClickSignin(course: CourseInfo){
+  onClickSignin(course: CourseInfo) {
     this.signinClick.emit(course)
   }
+
   /**
    * 监听“删除”按钮，发送给父组件
    *
    * @param {*} course 点击的班课
    * @memberof CourseListPage
    */
-   onDeleteCourse(course: CourseInfo){
+  onDeleteCourse(course: CourseInfo) {
     this.deleteClick.emit(course)
   }
 
-  
 
 }

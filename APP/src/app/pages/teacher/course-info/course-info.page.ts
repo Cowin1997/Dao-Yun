@@ -1,7 +1,7 @@
-import { MemberInfo } from './../vo/member-info';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CourseInfo } from '../vo/course-info';
+import {MemberInfo} from './../vo/member-info';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CourseInfo} from '../vo/course-info';
 
 @Component({
   selector: 'app-course-info',
@@ -62,6 +62,7 @@ export class CourseInfoPage implements OnInit {
 
   ngOnInit() {
   }
+
   /**
    * 点击“查看签到记录”按钮
    *

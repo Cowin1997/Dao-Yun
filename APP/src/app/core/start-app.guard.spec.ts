@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { StartAppGuard } from './start-app.guard';
+import {StartAppGuard} from './start-app.guard';
 
 describe('StartAppGuard', () => {
   let guard: StartAppGuard;

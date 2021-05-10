@@ -21,9 +21,9 @@
 
   <ion-list>
     <ng-container *ngFor="let course of testData">
-      <app-course-item [courseInfo]="course" [haveSigninBtn]="1" [status]="deleteFlag" 
-      (infoClick)=onClickCourse($event) (signinClick)=onClickSignin($event) 
-      (deleteClick)=onClickDelete($event)></app-course-item>
+      <app-course-item [courseInfo]="course" [haveSigninBtn]="1" [status]="deleteFlag"
+                       (infoClick)=onClickCourse($event) (signinClick)=onClickSignin($event)
+                       (deleteClick)=onClickDelete($event)></app-course-item>
     </ng-container>
     <!-- <ion-item *ngFor="let course of testData" >
       <ion-thumbnail slot="start">
@@ -48,9 +48,9 @@
           签到
         </ion-button>
       </ion-note>
-      
+
       <ion-button class="del-btn" color="danger" *ngIf="deleteFlag" (click)="onDeleteCourse(course)" expand="block" fill="clear" >
-        删除 
+        删除
       </ion-button>
     </ion-item> -->
   </ion-list>
