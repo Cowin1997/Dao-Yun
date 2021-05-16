@@ -10,8 +10,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/': {
-        target: 'http://127.0.0.1:6677/',  //目标接口域名
+      '/api': {
+        target: 'http://127.0.0.1:8888',  //目标接口域名
         changeOrigin: true,  //是否跨域
         // pathRewrite: {
         //   '^/api': '/'   //重写接口 后台接口指向不统一  所以指向所有/
