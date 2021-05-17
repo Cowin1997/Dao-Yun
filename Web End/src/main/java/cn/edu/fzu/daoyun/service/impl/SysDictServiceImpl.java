@@ -25,6 +25,19 @@ public class SysDictServiceImpl implements SysDictService {
     public List<SysDictDO> getDictParentList(Integer from, Integer to) {
         return sysDictMapper.getDictParentList(from,to);
     }
+    public Page<SysDictDTO> getDictPageBySearch(Integer page, Integer size,String search){
+        Integer from = (page - 1) * size;
+        Integer to = page * size;
+        List<SysDictDO> dictParentListBySearch = sysDictMapper.getDictParentListBySearch(from, to, search);
+        Integer totalSize = dictParentListBySearch.size();
+        Integer totalPage = (int) Math.ceil((double) totalSize / size); //总页数
+        List<SysDictDTO> list = new ArrayList<>();
+        for (SysDictDO dict:dictParentListBySearch) {
+            List<SysDictDO> subDictList = this.getSubDictList(dict.getId());
+            list.add(new SysDictDTO(dict,subDictList));
+        }
+        return new Page<>(list, totalSize, totalPage);
+    }
 
     @Override
     public List<SysDictDO> getSubDictList(Integer parentId) {

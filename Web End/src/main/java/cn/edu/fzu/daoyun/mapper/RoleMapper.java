@@ -1,5 +1,6 @@
 package cn.edu.fzu.daoyun.mapper;
 
+import cn.edu.fzu.daoyun.base.Page;
 import cn.edu.fzu.daoyun.entity.RoleDO;
 import org.apache.ibatis.annotations.*;
 import org.mapstruct.Mapper;
@@ -9,9 +10,14 @@ import java.util.List;
 @Mapper
 public interface RoleMapper {
     // 获取所有角色
-    @Select("select * from role order by level asc;")
-    public List<RoleDO> getAll();
+    @Select("select * from role order by level asc limit #{from},#{to};")
+    public List<RoleDO> getRoleList(Integer from, Integer to);
 
+    @Select("select * from role where name like '%${search}%' or description like '%${search}%' order by level asc limit #{from},#{to};")
+    public List<RoleDO> getRoleListBySearch(Integer from, Integer to, String search);
+
+    @Select("select count(*) from role;")
+    public Integer getRoleTotal();
     // 添加角色
     @Insert("insert into role(name,level,description,gmt_create,gmt_modified,creator,modifier) " +
             "values (#{name},#{level},#{description},#{gmt_create},#{gmt_modified},#{creator},#{modifier});")

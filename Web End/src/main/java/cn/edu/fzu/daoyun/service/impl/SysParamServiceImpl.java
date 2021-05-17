@@ -26,6 +26,21 @@ public class SysParamServiceImpl implements SysParamService {
     }
 
 
+
+    public Page<SysParamDO> getSysParamListBySearch(Integer page, Integer size,String search){
+        Integer from = (page - 1) * size;
+        Integer to = page * size;
+        Integer totalSize = this.sysParamMapper.getSysParamTotal(); //总条数
+        Integer totalPage = (int) Math.ceil((double) totalSize / size); //总页数
+        List<SysParamDO> sysParamList = this.sysParamMapper.getSysParamListBySearch(from, to,search);
+        Page pageResult = new Page(sysParamList, totalSize, totalPage);
+        return pageResult;
+    }
+
+
+
+
+
     public Boolean delSysParam(Integer id){
         return sysParamMapper.delSysParam(id);
     }

@@ -11,8 +11,8 @@ public interface SysParamMapper {
 
     @Select("select * from sys_param limit #{from},#{to};")
     public List<SysParamDO> getSysParamList(Integer from, Integer to);
-
-
+    @Select("select * from sys_param where arg_key like '%${search}%' or arg_desc like  '%${search}%' limit #{from},#{to};")
+    public List<SysParamDO> getSysParamListBySearch(Integer from, Integer to,String search);
 
     @Select("select count(*) from sys_param;")
     public Integer getSysParamTotal();

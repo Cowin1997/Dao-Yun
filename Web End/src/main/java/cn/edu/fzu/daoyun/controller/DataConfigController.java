@@ -22,9 +22,11 @@ import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -48,12 +50,21 @@ public class DataConfigController {
     })
     public Result<Page<SysParamDO>> getSysParamList(
             @RequestParam(value = "page",required = true) Integer page,
-            @RequestParam(value = "size",required = true) Integer size
+            @RequestParam(value = "size",required = true) Integer size,
+            @RequestParam(value = "search",required = false) String search
     ){
+        Page<SysParamDO> pageResult = new Page<>();
         if (page <= 0 || size <= 0) //页数或条数不能小于0
             throw new BadRequestException("页数或条数不能小于0");
-        Page<SysParamDO> pageResult = this.sysParamService.getSysParamList(page, size);
+        if(search==null){
+            pageResult = this.sysParamService.getSysParamList(page, size);
+        }
+        if(!StringUtils.isEmptyOrWhitespace(search)){
+            pageResult = this.sysParamService.getSysParamListBySearch(page, size,search);
+        }
+
         return Result.success(ResultCodeEnum.SUCCESS, pageResult);
+
     }
 
 
@@ -104,11 +115,16 @@ public class DataConfigController {
     })
     public Result<Page<SysDictDTO>> getDictParamList(
             @RequestParam(value = "page",required = true) Integer page,
-            @RequestParam(value = "size",required = true) Integer size
+            @RequestParam(value = "size",required = true) Integer size,
+            @RequestParam(value = "search",required = false) String search
     ){
+        Page<SysDictDTO> pageResult = new Page<>();
         if (page <= 0 || size <= 0) //页数或条数不能小于0
            throw new BadRequestException("页数或条数不能小于0");
-        Page<SysDictDTO> pageResult = this.sysDictService.getDictPage(page,size);
+
+        if(search==null)  pageResult = this.sysDictService.getDictPage(page,size);
+        if(!StringUtils.isEmptyOrWhitespace(search))
+            pageResult = this.sysDictService.getDictPageBySearch(page,size,search);
         return Result.success(ResultCodeEnum.SUCCESS,pageResult);
     }
 

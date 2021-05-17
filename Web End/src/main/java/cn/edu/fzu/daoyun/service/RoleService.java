@@ -1,5 +1,6 @@
 package cn.edu.fzu.daoyun.service;
 
+import cn.edu.fzu.daoyun.base.Page;
 import cn.edu.fzu.daoyun.dto.RoleDTO;
 import cn.edu.fzu.daoyun.entity.RoleDO;
 import org.apache.ibatis.annotations.Update;
@@ -11,8 +12,8 @@ public interface RoleService {
      *  查询全部角色
      * @return
      */
-    public List<RoleDTO> getAll();
-
+    public Page<RoleDO> getRoleList(Integer page, Integer size);
+    public Page<RoleDO> getRoleListBySearch(Integer page, Integer size,String search);
 
     /**
      *  添加角色

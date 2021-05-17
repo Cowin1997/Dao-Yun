@@ -153,6 +153,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DaoYunApplicationTests.tetttt" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Dao-Yun" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.fzu.daoyun.daoyun.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="cn.edu.fzu.daoyun.daoyun" />
+      <option name="MAIN_CLASS_NAME" value="cn.edu.fzu.daoyun.daoyun.DaoYunApplicationTests" />
+      <option name="METHOD_NAME" value="tetttt" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WebSecurityConfig.test" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="Dao-Yun" />
       <extension name="coverage">
@@ -185,9 +201,11 @@
       <item itemvalue="JUnit.DaoYunApplicationTests.contextLoads" />
       <item itemvalue="JUnit.DaoYunApplicationTests.test001" />
       <item itemvalue="Spring Boot.DaoYunApplication" />
+      <item itemvalue="JUnit.DaoYunApplicationTests.tetttt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DaoYunApplicationTests.tetttt" />
         <item itemvalue="JUnit.DaoYunApplicationTests.test001" />
         <item itemvalue="JUnit.DaoYunApplicationTests.contextLoads" />
         <item itemvalue="JUnit.DaoYunApplicationTests.testCaptcha" />
@@ -224,7 +242,7 @@
       <workItem from="1620806173698" duration="8167000" />
       <workItem from="1620870552486" duration="16483000" />
       <workItem from="1620973488871" duration="1422000" />
-      <workItem from="1620981400647" duration="24254000" />
+      <workItem from="1620981400647" duration="54846000" />
     </task>
     <servers />
   </component>

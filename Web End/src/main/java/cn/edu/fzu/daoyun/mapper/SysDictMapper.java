@@ -12,6 +12,8 @@ public interface SysDictMapper {
 
     @Select("select * from sys_dict where parent_id is null limit #{from},#{to};")
     public List<SysDictDO> getDictParentList(Integer from , Integer to);
+    @Select("select * from sys_dict where parent_id is null and ( code like '%${search}%' or type like '%${search}%' or details like '%${search}%') limit #{from},#{to};")
+    public List<SysDictDO>getDictParentListBySearch(Integer from , Integer to,String search);
 
     @Select("select * from sys_dict where parent_id = #{parent_id};")
     public List<SysDictDO> getSubDictList(Integer parent_id);

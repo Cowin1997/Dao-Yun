@@ -1,11 +1,15 @@
 package cn.edu.fzu.daoyun.service.impl;
 
+import cn.edu.fzu.daoyun.base.Page;
 import cn.edu.fzu.daoyun.dto.RoleDTO;
 import cn.edu.fzu.daoyun.entity.RoleDO;
+import cn.edu.fzu.daoyun.entity.SysParamDO;
 import cn.edu.fzu.daoyun.mapper.RoleMapper;
+import cn.edu.fzu.daoyun.mapper.UserMapper;
 import cn.edu.fzu.daoyun.service.RoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -17,20 +21,34 @@ public class RoleServiceImpl implements RoleService {
     @Resource
     private RoleMapper roleMapper;
 
+    @Resource
+    private UserMapper userMapper;
     /**
      *  查询全部角色
      * @return
      */
     @Override
-    public List<RoleDTO> getAll() {
-        List<RoleDTO> allRoleDTO = new ArrayList<>();
-        List<RoleDO> allRoleDO = this.roleMapper.getAll();
-        for (RoleDO role:allRoleDO){
-            RoleDTO roleDTO = new RoleDTO();
-            BeanUtils.copyProperties(role,roleDTO);
-            allRoleDTO.add(roleDTO);
-        }
-        return allRoleDTO;
+    public Page<RoleDO> getRoleList(Integer page, Integer size) {
+        Integer from = (page - 1) * size;
+        Integer to = page * size;
+
+        Integer totalSize = this.roleMapper.getRoleTotal(); //总条数
+        Integer totalPage = (int) Math.ceil((double) totalSize / size); //总页数
+        List<RoleDO> roleDOList = this.roleMapper.getRoleList(from, to);
+        Page pageResult = new Page(roleDOList, totalSize, totalPage);
+        return pageResult;
+    }
+
+    @Override
+    public Page<RoleDO> getRoleListBySearch(Integer page, Integer size, String search) {
+        Integer from = (page - 1) * size;
+        Integer to = page * size;
+        List<RoleDO> roleDOList = this.roleMapper.getRoleListBySearch(from, to,search);
+        Integer totalSize = roleDOList.size(); //总条数
+        Integer totalPage = (int) Math.ceil((double) totalSize / size); //总页数
+
+        Page pageResult = new Page(roleDOList, totalSize, totalPage);
+        return pageResult;
     }
 
     @Override
@@ -48,7 +66,9 @@ public class RoleServiceImpl implements RoleService {
      * @param roleId
      */
     @Override
+    @Transactional
     public Boolean delRole(Integer roleId) {
+        this.userMapper.lockAccountByRoleType(roleId);
         return this.roleMapper.delRole(roleId);
     }
 

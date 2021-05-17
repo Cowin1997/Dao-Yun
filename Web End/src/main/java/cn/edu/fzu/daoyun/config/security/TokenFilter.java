@@ -57,7 +57,7 @@ public class TokenFilter extends GenericFilterBean {
                 filterChain.doFilter(request, response); //放行继续下一个Filter
             }
         }else{
-            log.info("放行");
+          //  log.info("放行");
             filterChain.doFilter(request, response); //放行继续下一个Filter
         }
     }
