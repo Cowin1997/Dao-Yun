@@ -1,7 +1,16 @@
 <template>
   <div style="height:100%;width:100%;"> 
     <el-row>
-        <el-button type="primary" plain  @click="addEditVisiable = true">+ 新增</el-button>
+        <el-col :span="8" style="margin-right:5px;">
+            <el-input placeholder="请输入键或说明进行搜索" v-model="searchInput" clearable></el-input>
+        </el-col>
+        <el-col :span="3" style="margin-left:15px;">
+            <el-button type="success" icon="el-icon-search" plain @click="Search()">搜索</el-button>
+        </el-col>
+
+        <el-col :span="4">
+            <el-button type="primary" plain  @click="addEditVisiable = true">+ 新增</el-button>
+        </el-col>
     </el-row>
     <el-table :data="dictList" style="width: 100%; margin-top:10px;">
         <el-table-column prop="dict.code" label="字典码"></el-table-column>
@@ -65,6 +74,7 @@ export default {
     },
     data(){
         return {
+        searchInput:'',
         currentPage:1,
         pageSize:10,
         totalSize:0,
@@ -85,6 +95,21 @@ export default {
        
   
     methods:{
+        Search(){
+            if(this.searchInput.trim()!=''){
+            getSysDict({page:this.currentPage,size:this.pageSize,search:this.searchInput}).then(res =>{
+                this.totalSize = res.data.totalSize
+                this.dictList = res.data.pageData    })
+            }else{
+                getSysDict({page:this.currentPage,size:this.pageSize}).then(res =>{
+                this.totalSize = res.data.totalSize
+                this.dictList = res.data.pageData    })
+
+
+            }
+    
+    
+        },
         handleCurrentChange(currentPage){
             this.currentPage = currentPage
             getSysDict({page:this.currentPage,size:this.pageSize}).then(res =>{
