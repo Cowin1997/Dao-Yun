@@ -66,7 +66,8 @@ export default {
     },
     methods: {
         handleLoginOut(){
-            localStorage.removeItem("user");
+            localStorage.clear();
+            window.location.reload()
             this.$router.push("/login")
         },
         // 全屏事件

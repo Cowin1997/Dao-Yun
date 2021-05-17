@@ -31,3 +31,20 @@ export function deleteRole(data){
       method: 'delete'
     })
 }
+
+export function getPermissionTree(param){
+  return request({
+      url: 'api/menu',
+      method: 'get',
+      params: param
+    })
+}
+
+
+export function setPermission(data){
+  return request({
+      url: 'api/menu/set',
+      method: 'post',
+      data: data
+    })
+}

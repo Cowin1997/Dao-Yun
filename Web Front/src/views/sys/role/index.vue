@@ -20,7 +20,7 @@
         <el-table-column prop="gmt_create" label="创建时间" align="center" width="180"></el-table-column>
         <el-table-column  label="权限查询与设置" align="center" width="180">
             <template slot-scope="scope">
-               <el-button>权限查询与设置</el-button>
+               <el-button @click="pemissionSet(scope.$index, scope.row)">权限查询与设置</el-button>
             </template>
         </el-table-column>
         <el-table-column label="操作" style="width: 40%;" align="center" >
@@ -68,15 +68,59 @@
       :total="totalSize">
     </el-pagination>
     <!-- 权限编辑 -->
+
+    <el-dialog title="权限编辑" :visible.sync="pemissionVisiable" width="70%">
+        <el-tree :data="pemissionTree" show-checkbox  node-key="id" ref="tree"  highlight-current
+          :props="defaultProps">
+        </el-tree>
+
+
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="pemissionVisiable = false">取 消</el-button>
+        <el-button type="primary" @click="handlePemission()">确 定</el-button>
+      
+      </span>
+    </el-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </div>
 </template>
 
 <script>
-import { getRoleList,addRole,updateRole,deleteRole }  from '@/api/sys/role'
+import { getRoleList,addRole,updateRole,deleteRole, getPermissionTree ,setPermission}  from '@/api/sys/role'
 
 export default {
   data(){
     return {
+       defaultProps: {
+          children: 'children',
+          label: 'title'
+        },
+      currentRoleId:1,
+
+
+
+
+
+
+
       currentPage:1,
       pageSize:10,
       totalSize:0,
@@ -92,12 +136,68 @@ export default {
         'name':[{ required: true, message: '角色名字不能为空', trigger: 'blur' }],
         'level':[{ required: true, message: '角色等级不能为空', trigger: 'blur' }]
       },
+      pemissionTree:[],
+      pemissionVisiable:false
       
 
 
     }
   },
   methods:{
+
+    pemissionSet(index,row){ //权限查询与设置
+        this.currentRoleId = row.id;
+        getPermissionTree({roleId:row.id}).then(res => {
+          if(res.success) {this.pemissionTree = res.data;
+          console.log(this.pemissionTree)
+          this.pemissionVisiable = true
+          }
+        })
+    },
+    handlePemission(){ 
+      var select =  this.$refs.tree.getCheckedKeys();
+      var halfSelect = this.$refs.tree.getHalfCheckedKeys();
+      select = select.concat(halfSelect)
+      setPermission({roleId:this.currentRoleId,perm:select}).then(res =>{
+        if(res.success==true){
+          this.$message.success("权限修改成功,重新登录后生效")
+          this.pemissionVisiable = false
+        }else{
+          this.$message.error("权限修改失败")
+          this.pemissionVisiable = false
+        }
+      })
+   
+
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     handleDelete(bol,index,row){
         if(bol==true){
           deleteRole(row.id).then(res => {

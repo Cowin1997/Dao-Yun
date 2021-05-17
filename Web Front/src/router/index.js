@@ -30,7 +30,9 @@ router.beforeEach((to, from, next) => {
                 next()
             }else{
                 const menus = JSON.parse(localStorage.getItem("user")).menus
-            
+                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+                console.log(menus)
+                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
                 store.dispatch('SetSidebarRouters',JSON.parse(localStorage.getItem("user")).menus);
                 build(menus)
                 menus.push({ path: '*', redirect: '/404', hidden: true })

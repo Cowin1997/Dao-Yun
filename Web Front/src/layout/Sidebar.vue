@@ -93,6 +93,7 @@ export default {
             bus.$emit('collapse-content', msg);
         });
        this.menus = this.menus.concat(this.$store.state.sidebarRouters)
+       console.log("MENUS")
        console.log(this.menus)
       
 
