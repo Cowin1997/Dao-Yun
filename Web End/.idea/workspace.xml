@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="055fe9d7-a588-418b-93eb-b86446250d80" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="AnnotationType" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-config/5.4.6/spring-security-config-5.4.6.jar!/org/springframework/security/config/annotation/web/configuration/WebSecurityConfigurerAdapter.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.6/spring-context-5.3.6.jar!/org/springframework/cache/annotation/CachingConfigurerSupport.class" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectId" id="1rtod4Uia3iHewFk1YOmIui3g9y" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../eladmin-master" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+  </component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="cn.edu.fzu.daoyun.service.impl" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\IDEA-Project\Dao-Yun\src\main\java\cn\edu\fzu\daoyun\config\security" />
+      <recent name="E:\IDEA-Project\Dao-Yun\src\main\java\cn\edu\fzu\daoyun\annotation" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="cn.edu.fzu.daoyun" />
+      <recent name="cn.edu.fzu.daoyun.daoyun" />
+      <recent name="" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cn.edu.fzu.daoyun.controller" />
+      <recent name="cn.edu.fzu.daoyun.entity" />
+      <recent name="cn.edu.fzu.daoyun.mapper" />
+      <recent name="cn.edu.fzu.daoyun.base" />
+      <recent name="cn.edu.fzu.daoyun.service.impl" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.DaoYunApplication">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DaoYunApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Dao-Yun" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.fzu.daoyun.daoyun.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="cn.edu.fzu.daoyun.daoyun" />
+      <option name="MAIN_CLASS_NAME" value="cn.edu.fzu.daoyun.daoyun.DaoYunApplicationTests" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DaoYunApplicationTests.test001" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Dao-Yun" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.fzu.daoyun.daoyun.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="cn.edu.fzu.daoyun.daoyun" />
+      <option name="MAIN_CLASS_NAME" value="cn.edu.fzu.daoyun.daoyun.DaoYunApplicationTests" />
+      <option name="METHOD_NAME" value="test001" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DaoYunApplicationTests.testCaptcha" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Dao-Yun" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.fzu.daoyun.daoyun.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="cn.edu.fzu.daoyun.daoyun" />
+      <option name="MAIN_CLASS_NAME" value="cn.edu.fzu.daoyun.daoyun.DaoYunApplicationTests" />
+      <option name="METHOD_NAME" value="testCaptcha" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DaoYunApplicationTests.testRedis01" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Dao-Yun" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.fzu.daoyun.daoyun.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="cn.edu.fzu.daoyun.daoyun" />
+      <option name="MAIN_CLASS_NAME" value="cn.edu.fzu.daoyun.daoyun.DaoYunApplicationTests" />
+      <option name="METHOD_NAME" value="testRedis01" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebSecurityConfig.test" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="Dao-Yun" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.fzu.daoyun.utils.captcha.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="cn.edu.fzu.daoyun.config.security" />
+      <option name="MAIN_CLASS_NAME" value="cn.edu.fzu.daoyun.config.security.WebSecurityConfig" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DaoYunApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="Dao-Yun" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.edu.fzu.daoyun.DaoYunApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.WebSecurityConfig.test" />
+      <item itemvalue="JUnit.DaoYunApplicationTests.testRedis01" />
+      <item itemvalue="JUnit.DaoYunApplicationTests.testCaptcha" />
+      <item itemvalue="JUnit.DaoYunApplicationTests.contextLoads" />
+      <item itemvalue="JUnit.DaoYunApplicationTests.test001" />
+      <item itemvalue="Spring Boot.DaoYunApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.DaoYunApplicationTests.test001" />
+        <item itemvalue="JUnit.DaoYunApplicationTests.contextLoads" />
+        <item itemvalue="JUnit.DaoYunApplicationTests.testCaptcha" />
+        <item itemvalue="JUnit.DaoYunApplicationTests.testRedis01" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpringBeansView">
+    <option name="showImplicitBeans" value="false" />
+  </component>
+  <component name="SpringBootOptions">
+    <option name="showAdditionalConfigNotification" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="055fe9d7-a588-418b-93eb-b86446250d80" name="Default Changelist" comment="" />
+      <created>1619804838975</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1619804838975</updated>
+      <workItem from="1619804862091" duration="596000" />
+      <workItem from="1619807647619" duration="3187000" />
+      <workItem from="1619939839513" duration="99349000" />
+      <workItem from="1620458111122" duration="22779000" />
+      <workItem from="1620483054967" duration="26616000" />
+      <workItem from="1620622050423" duration="2303000" />
+      <workItem from="1620627794779" duration="228000" />
+      <workItem from="1620648402436" duration="3835000" />
+      <workItem from="1620720427677" duration="101000" />
+      <workItem from="1620720820118" duration="107000" />
+      <workItem from="1620729392291" duration="13065000" />
+      <workItem from="1620805615983" duration="503000" />
+      <workItem from="1620806173698" duration="8167000" />
+      <workItem from="1620870552486" duration="16483000" />
+      <workItem from="1620973488871" duration="1422000" />
+      <workItem from="1620981400647" duration="24254000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

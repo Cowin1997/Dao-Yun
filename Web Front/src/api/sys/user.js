@@ -31,4 +31,15 @@ export function editUserx(data){
 }
 
 
+export function addUserx(data){
+  return request({
+      url: 'api/user',
+      method: 'post',
+      data:data
+    })
+}
+
+
+
+
 

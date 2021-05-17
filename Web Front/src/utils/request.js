@@ -28,7 +28,7 @@ service.interceptors.response.use(
   },
   error => {
     Notification.error({
-      title: error.response.data.msg,
+      title: error.response.data.error,
       duration: 5000
     })
     return Promise.reject(error)

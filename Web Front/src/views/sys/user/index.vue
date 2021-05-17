@@ -66,8 +66,6 @@
 
 
 
-
-
         <el-dialog title="用户添加管理" :visible.sync="addVisible" width="30%">
           <el-form :model="addUser" :rules="addRules" ref="addform">
             <el-form-item label="用户名" clearable prop="nickname">
@@ -76,9 +74,20 @@
             <el-form-item label="电话号码" prop="phone">
                   <el-input v-model="addUser.phone" clearable></el-input>
             </el-form-item>
-             <el-form-item label="角色类型" prop="type">
-                  <el-input v-model="addUser.type" clearable></el-input>
+             <el-form-item label="角色类型" prop="role">
+                <el-select v-model="addUser.role" placeholder="请选择角色类型" @focus="loadingRoleList">
+                  <el-option v-for="item in roleList" :key="item.id" :label="item.name" :value="item.id" ></el-option>
+                </el-select>
             </el-form-item>
+            <el-form-item label="状态" prop="enabled">
+              <template >
+                <el-radio v-model="addUser.enabled" :label="true">启用</el-radio>
+                <el-radio v-model="addUser.enabled" :label="false">禁用</el-radio>
+                </template>
+            </el-form-item>
+
+
+            
              </el-form>
               <span slot="footer" class="dialog-footer">
                   <el-button @click="addVisible = false">取 消</el-button>
@@ -101,14 +110,14 @@
 </template>
 
 <script>
-import { getUserList,lock,unlock,editUserx  }  from '@/api/sys/user'
-
+import { getUserList,lock,unlock,editUserx,addUserx  }  from '@/api/sys/user'
+import { getRoleList }  from '@/api/sys/role'
 export default {
  data(){
     return {
       addVisible:false,
       addUser:{},
-
+      roleList:[],
       currentPage:1,
       pageSize:10,
       totalSize:0,
@@ -120,17 +129,70 @@ export default {
       },
       searchInput: '',
       editUser:{},
-      addUser:{},
+      addUser:{
+        enabled:true
+      },
       editVisible:false,
       addVisible:false,
       editRules:{
-              phone :[{ required: true, message: '请输入手机号', trigger: 'blur' },
-                { pattern: /^1[3|5|7|8|9]\d{9}$/, message: '请输入正确的号码格式', trigger: 'blur'}],
-              nickname: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+          phone :[{ required: true, message: '请输入手机号', trigger: 'blur' },
+            { pattern: /^1[3|5|7|8|9]\d{9}$/, message: '请输入正确的号码格式', trigger: 'blur'}],
+          nickname: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+      },
+      addRules:{
+           nickname: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+           phone :[{ required: true, message: '请输入手机号', trigger: 'blur' },
+            { pattern: /^1[3|5|7|8|9]\d{9}$/, message: '请输入正确的号码格式', trigger: 'blur'}],
+          role: [{ required: true, message: '请输入选择用户类型', trigger: 'blur' }],
+          enabled:[{ required: true, message: '请输入选择用户状态', trigger: 'blur' }]
       }
     }
   },
   methods:{
+
+    handleCreate(addUser){
+        console.log(addUser)
+
+       this.$refs.addform.validate(valid => {
+          if(valid){
+              addUserx({name:addUser.nickname, ...addUser}).then(res => {
+                console.log(res)
+                if(res.success==true){
+                getUserList( { page:this.currentPage,size:this.pageSize } ).then(res => {
+                      this.userList = res.data.pageData;
+                      this.totalSize = res.data.totalSize
+                    })
+                this.$message.success("添加成功")
+                this.addVisible = false;
+                }else{
+                   this.$message.error(res.error)
+                    this.addVisible = false;
+                }
+              })
+
+          }else{
+            alert("表单验证失败")
+          }
+
+
+
+
+
+       })
+
+
+
+
+
+
+        this.addVisible = false;
+    },
+
+    loadingRoleList(){ //加载角色列表
+        getRoleList({page:1,size:50}).then(res => {
+          this.roleList = res.data.pageData
+        })
+    },
     Search(){ //进行模糊搜索
         if(this.searchInput==null ||this.searchInput.trim()==''){
             getUserList( { page:this.currentPage,size:this.pageSize} ).then(res => {
