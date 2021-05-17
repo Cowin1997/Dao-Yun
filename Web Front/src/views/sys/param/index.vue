@@ -1,14 +1,14 @@
 <template>
     <div style="height:100%;width:100%;"> 
         <el-row>
-            <el-col :span="8" style="margin-right:5px;">
+            <el-col :span="9" style="margin-right:5px;">
                 <el-input placeholder="请输入键或说明进行搜索" v-model="searchInput" clearable></el-input>
             </el-col>
-            <el-col :span="3" style="margin-left:15px;">
+            <el-col :span="3" style="margin-left:5px;">
                  <el-button type="success" icon="el-icon-search" plain @click="Search()" >搜索</el-button>
             </el-col>
         
-            <el-col :span="4">
+            <el-col :span="1">
                 <el-button type="primary" plain @click="addEditVisible = true;sysParam={};isAdd=true">+ 新增</el-button>
             </el-col>
         </el-row>

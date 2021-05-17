@@ -1,9 +1,33 @@
 import request from '@/utils/request'
 
 
-export function getRoleList(){
+export function getRoleList(data){
     return request({
-        url: 'api/role/all',
-        method: 'get'
+        url: 'api/role',
+        method: 'get',
+        params: data
       })
+}
+
+export function addRole(data){
+  return request({
+      url: 'api/role',
+      method: 'post',
+      data: data
+    })
+}
+
+export function updateRole(data){
+  return request({
+      url: 'api/role',
+      method: 'put',
+      data: data
+    })
+}
+
+export function deleteRole(data){
+  return request({
+      url: 'api/role/'+data,
+      method: 'delete'
+    })
 }
