@@ -180,6 +180,9 @@ export default {
                                 this.$router.push('/index');
                             }
                          });
+
+                        
+
                             return true;
                         }
                         else{

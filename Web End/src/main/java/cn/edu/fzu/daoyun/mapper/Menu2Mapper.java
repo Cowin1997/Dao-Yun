@@ -17,7 +17,8 @@ public interface Menu2Mapper {
     "<foreach  item='item' index='index' collection='ids' open='(' separator=',' close=')'> #{item} </foreach> </script>")
     public List<MenuDO> getMenusById(List<Integer> ids);
 
-
+    @Select("select * from menu2 where parent_id is NULL;")
+    public List<MenuDO> getParentMenus();
 
     @Select("<script> select * from menu2 where id in"+
             "<foreach  item='item' index='index' collection='ids' open='(' separator=',' close=')'> #{item} </foreach> and parent_id is NULL ORDER BY menu_sort asc;  </script>")
@@ -33,4 +34,7 @@ public interface Menu2Mapper {
             "id in <foreach  item='item' index='index' collection='ids' open='(' separator=',' close=')'> #{item} </foreach>" +
             " order by menu_sort asc; </script>")
     public List<MenuDTO> getSubMenusWithOrderByPida( List<Integer> ids,Integer pid);
+
+    @Select("select permission from menu2 where id=#{i} and type=2;")
+    public String getBtnPermit(int i);
 }

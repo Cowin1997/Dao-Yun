@@ -9,7 +9,7 @@
             </el-col>
         
             <el-col :span="1">
-                <el-button type="primary" plain @click="addEditVisible = true;sysParam={};isAdd=true">+ 新增</el-button>
+                <el-button :disabled="!hasPerm('param:add')" type="primary" plain @click="addEditVisible = true;sysParam={};isAdd=true">+ 新增</el-button>
             </el-col>
         </el-row>
         <el-table :data="paramList" height="80%" border style="width: 100%;font-size:15px;margin-top:10px;">
@@ -21,9 +21,9 @@
             <el-table-column prop="gmt_modified" label="修改时间" align="center"></el-table-column>
             <el-table-column label="操作" style="width: 40%;" align="center" >
                 <template slot-scope="scope">
-                    <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button type="text" icon="el-icon-edit" :disabled="!hasPerm('param:edit')"  @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <el-popconfirm title="确定删除吗？" @confirm="handleDelete(true,scope.$index,scope.row)"  @cancel="handleDelete(false,scope.$index,scope.row)">
-                        <el-button icon="el-icon-delete" slot="reference" style="margin-left: 10px"  type="danger" size="small" >
+                        <el-button icon="el-icon-delete" :disabled="!hasPerm('param:del')"  slot="reference" style="margin-left: 10px"  type="danger" size="small" >
                             删除
                         </el-button>
                     </el-popconfirm>

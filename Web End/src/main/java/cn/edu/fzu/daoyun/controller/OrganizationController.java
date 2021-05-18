@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @RestController
-@RequestMapping("/org")
+@RequestMapping("/api/org")
 @Api(tags={"学校,学院,专业组织接口"})
 public class OrganizationController {
     @Resource

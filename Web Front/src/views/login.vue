@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { getCodeImg,login} from '@/api/login'
+import { getCodeImg,login, getBtnPerm} from '@/api/login'
 
 export default {
     data: function() {
@@ -130,6 +130,10 @@ export default {
                             localStorage.setItem("user", JSON.stringify(res.data.user));
                             // 保存token
                             localStorage.setItem("token", JSON.stringify(res.data.token));
+                            // btnperm
+                            getBtnPerm(JSON.parse(localStorage.getItem('user'))['user']['role_id']).then(res =>{
+                               localStorage.setItem("perm", JSON.stringify(res.data));
+                            })
                             // 跳转
                            this.$router.push({path: "/"})
                         }

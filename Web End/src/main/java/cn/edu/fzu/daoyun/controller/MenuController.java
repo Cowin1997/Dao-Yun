@@ -34,8 +34,8 @@ public class MenuController {
 
     @AnonymousGetMapping("")
     public Result getMenusTree(@RequestParam("roleId") Integer roleId){
-        List<Integer> permissionList = permissionMapper.getPermission(1);
-        List<MenuDO> parentMenuList = this.menu2Mapper.getParentMenusWithOrderById(permissionList);
+    //    List<Integer> permissionList = permissionMapper.getPermission(roleId);
+        List<MenuDO> parentMenuList = this.menu2Mapper.getParentMenus();
         List<MenuDTO> menuDTOList = new ArrayList<>();
         for ( MenuDO m :parentMenuList) { // 获取二级
             MenuDTO md = new MenuDTO();
@@ -62,4 +62,14 @@ public class MenuController {
         return Result.success(ResultCodeEnum.SUCCESS);
     }
 
+    @AnonymousGetMapping("/btn_perm")
+    public Result getBtnPerm(@RequestParam("roleId") Integer roleId ){
+        List<Integer> permissionList = permissionMapper.getPermission(roleId);
+        List<String> stringList = new ArrayList<>();
+        for ( Integer i:permissionList) {
+            String btnPermit = this.menu2Mapper.getBtnPermit(i);
+            if(btnPermit!=null) stringList.add(btnPermit);
+        }
+        return Result.success(ResultCodeEnum.SUCCESS,stringList);
+    }
 }

@@ -15,3 +15,10 @@ export function login(loginQuery) {
       data: loginQuery
     })
   }
+
+export function getBtnPerm(role){
+  return request({
+    url: 'api/menu/btn_perm?roleId='+role,
+    method: 'get'
+  })
+}

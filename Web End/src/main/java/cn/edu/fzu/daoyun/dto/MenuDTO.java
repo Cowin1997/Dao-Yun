@@ -13,6 +13,7 @@ public class MenuDTO  implements Serializable {
     private List<MenuDTO> children;
     private String name;
     private String title;
+    private Integer type;
     private String component;
     private String icon;
     private String path;

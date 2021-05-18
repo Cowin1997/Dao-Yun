@@ -29,12 +29,11 @@ router.beforeEach((to, from, next) => {
             if(store.state.addRouters!=null && store.state.addRouters.length !=0){
                 next()
             }else{
+                
                 const menus = JSON.parse(localStorage.getItem("user")).menus
-                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-                console.log(menus)
-                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
                 store.dispatch('SetSidebarRouters',JSON.parse(localStorage.getItem("user")).menus);
                 build(menus)
+                
                 menus.push({ path: '*', redirect: '/404', hidden: true })
                 store.dispatch('GenerateRoutes', menus).then(() => { // 存储路由
                      router.addRoutes(menus) // 动态添加可访问路由表
@@ -50,6 +49,10 @@ router.beforeEach((to, from, next) => {
       }
     }
 })
+
+
+
+
 
 function build(menus){
     menus.filter( menu => {

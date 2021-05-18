@@ -21,13 +21,14 @@ Vue.use(ElementUI, {
 })
 
 
+function hasPerm(permission){
+  let btnPerms = JSON.parse(localStorage.getItem("perm"));
+  var i = btnPerms.indexOf(permission);
+  if(i>=0) return true;
+  return false;
+}
 
-// //使用钩子函数对路由进行权限跳转
-// router.beforeEach((to, from, next) => {
-//   next();
-// })
-
-
+Vue.prototype.hasPerm = hasPerm;
 
 /* eslint-disable no-new */
 new Vue({
