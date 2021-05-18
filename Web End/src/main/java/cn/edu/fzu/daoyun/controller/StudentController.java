@@ -10,6 +10,7 @@ import cn.edu.fzu.daoyun.entity.StudentDO;
 import cn.edu.fzu.daoyun.exception.BadRequestException;
 import cn.edu.fzu.daoyun.mapper.StudentMapper;
 import cn.edu.fzu.daoyun.service.StudentService;
+import cn.edu.fzu.daoyun.service.impl.StudentServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ import java.util.List;
 @RequestMapping(value = {"/api/student"})
 public class StudentController {
     @Resource
-    private StudentService studentService;
+    private StudentServiceImpl studentService;
 
 
     @AnonymousGetMapping(value = "/list")
@@ -87,10 +88,19 @@ public class StudentController {
             return Result.success(ResultCodeEnum.UPD_SUCCESS);
         }
         return Result.failure(ResultCodeEnum.UPD_FAILURE);
-
     }
 
 
+    @AnonymousGetMapping(value = "/search")
+    @ApiOperation(value = "searchStudent",notes = "模糊搜索学生信息")
+    public Result searchStudent(
+            @RequestParam(value = "page",required = true) Integer page,
+            @RequestParam(value = "size",required = true) Integer size,
+            @RequestParam(value = "search",required = false) String search
+    ){ ;
+        Page<StudentDO> studentDOPage = this.studentService.searchStudentByLike(page, size, search);
+        return Result.success(ResultCodeEnum.SUCCESS,studentDOPage);
+    }
 
 
 

@@ -9,7 +9,7 @@
         </el-col>
 
         <el-col :span="4">
-            <el-button type="primary" plain  @click="addEditVisiable = true">+ 新增</el-button>
+            <el-button type="primary" plain  :disabled="!hasPerm('dict:add')" @click="addEditVisiable = true">+ 新增</el-button>
         </el-col>
     </el-row>
     <el-table :data="dictList" style="width: 100%; margin-top:10px;">
@@ -18,10 +18,10 @@
         <el-table-column prop="dict.details" label="用途描述"></el-table-column>
         <el-table-column fixed="right" label="操作">
             <template slot-scope="scope">
-                <el-button icon="el-icon-edit" type="text" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                <el-button icon="el-icon-edit"  :disabled="!hasPerm('dict:edit')" type="text" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                 <el-button icon="el-icon-setting" type="text" size="small" @click="handleSetting(scope.$index, scope.row)">字典配置</el-button>
                     <el-popconfirm title="确定删除吗？" @confirm="handleDelete(true,scope.$index,scope.row)"  @cancel="handleDelete(false,scope.$index,scope.row)">
-                        <el-button icon="el-icon-delete" slot="reference" style="margin-left: 10px"  type="danger" size="small" >
+                        <el-button icon="el-icon-delete" :disabled="!hasPerm('dict:del')" slot="reference" style="margin-left: 10px"  type="danger" size="small" >
                             删除
                         </el-button>
                     </el-popconfirm>

@@ -11,6 +11,7 @@ import cn.edu.fzu.daoyun.entity.CourseDO;
 import cn.edu.fzu.daoyun.entity.StudentDO;
 import cn.edu.fzu.daoyun.mapper.CourseMapper;
 import cn.edu.fzu.daoyun.service.CourseService;
+import cn.edu.fzu.daoyun.service.impl.CourseServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ import java.util.List;
 @RequestMapping("/api/course")
 public class CourseController {
     @Resource
-    private CourseService courseService;
+    private CourseServiceImpl courseService;
     @Resource
     private CourseMapper courseMapper;
     @AnonymousPostMapping(value = "")

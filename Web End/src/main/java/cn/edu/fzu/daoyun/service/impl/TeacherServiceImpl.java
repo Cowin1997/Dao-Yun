@@ -1,5 +1,7 @@
 package cn.edu.fzu.daoyun.service.impl;
 
+import cn.edu.fzu.daoyun.base.Page;
+import cn.edu.fzu.daoyun.entity.StudentDO;
 import cn.edu.fzu.daoyun.entity.TeacherDO;
 import cn.edu.fzu.daoyun.exception.BadRequestException;
 import cn.edu.fzu.daoyun.mapper.TeacherMapper;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -15,12 +18,12 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherMapper teacherMapper;
 
 
-    @Override
+
     public TeacherDO getTeacherByTid(Integer tid) {
        return this.teacherMapper.getTeacherByTid(tid);
     }
 
-    @Override
+
     public Boolean addTeacherByTid(TeacherDO teacher) {
         TeacherDO t = this.teacherMapper.getTeacherByTid(teacher.getTid());
         if(t!=null) throw new BadRequestException("该教师工号已经注册");
@@ -28,12 +31,23 @@ public class TeacherServiceImpl implements TeacherService {
         return this.teacherMapper.insertTeacher(teacher);
     }
 
-    @Override
+
+
+    public Page<TeacherDO> getTeacherList(Integer sch, Integer col, Integer maj, Integer page, Integer size) {
+        Integer from = (page-1)*size;
+        Integer to = page * size;
+        Integer totalSize = this.teacherMapper.getTotalBySch_Col_Maj(sch,col,maj);
+        Integer totalPage = (int) Math.ceil((double) totalSize / size);
+        List<TeacherDO> pageData = this.teacherMapper.getTeacherList(sch, col, maj, from, to);
+        return new Page<>(pageData,totalSize,totalPage);
+    }
+
+
     public Boolean delTeacherByTid(Integer tid) {
         return this.delTeacherByTid(tid);
     }
 
-    @Override
+
     public Boolean updTeacherByTid(TeacherDO teacher) {
         return this.teacherMapper.updateTeacher(teacher);
     }

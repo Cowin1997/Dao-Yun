@@ -6,15 +6,15 @@
         <span>字典列表</span>
         <el-button icon="el-icon-close" @click="handleClose()" style="float: right; padding: 3px 0" type="text"></el-button>
       </div>
-      <el-button style="float: right" type="primary"  @click="handleAdd()">新增</el-button>
+      <el-button style="float: right" type="primary"  :disabled="!hasPerm('dict:add')" @click="handleAdd()">新增</el-button>
       <el-table :data="subDictList" style="width: 100%">
         <el-table-column prop="details" label="名称"></el-table-column>
         <el-table-column prop="value" label="数据值"></el-table-column>
         <el-table-column ixed="right" label="操作" >
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button type="text" size="small"  :disabled="!hasPerm('dict:edit')" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-popconfirm title="这是一段内容确定删除吗" @confirm="handleDelete(true,scope.$index,scope.row)" @cancel="handleDelete(false,scope.$index,scope.row)"> 
-              <el-button slot="reference" style="margin-left: 10px" type="danger" size="small" >删除</el-button>
+              <el-button slot="reference"  :disabled="!hasPerm('dict:del')" style="margin-left: 10px" type="danger" size="small" >删除</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>

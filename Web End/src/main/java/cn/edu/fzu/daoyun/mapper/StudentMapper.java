@@ -61,4 +61,8 @@ public interface StudentMapper {
 
     @Update("update student set name=#{name}, gender=#{gender},phone=#{phone},school_code=#{school_code},college_code=#{college_code},major_code=#{major_code},gmt_modified=#{gmt_modified} where sid=#{sid};")
     public Boolean updateStudent(StudentDO student);
+
+
+    @Select("Select * from student where sid like '%${search}%' or name like '%${search}%' or phone  like '%${search}%' ;")
+    public List<StudentDO> getStudentByLike(String search);
 }

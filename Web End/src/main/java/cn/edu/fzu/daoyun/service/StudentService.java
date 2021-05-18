@@ -42,5 +42,5 @@ public interface StudentService {
 
     public Page<StudentDO> getStudentPageByOrg(Integer sch, Integer col, Integer maj, Integer from, Integer to);
 
-
+    public Page<StudentDO> searchStudentByLike(Integer page, Integer size,String search);
 }

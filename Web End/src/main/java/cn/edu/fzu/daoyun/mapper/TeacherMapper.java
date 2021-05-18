@@ -28,8 +28,9 @@ public interface TeacherMapper {
     public Boolean updateTeacher(TeacherDO teacher);
 
 
-    @Select("select * from teacher where school_code=#{school} and college_code=#{college} and major_code=#{major};")
-    public List<TeacherDO> getTeacherList(Integer school, Integer college, Integer major);
-
+    @Select("select * from teacher where school_code=#{school} and college_code=#{college} and major_code=#{major} limit #{from},#{to};")
+    public List<TeacherDO> getTeacherList(Integer school, Integer college, Integer major, Integer from ,Integer to);
+    @Select("select count(*) from teacher where school_code=#{school} and college_code=#{college} and major_code=#{major};")
+    public Integer getTotalBySch_Col_Maj(Integer school, Integer college, Integer major);
 
 }

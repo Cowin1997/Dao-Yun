@@ -152,9 +152,27 @@ export default {
                     if(valid){
                        this.loading = true;
                        //登录
-                        this.$store.dispatch("Login", this.loginQuery).then( () =>{
+                        login(this.loginQuery).then( res =>{ 
+                            console.log(res)
                             this.loading = false;
+                        if(res.success==true){
+                            console.log("DD")
+                            // 保存个人信息
+                            localStorage.setItem("user", JSON.stringify(res.data.user));
+                            // 保存token
+                            localStorage.setItem("token", JSON.stringify(res.data.token));
+                            // btnperm
+                            getBtnPerm(JSON.parse(localStorage.getItem('user'))['user']['role_id']).then(res =>{
+                               localStorage.setItem("perm", JSON.stringify(res.data));
+                            })
+                            // 跳转
+                           this.$router.push({path: "/"})
+                        }
+
                           
+                       }).catch( () => {
+                           this.loading = false
+                            this.getCode()
                        })
                     }else{
                         alert("表单验证失败")

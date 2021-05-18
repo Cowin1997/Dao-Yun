@@ -75,5 +75,13 @@ public class StudentServiceImpl implements StudentService {
         return new Page<>(pageData,totalSize,totalPage);
     }
 
-
+    public Page<StudentDO> searchStudentByLike(Integer page, Integer size,String search){
+        Integer from = (page - 1) * size;
+        Integer to = page * size;
+        List<StudentDO> studentByLike = this.studentMapper.getStudentByLike(search);
+        Integer totalSize = studentByLike.size(); //总条数
+        Integer totalPage = (int) Math.ceil((double) totalSize / size); //总页数
+        Page pageResult = new Page(studentByLike, totalSize, totalPage);
+        return pageResult;
+    }
 }
