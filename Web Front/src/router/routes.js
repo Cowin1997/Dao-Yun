@@ -41,6 +41,7 @@ export const constantRouterMap = [
       children:[{
         path: '/dashboard',
         component: Home,
+        meta:{ title:"首页", icon:'el-icon-s-custom'}
       }
     ]
     },

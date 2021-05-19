@@ -9,9 +9,10 @@ import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 import axios from 'axios' // 导入axios http请求库
 import Cookies from 'js-cookie'
 import store from './store'
+import "font-awesome/css/font-awesome.css";
+import iconPicker from 'vue-fontawesome-elementui-icon-picker';
 
-
-
+Vue.use(iconPicker);
 // axios.defaults.baseURL = 'http://127.0.0.1:6677' // 设置默认请求的url
 
 Vue.prototype.$http = axios

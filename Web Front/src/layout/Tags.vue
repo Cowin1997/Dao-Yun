@@ -58,6 +58,7 @@ import bus from './bus';
             },
             // 设置标签
             setTags(route){
+            
                 const isExist = this.tagsList.some(item => {
                     return item.path === route.fullPath;
                 })

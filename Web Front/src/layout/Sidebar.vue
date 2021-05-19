@@ -67,22 +67,10 @@ export default {
             menus: [
                 {
                     path: '/dashboard',
-                    title: '系统首页'
+                    title: '系统首页',
+                    icon:'el-icon-s-custom'
                 },
-                // {
-                //     path: '/sys',
-                //     title: '系统管理',
-                //     children:[
-                //         {
-                //             path: '/sys/role',
-                //             title: '角色管理'
-                //         },
-                //            {
-                //             path: '/sys/user',
-                //             title: '用户管理'
-                //         }
-                //     ]
-                // }
+                
             ]
         }
     },

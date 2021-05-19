@@ -136,6 +136,8 @@ export default {
                             })
                             // 跳转
                            this.$router.push({path: "/"})
+                        }else{
+                            this.$message.error(res.error)
                         }
                            
                        }).catch( () => {
@@ -167,6 +169,8 @@ export default {
                             })
                             // 跳转
                            this.$router.push({path: "/"})
+                        }else{
+                            this.$message.error(res.error)
                         }
 
                           
