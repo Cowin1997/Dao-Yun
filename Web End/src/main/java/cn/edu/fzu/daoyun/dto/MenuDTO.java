@@ -19,4 +19,5 @@ public class MenuDTO  implements Serializable {
     private String path;
     private Integer parent_id;
     private Integer id;
+    private Integer menu_sort;
 }

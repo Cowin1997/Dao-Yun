@@ -30,7 +30,7 @@ public class CaptchaProperties {
     /**
      * 验证码内容长度
      */
-    private int length = 3;
+    private int length = 2;
     /**
      * 验证码宽度
      */

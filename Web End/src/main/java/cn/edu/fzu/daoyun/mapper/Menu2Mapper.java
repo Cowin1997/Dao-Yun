@@ -3,8 +3,10 @@ package cn.edu.fzu.daoyun.mapper;
 import cn.edu.fzu.daoyun.dto.MenuDTO;
 import cn.edu.fzu.daoyun.entity.Menu;
 import cn.edu.fzu.daoyun.entity.MenuDO;
+import cn.edu.fzu.daoyun.query.updateMenuQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -37,4 +39,9 @@ public interface Menu2Mapper {
 
     @Select("select permission from menu2 where id=#{i} and type=2;")
     public String getBtnPermit(int i);
+
+
+
+    @Update("update menu2 set icon=#{icon},title=#{title},path=#{path},menu_sort=#{menu_sort} where id=#{id};")
+    public Boolean updateMenu(updateMenuQuery query);
 }

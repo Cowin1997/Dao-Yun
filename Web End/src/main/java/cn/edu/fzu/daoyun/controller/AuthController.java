@@ -42,6 +42,7 @@ public class AuthController {
 
     private final RedisUtils redisUtils;
     private final LoginServiceImpl loginService;
+    private final CaptChaUtils captChaUtils;
 
 
     @AnonymousPostMapping(value = "/login")
@@ -56,19 +57,20 @@ public class AuthController {
     public Result<JwtUserDTO> login(@RequestBody @Valid LoginQuery loginQuery){
         JwtUserDTO jwtUserDTO = null;
         // 验证码检验
-//        Result codeResult = captChaUtils.checkValid(loginQuery.getUuid(),loginQuery.getCode());
-//        if(!codeResult.getSuccess()) return codeResult;
-        String token = null;
+        Result codeResult = captChaUtils.checkValid(loginQuery.getUuid(),loginQuery.getCode());
+        if(!codeResult.getSuccess()) return codeResult;
+
+
         switch (loginQuery.getType()){
             case 1:  // 用户名密码登录
                 jwtUserDTO = loginService.loginByLocal(loginQuery);
                 break;
             case 2: // 短信验证码登录
                 //校验短信验证码
-//                String code = (String) redisUtils.get(loginQuery.getIdentifier());
-//                if(code==null) return Result.failure(ResultCodeEnum.CODE_EXPIRED);
-//                if(!StringUtils.equals(code,loginQuery.getCredential())) return Result.failure(ResultCodeEnum.CODE_INVAILD);
-//                // 登录成功返回 token,登录异常交给 Springseurity 异常处理
+                String code = (String) redisUtils.get(loginQuery.getIdentifier());
+                if(code==null) return Result.failure(ResultCodeEnum.CODE_EXPIRED);
+                if(!StringUtils.equals(code,loginQuery.getCredential())) return Result.failure(ResultCodeEnum.CODE_INVAILD);
+                // 登录成功返回 token,登录异常交给 Springseurity 异常处理
                 jwtUserDTO = loginService.loginByPhone(loginQuery);
                 break;
             default:

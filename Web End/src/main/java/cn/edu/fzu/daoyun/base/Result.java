@@ -51,6 +51,7 @@ public class Result<T> implements Serializable {
     public static<T> Result<T> failure(ResultCodeEnum errorCode){
         Result<T> result = new Result<T>(errorCode);
         //失败不设置数据
+        result.setError(errorCode.getMessage());
         result.setSuccess(false); //请求失败
         return result;
     }

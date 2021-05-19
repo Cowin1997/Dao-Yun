@@ -13,6 +13,7 @@ import cn.edu.fzu.daoyun.mapper.Menu2Mapper;
 import cn.edu.fzu.daoyun.mapper.MenuMapper;
 import cn.edu.fzu.daoyun.mapper.PermissionMapper;
 import cn.edu.fzu.daoyun.query.setPermQuery;
+import cn.edu.fzu.daoyun.query.updateMenuQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,4 +73,13 @@ public class MenuController {
         }
         return Result.success(ResultCodeEnum.SUCCESS,stringList);
     }
+
+    @AnonymousPutMapping
+    public Result updateMenu(@RequestBody updateMenuQuery query){
+        Boolean aBoolean = this.menu2Mapper.updateMenu(query);
+        if(aBoolean==true) return Result.success(ResultCodeEnum.SUCCESS);
+        return Result.failure(ResultCodeEnum.FAILURE);
+
+    }
+
 }
