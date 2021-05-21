@@ -3,15 +3,22 @@ package cn.edu.fzu.daoyun.controller;
 import cn.edu.fzu.daoyun.annotation.AnonymousGetMapping;
 import cn.edu.fzu.daoyun.annotation.AnonymousPostMapping;
 import cn.edu.fzu.daoyun.annotation.AnonymousPutMapping;
+import cn.edu.fzu.daoyun.base.Page;
 import cn.edu.fzu.daoyun.base.Result;
 import cn.edu.fzu.daoyun.constant.ResultCodeEnum;
 import cn.edu.fzu.daoyun.dto.CourseDTO;
+import cn.edu.fzu.daoyun.dto.CourseDTO2;
 import cn.edu.fzu.daoyun.dto.StudentCheckLogDTO;
 import cn.edu.fzu.daoyun.entity.CourseDO;
 import cn.edu.fzu.daoyun.entity.StudentDO;
+import cn.edu.fzu.daoyun.entity.TeacherDO;
+import cn.edu.fzu.daoyun.exception.BadRequestException;
 import cn.edu.fzu.daoyun.mapper.CourseMapper;
+import cn.edu.fzu.daoyun.query.UpdateStatusQuery;
 import cn.edu.fzu.daoyun.service.CourseService;
+import cn.edu.fzu.daoyun.service.TeacherService;
 import cn.edu.fzu.daoyun.service.impl.CourseServiceImpl;
+import cn.edu.fzu.daoyun.service.impl.TeacherServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +36,8 @@ public class CourseController {
     private CourseServiceImpl courseService;
     @Resource
     private CourseMapper courseMapper;
+    @Resource
+    private TeacherServiceImpl teacherService;
     @AnonymousPostMapping(value = "")
     @ApiOperation(value = "addCourse",notes = "添加班课")
     public Result<Boolean> addCourse(@RequestBody CourseDO course){
@@ -42,7 +51,9 @@ public class CourseController {
 
     @AnonymousPutMapping(value = "")
     @ApiOperation(value = "updateCourse",notes = "更新班课信息")
-    public Result updateCourse(@RequestBody CourseDO course){ ;
+    public Result updateCourse(@RequestBody CourseDO course){
+        TeacherDO teacher = this.teacherService.getTeacherByTid(course.getTeacher_tid());
+        if(teacher==null) return Result.failure(ResultCodeEnum.TEACHER_UNEXIST);
         Boolean isSuccess = this.courseService.updateCourse(course);
         if(isSuccess==true) {
             return Result.success(ResultCodeEnum.UPD_SUCCESS);
@@ -91,6 +102,7 @@ public class CourseController {
         if(aBoolean) return Result.success(ResultCodeEnum.ADD_SUCCESS);
         return Result.failure(ResultCodeEnum.ADD_FAILURE);
     }
+
     @AnonymousGetMapping(value = "/unselect")
     @ApiOperation(value = "unSelectCourse",notes = "学生退选班课")
     public Result unSelectCourse(@RequestParam("cid") Integer cid,@RequestParam("sid") Integer sid) {
@@ -98,6 +110,31 @@ public class CourseController {
         if(aBoolean) return Result.success(ResultCodeEnum.DEL_SUCCESS);
         return Result.failure(ResultCodeEnum.DEL_FAILURE);
     }
+
+    @AnonymousPostMapping(value = "/status")
+    @ApiOperation(value = "updateStatus",notes = "更新状态:当前班课是否可加入")
+    public Result updateStatus(@RequestBody UpdateStatusQuery query) {
+        Boolean aBoolean = this.courseMapper.updateStatus(query.getCid(), query.getEnabled());
+        if(aBoolean) return Result.success(ResultCodeEnum.UPD_SUCCESS);
+        return Result.failure(ResultCodeEnum.DEL_FAILURE);
+    }
+
+
+    @AnonymousGetMapping(value = "/list")
+    @ApiOperation(value = "getCourseList",notes = "获取课表列表")
+    public Result<Page<CourseDTO2>> getCourseList(@RequestParam(value = "sch") Integer sch,
+                                               @RequestParam(value = "col") Integer col,
+                                               @RequestParam(value = "maj") Integer maj,
+                                               @RequestParam(value = "page") Integer page,
+                                               @RequestParam(value = "size") Integer size){
+
+        if(sch>0 && col>0 && maj>0 && page >0 && size >0){
+            Page<CourseDTO2> pageData = this.courseService.getCourseListByOrg(sch, col, maj, page, size);
+            return Result.success(ResultCodeEnum.SUCCESS,pageData);
+        }
+        throw new BadRequestException("请求参数错误");
+    }
+
 
 }
 

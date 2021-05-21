@@ -2,6 +2,7 @@ package cn.edu.fzu.daoyun.controller;
 
 import cn.edu.fzu.daoyun.annotation.AnonymousDeleteMapping;
 import cn.edu.fzu.daoyun.annotation.AnonymousGetMapping;
+import cn.edu.fzu.daoyun.annotation.AnonymousPostMapping;
 import cn.edu.fzu.daoyun.annotation.AnonymousPutMapping;
 import cn.edu.fzu.daoyun.base.Page;
 import cn.edu.fzu.daoyun.base.Result;
@@ -9,6 +10,7 @@ import cn.edu.fzu.daoyun.constant.ResultCodeEnum;
 import cn.edu.fzu.daoyun.entity.StudentDO;
 import cn.edu.fzu.daoyun.exception.BadRequestException;
 import cn.edu.fzu.daoyun.mapper.StudentMapper;
+import cn.edu.fzu.daoyun.query.AddStudentQuery;
 import cn.edu.fzu.daoyun.service.StudentService;
 import cn.edu.fzu.daoyun.service.impl.StudentServiceImpl;
 import io.swagger.annotations.Api;
@@ -27,7 +29,7 @@ import java.util.List;
 @RequestMapping(value = {"/api/student"})
 public class StudentController {
     @Resource
-    private StudentServiceImpl studentService;
+    private StudentService studentService;
 
 
     @AnonymousGetMapping(value = "/list")
@@ -59,10 +61,10 @@ public class StudentController {
 
 
 
-    @PostMapping(value = "")
+    @AnonymousPostMapping(value = "")
     @ApiOperation(value = "addStudent",notes = "添加学生")
-    public Result<Boolean> addStudent(@RequestBody StudentDO student){
-        Boolean isSuccess = this.studentService.addStudent(student);
+    public Result<Boolean> addStudent(@RequestBody AddStudentQuery  query){
+        Boolean isSuccess = this.studentService.addStudent(query);
         if(isSuccess==true){
             return Result.success(ResultCodeEnum.ADD_SUCCESS);
         }

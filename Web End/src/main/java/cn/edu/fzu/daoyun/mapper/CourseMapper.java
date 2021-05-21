@@ -5,10 +5,7 @@ import cn.edu.fzu.daoyun.dto.StudentCheckLogDTO;
 import cn.edu.fzu.daoyun.entity.CourseDO;
 import cn.edu.fzu.daoyun.entity.StudentDO;
 import io.swagger.models.auth.In;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -28,7 +25,7 @@ public interface CourseMapper {
     public Boolean addCourse(CourseDO course);
 
     // 编辑班课信息
-    @Insert("update course set coursename=#{coursename},enabled=#{enabled},detailinfo=#{detailinfo} where cid = #{cid};")
+    @Insert("update course set coursename=#{coursename},enabled=#{enabled},detailinfo=#{detailinfo}, teacher_tid=#{teacher_tid} where cid = #{cid};")
     public Boolean updateCourse(CourseDO course);
 
 
@@ -51,4 +48,14 @@ public interface CourseMapper {
 
     @Delete("delete from select_course where course_cid=#{cid} and student_sid=#{sid};")
     public Boolean deleteCourse(Integer cid,Integer sid);
+
+
+    @Select("select count(*) from course where school_code=#{sch} and college_code = #{col} and major_code=#{maj};")
+    public Integer getCourseListTotalByOrg(Integer sch,Integer col,Integer maj);
+
+    @Select("select * from course where school_code=#{sch} and college_code = #{col} and major_code=#{maj} limit #{from},#{to};")
+    public List<CourseDO> getCourseListByOrg(Integer sch,Integer col,Integer maj,Integer from,Integer to);
+
+    @Update("update course set enabled = #{enabled} where cid =#{cid};")
+    public Boolean updateStatus(Integer cid, Boolean enabled);
 }

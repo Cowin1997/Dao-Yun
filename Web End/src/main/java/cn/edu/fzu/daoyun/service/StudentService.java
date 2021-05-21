@@ -2,6 +2,7 @@ package cn.edu.fzu.daoyun.service;
 
 import cn.edu.fzu.daoyun.base.Page;
 import cn.edu.fzu.daoyun.entity.StudentDO;
+import cn.edu.fzu.daoyun.query.AddStudentQuery;
 import com.squareup.okhttp.internal.Internal;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Select;
@@ -33,7 +34,7 @@ public interface StudentService {
     /**
      *  添加学生(* 必须先添加账号)
      */
-    public Boolean addStudent(StudentDO student);
+    public Boolean addStudent(AddStudentQuery query);
 
 
     /**

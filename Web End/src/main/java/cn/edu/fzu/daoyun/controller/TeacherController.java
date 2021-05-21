@@ -71,13 +71,26 @@ public class TeacherController {
                                               @RequestParam(value = "col") Integer col,
                                               @RequestParam(value = "maj") Integer maj,
                                               @RequestParam(value = "page") Integer page,
-                                              @RequestParam(value = "size") Integer size){
+                                              @RequestParam(value = "size") Integer size
+
+                                              ){
 
         if(sch>0 && col>0 && maj>0 && page >0 && size >0){
             Page<TeacherDO> pageData = this.teacherService.getTeacherList(sch, col, maj, page, size);
             return Result.success(ResultCodeEnum.SUCCESS,pageData);
         }
         throw new BadRequestException("请求参数错误");
+    }
+
+    @AnonymousGetMapping(value = "/search")
+    @ApiOperation(value = "searchTeacher",notes = "模糊搜索教师信息")
+    public Result searchTeacher(
+            @RequestParam(value = "page",required = true) Integer page,
+            @RequestParam(value = "size",required = true) Integer size,
+            @RequestParam(value = "search",required = false) String search
+    ){ ;
+        Page<TeacherDO> teacherPage = this.teacherService.searchTeacherByLike(page, size, search);
+        return Result.success(ResultCodeEnum.SUCCESS,teacherPage);
     }
 
 

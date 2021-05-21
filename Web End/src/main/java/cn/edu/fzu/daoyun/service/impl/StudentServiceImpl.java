@@ -2,10 +2,18 @@ package cn.edu.fzu.daoyun.service.impl;
 
 import cn.edu.fzu.daoyun.base.Page;
 import cn.edu.fzu.daoyun.entity.StudentDO;
+import cn.edu.fzu.daoyun.entity.UserAuthDO;
+import cn.edu.fzu.daoyun.entity.UserDO;
 import cn.edu.fzu.daoyun.exception.BadRequestException;
 import cn.edu.fzu.daoyun.mapper.StudentMapper;
+import cn.edu.fzu.daoyun.mapper.UserAuthMapper;
+import cn.edu.fzu.daoyun.mapper.UserMapper;
+import cn.edu.fzu.daoyun.query.AddStudentQuery;
+import cn.edu.fzu.daoyun.query.addUserQuery;
 import cn.edu.fzu.daoyun.service.StudentService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -15,6 +23,10 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
     @Resource
     private StudentMapper studentMapper;
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private UserAuthMapper userAuthMapper;
 
 
     /**
@@ -35,7 +47,7 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public Boolean deleteStudentBySid(Integer sid) {
-        return this.deleteStudentBySid(sid);
+        return this.studentMapper.delStudentBySid(sid);
     }
 
     /**
@@ -50,16 +62,35 @@ public class StudentServiceImpl implements StudentService {
     }
 
     /**
-     * 添加学生(* 必须先添加账号)
+     * 添加学生(+添加账号)
      *
-     * @param student
+     * @param
      */
     @Override
-    public Boolean addStudent(StudentDO student) {
-        StudentDO s = this.getStudentBySid(student.getSid());
+    @Transactional
+    public Boolean addStudent(AddStudentQuery query) {
+        StudentDO s = this.getStudentBySid(query.getSid());
         if(s!=null) throw new BadRequestException("添加学生的学号已存在");
-        student.setGmt_create(new Date());
-        return this.addStudent(student);
+        // 注册检查
+        UserDO u = this.userMapper.getUserByPhone(query.getPhone());
+        UserAuthDO u2 = this.userAuthMapper.selectByIdentifier(query.getPhone(), null);
+        if(u!=null || u2!=null) throw new BadRequestException("电话号码已被注册");
+        // 注册
+        query.setGmt_create(new Date());
+        Boolean aBoolean = this.userMapper.addUser(query);
+        if(aBoolean == false) throw new BadRequestException("注册异常,请联系管理员");
+        // 添加凭证
+        aBoolean = this.userAuthMapper.addUserAuthLocal2(query.getId(), query.getAccountName(), query.getGmt_create());
+        if(aBoolean == false) throw new BadRequestException("注册异常,请联系管理员");
+        aBoolean = this.userAuthMapper.addUserAuthPhone2(query.getId(), query.getPhone(), query.getGmt_create());
+        if(aBoolean == false) throw new BadRequestException("注册异常,请联系管理员");
+        // 添加学生
+        StudentDO student = new StudentDO();
+        BeanUtils.copyProperties(query,student);
+        student.setUser_id(query.getId());
+        aBoolean = this.studentMapper.insertStudent(student);
+        if(aBoolean == false) throw new BadRequestException("注册异常,请联系管理员");
+        return aBoolean;
     }
 
     /**

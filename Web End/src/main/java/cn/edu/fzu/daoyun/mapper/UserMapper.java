@@ -2,6 +2,7 @@ package cn.edu.fzu.daoyun.mapper;
 
 import cn.edu.fzu.daoyun.entity.UserAuthDO;
 import cn.edu.fzu.daoyun.entity.UserDO;
+import cn.edu.fzu.daoyun.query.AddStudentQuery;
 import cn.edu.fzu.daoyun.query.addUserQuery;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Insert;
@@ -10,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.mapstruct.Mapper;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -44,6 +46,11 @@ public interface UserMapper {
             "#{name},#{phone},#{role},#{enabled},#{gmt_create});")
     @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
     public Boolean addtUser(addUserQuery user);
+
+    @Insert("insert into user(nickname,phone,role_id,enabled,gmt_create) values (" +
+            "#{name},#{phone},#{role},#{enabled},#{gmt_create});")
+    @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
+    public Boolean addUser(AddStudentQuery query);
 
     @Select("select * from user where nickname=#{name};")
     public UserDO getUserByName(String name);

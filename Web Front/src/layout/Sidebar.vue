@@ -68,7 +68,7 @@ export default {
                 {
                     path: '/dashboard',
                     title: '系统首页',
-                    icon:'el-icon-s-custom'
+                    icon:'fa fa-tachometer'
                 },
                 
             ]

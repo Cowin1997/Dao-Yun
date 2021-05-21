@@ -13,6 +13,7 @@
     </el-row>
       <!--角色数据-->
       <el-table :data="userList" height="80%" border style="width: 100%;font-size:15px;margin-top:10px;">
+        <el-table-column prop="user.id" label="用户ID" align="center" ></el-table-column>
         <el-table-column prop="user.nickname" label="用户名" align="center" ></el-table-column>
         <el-table-column prop="user.phone" label="电话号码" align="center" ></el-table-column>
         <el-table-column prop="userRole==null||userRole==undefined?'undefined':userRole.name" label="账户类型" align="center" >
@@ -46,6 +47,7 @@
 
       <el-dialog title="用户编辑管理" :visible.sync="editVisible" width="30%">
           <el-form :model="editUser" :rules="editRules" ref="editform">
+            
             <el-form-item  label="用户名" clearable prop="nickname">
                 <el-input v-model="editUser.nickname" clearable></el-input>
             </el-form-item>

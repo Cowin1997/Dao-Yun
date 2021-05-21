@@ -49,7 +49,20 @@ export function searchStudent(params) {
   })
 }
 
+export function deleteStudent(params) {
+  return request({
+    url: '/api/student/'+params,
+    method: 'delete'
+  })
+}
 
+export function addStudent(data) {
+  return request({
+    url: '/api/student',
+    method: 'post',
+    data:data
+  })
+}
 
 
 

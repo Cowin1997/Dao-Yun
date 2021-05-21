@@ -35,12 +35,13 @@ public enum ResultCodeEnum {
     UPD_FAILURE(4510,"更新失败"),
     LOGIN_UNEXIST(4511,"账户不存在,请先注册"),
     STUDENT_UNEXIST(4512,"查询的学生不存在"),
-    TEACHER_UNEXIST(4513,"查询的教师不存在"),
+    TEACHER_UNEXIST(4513,"教师ID不存在"),
     COURSE_UNEXIST(4514,"查询的班课号不存在"),
     CHECK_FAILURE(2008,"签到失败"),
     CHECK_TIMEOUT(20009, "当前没有签到任务"),
     HAS_CHECK(20006,"已签到,请勿重复签到"),
-    HASNOT_UNCHECK(26561,"当前没有签到任务")
+    HASNOT_UNCHECK(26561,"当前没有签到任务"),
+
     ;
     //响应状态码
     private Integer code;

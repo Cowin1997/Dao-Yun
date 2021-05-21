@@ -35,7 +35,7 @@ public class UserServiceImpl  {
     @Resource
     private PermissionMapper permissionMapper;
     @Resource
-    private Menu2Mapper menu2Mapper;
+    private MenuMapper menuMapper;
 
 
     @Transactional
@@ -136,13 +136,13 @@ public class UserServiceImpl  {
         List<Integer> permissionList = permissionMapper.getPermission(user.getRole_id());
         List<MenuDTO> menuDTOList = new ArrayList<>();
         if(permissionList.size()>0) {
-            List<MenuDO> parentMenuList = this.menu2Mapper.getParentMenusWithOrderById(permissionList);
+            List<MenuDO> parentMenuList = this.menuMapper.getParentMenusWithOrderById(permissionList);
             System.out.println(parentMenuList.toString());
 
             for (MenuDO m : parentMenuList) { // 获取二级
                 MenuDTO md = new MenuDTO();
                 BeanUtils.copyProperties(m, md);
-                List<MenuDTO> subMenuList = this.menu2Mapper.getSubMenusWithOrderByPida(permissionList, m.getId());
+                List<MenuDTO> subMenuList = this.menuMapper.getSubMenusWithOrderByPida(permissionList, m.getId());
                 md.setChildren(subMenuList);
                 menuDTOList.add(md);
             }

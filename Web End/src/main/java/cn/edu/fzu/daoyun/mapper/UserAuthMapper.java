@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.mapstruct.Mapper;
 
+import java.util.Date;
+
 @Mapper
 public interface UserAuthMapper {
     @Select("select * from user_auth where identifier=#{identifier};")
@@ -27,4 +29,12 @@ public interface UserAuthMapper {
     @Insert("insert into user_auth(user_id, identity_type, identifier, credential, gmt_create)" +
             "values(#{id},'phone',#{phone},'$2a$10$r0kc433EWd.7PpOi4yKBB.a3ck0mNx7ZnNjdgomdD1ZZwTwqPV7dK',#{gmt_create}); ")
     public Boolean addUserAuthPhone(addUserQuery query);
+
+    @Insert("insert into user_auth(user_id, identity_type, identifier, credential, gmt_create)" +
+            "values(#{id},'local',#{name},'$2a$10$r0kc433EWd.7PpOi4yKBB.a3ck0mNx7ZnNjdgomdD1ZZwTwqPV7dK',#{gmt_create}); ")
+    public Boolean addUserAuthLocal2(Integer id, String name, Date gmt_create);
+
+    @Insert("insert into user_auth(user_id, identity_type, identifier, credential, gmt_create)" +
+            "values(#{id},'phone',#{phone},'$2a$10$r0kc433EWd.7PpOi4yKBB.a3ck0mNx7ZnNjdgomdD1ZZwTwqPV7dK',#{gmt_create}); ")
+    public Boolean addUserAuthPhone2(Integer id, String phone, Date gmt_create);
 }

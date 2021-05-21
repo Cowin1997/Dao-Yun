@@ -1,6 +1,7 @@
 package cn.edu.fzu.daoyun.mapper;
 
 
+import cn.edu.fzu.daoyun.entity.StudentDO;
 import cn.edu.fzu.daoyun.entity.TeacherDO;
 import org.apache.ibatis.annotations.*;
 
@@ -33,4 +34,7 @@ public interface TeacherMapper {
     @Select("select count(*) from teacher where school_code=#{school} and college_code=#{college} and major_code=#{major};")
     public Integer getTotalBySch_Col_Maj(Integer school, Integer college, Integer major);
 
+
+    @Select("Select * from teacher where tid like '%${search}%' or name like '%${search}%' or phone  like '%${search}%' ;")
+    public List<TeacherDO> getTeacherByLike(String search);
 }

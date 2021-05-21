@@ -1,6 +1,8 @@
 package cn.edu.fzu.daoyun.service;
 
+import cn.edu.fzu.daoyun.base.Page;
 import cn.edu.fzu.daoyun.dto.CourseDTO;
+import cn.edu.fzu.daoyun.dto.CourseDTO2;
 import cn.edu.fzu.daoyun.entity.CourseDO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -25,4 +27,6 @@ public interface CourseService {
 
     // 根据工号获取教师的所有课程
     public List<CourseDO> getCourseByTid(Integer tid);
+    //
+    public Page<CourseDTO2> getCourseListByOrg(Integer sch, Integer col, Integer maj, Integer page, Integer size);
 }

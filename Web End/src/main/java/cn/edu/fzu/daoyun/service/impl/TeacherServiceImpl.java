@@ -44,11 +44,30 @@ public class TeacherServiceImpl implements TeacherService {
 
 
     public Boolean delTeacherByTid(Integer tid) {
-        return this.delTeacherByTid(tid);
+        return this.teacherMapper.deleteTeacherByTid(tid);
     }
 
 
     public Boolean updTeacherByTid(TeacherDO teacher) {
         return this.teacherMapper.updateTeacher(teacher);
     }
+
+
+
+
+
+
+    public Page<TeacherDO> searchTeacherByLike(Integer page, Integer size,String search){
+        Integer from = (page - 1) * size;
+        Integer to = page * size;
+        List<TeacherDO> teacherByLike = this.teacherMapper.getTeacherByLike(search);
+        Integer totalSize = teacherByLike.size(); //总条数
+        Integer totalPage = (int) Math.ceil((double) totalSize / size); //总页数
+        Page pageResult = new Page(teacherByLike, totalSize, totalPage);
+        return pageResult;
+    }
+
+
+
+
 }
