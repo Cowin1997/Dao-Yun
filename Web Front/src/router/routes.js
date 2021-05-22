@@ -66,7 +66,7 @@ export const constantRouterMap = [
 
 export default new VueRouter({
   // mode: 'hash',
-  mode: 'history',
+  mode: 'hash',
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })

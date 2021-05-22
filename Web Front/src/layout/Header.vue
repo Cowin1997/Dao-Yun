@@ -150,6 +150,8 @@ export default {
             localStorage.clear();
             window.location.reload()
             this.$router.push("/login")
+            
+            
         },
         // 全屏事件
         handleFullScreen() {

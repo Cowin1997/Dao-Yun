@@ -12,7 +12,7 @@ export const loadView = (view) => {
   }
 
 router.beforeEach((to, from, next) => {
-    console.log(to)
+    console.log(to.path)
     if (to.meta.title) {
         document.title = to.meta.title;
       }
