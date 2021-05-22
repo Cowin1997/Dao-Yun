@@ -32,3 +32,13 @@ export function deleteTeacher(params) {
     method: 'delete'
   })
 }
+
+
+
+export function addTeacher(data) {
+  return request({
+    url: '/api/teacher',
+    method: 'post',
+    data:data
+  })
+}

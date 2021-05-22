@@ -119,7 +119,7 @@ public class AuthController {
 
 
     @ResponseBody
-    @AnonymousPostMapping(value = "/pwd-reset")
+    @AnonymousPostMapping(value = "/pwd-forget")
     @ApiOperation(value = "pwdForget",notes = "短信验证找回密码")
     public Result pwdForget(@RequestBody PwdForgetQuery query){
         // 验证短信验证码
@@ -132,5 +132,14 @@ public class AuthController {
         return Result.failure(ResultCodeEnum.PWDRESET_FAILURE);
     }
 
+
+    @ResponseBody
+    @AnonymousPostMapping(value = "/pwd-reset")
+    @ApiOperation(value = "pwdRest",notes = "修改密码")
+    public Result pwdRest(@RequestBody PwdResetQuery query){
+        boolean isResetSuccess =  loginService.pwdReset2(query);
+        if(isResetSuccess) return Result.success(ResultCodeEnum.PWDRESET_SUCCESS);
+        return Result.failure(ResultCodeEnum.PWDRESET_FAILURE);
+    }
 
 }

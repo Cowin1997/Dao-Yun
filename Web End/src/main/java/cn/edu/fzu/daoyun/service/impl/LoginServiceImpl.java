@@ -16,10 +16,7 @@ import cn.edu.fzu.daoyun.exception.BadRequestException;
 import cn.edu.fzu.daoyun.mapper.StudentMapper;
 import cn.edu.fzu.daoyun.mapper.TeacherMapper;
 import cn.edu.fzu.daoyun.mapper.UserMapper;
-import cn.edu.fzu.daoyun.query.FastRegisterQuery;
-import cn.edu.fzu.daoyun.query.LoginQuery;
-import cn.edu.fzu.daoyun.query.PwdForgetQuery;
-import cn.edu.fzu.daoyun.query.RegisterQuery;
+import cn.edu.fzu.daoyun.query.*;
 import cn.edu.fzu.daoyun.service.OnlineUserService;
 import cn.edu.fzu.daoyun.utils.JwtUtils;
 import cn.edu.fzu.daoyun.utils.RedisUtils;
@@ -164,5 +161,16 @@ public class LoginServiceImpl {
     @Transactional
     public Boolean pwdReset(PwdForgetQuery query){
        return userMapper.updatePwd(query.getPhone(),passwordEncoder.encode(query.getNewPass()));
+    }
+
+    @Transactional
+    public Boolean pwdReset2(PwdResetQuery query){
+        UserAuthDO userAuthById = this.userMapper.getUserAuthById(query.getUid());
+        if(userAuthById==null) throw new BadRequestException("账户不存在");
+        boolean matches = passwordEncoder.matches(query.getOldPass(),userAuthById.getCredential());
+        if(matches==false) throw new BadRequestException("旧密码错误");
+        Boolean aBoolean = userMapper.updatePwd2(query.getUid(), passwordEncoder.encode(query.getNewPass()));
+        if(aBoolean==false) throw new BadRequestException("密码修改出错,请联系管理员");
+        return aBoolean;
     }
 }

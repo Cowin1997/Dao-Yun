@@ -4,6 +4,7 @@ import cn.edu.fzu.daoyun.base.Page;
 import cn.edu.fzu.daoyun.dto.CourseDTO;
 import cn.edu.fzu.daoyun.dto.CourseDTO2;
 import cn.edu.fzu.daoyun.entity.CourseDO;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,6 +19,8 @@ public interface CourseService {
 
     // 添加班课信息
     public Boolean addCourse(CourseDO course);
+
+    public Boolean deleteCourse(Integer cid);
 
     // 编辑班课信息
     public Boolean updateCourse(CourseDO course);

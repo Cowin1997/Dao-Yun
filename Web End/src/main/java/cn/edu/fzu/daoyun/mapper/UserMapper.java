@@ -3,6 +3,7 @@ package cn.edu.fzu.daoyun.mapper;
 import cn.edu.fzu.daoyun.entity.UserAuthDO;
 import cn.edu.fzu.daoyun.entity.UserDO;
 import cn.edu.fzu.daoyun.query.AddStudentQuery;
+import cn.edu.fzu.daoyun.query.AddTeacherQuery;
 import cn.edu.fzu.daoyun.query.addUserQuery;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Insert;
@@ -17,6 +18,10 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
+    @Select("select * from user_auth where id=#{id};")
+    public UserAuthDO getUserAuthById(Integer id);
+    @Update("update user_auth set credential=#{newPass} where id=#{id};")
+    public Boolean updatePwd2(Integer id,String newPass);
     @Update("update user set nickname=#{name} where id=#{id};")
     public Boolean updateName(Integer id,String name);
 
@@ -51,6 +56,11 @@ public interface UserMapper {
             "#{name},#{phone},#{role},#{enabled},#{gmt_create});")
     @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
     public Boolean addUser(AddStudentQuery query);
+
+    @Insert("insert into user(nickname,phone,role_id,enabled,gmt_create) values (" +
+            "#{name},#{phone},#{role},#{enabled},#{gmt_create});")
+    @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
+    public Boolean addUser2(AddTeacherQuery query);
 
     @Select("select * from user where nickname=#{name};")
     public UserDO getUserByName(String name);

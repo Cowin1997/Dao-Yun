@@ -43,28 +43,109 @@
                         <a href="http://github.com/cowin1997/Dao-Yun" target="_blank">
                             <el-dropdown-item>项目仓库</el-dropdown-item>
                         </a>
+                         <el-dropdown-item divided @click.native="changePwd">修改密码</el-dropdown-item>
                         <el-dropdown-item divided @click.native="handleLoginOut">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
         </div>
+     <el-dialog title="修改密码" :visible.sync="changePwdVisiable" width="40%">
+        <el-form :model="pwd" label-width="150px" :rules="pwdRules" ref="pwdform">
+          <el-form-item label="旧密码" prop="oldPass">
+                <el-input type="password" v-model="pwd.oldPass"></el-input>
+          </el-form-item>
+           <el-form-item label="新密码" prop="newPass">
+                <el-input type="password" v-model="pwd.newPass"></el-input>
+          </el-form-item>
+            <el-form-item label="请再一次输入新密码" prop="newPassAgain">
+                <el-input type="password" v-model="pwd.newPassAgain"></el-input>
+          </el-form-item>
+           </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="changePwdVisiable = false">取 消</el-button>
+            <el-button type="primary" @click="handleChangePwd()" >确 定</el-button>
+        </span>
     
+     </el-dialog>
   </div>
 </template>
 
 <script>
 // 导入bus,用于组件间通信
+import {pwdRest} from '@/api/pwd'
 import bus from './bus';
 export default {
     data(){
+        var validatePass = (rule, value, callback) => {
+        if (value === '') {
+            callback(new Error('请输入密码'));
+        } else {
+        if (this.pwd.newPassAgain !== '') {
+     this.$refs.pwdform.validateField('newPassAgain');
+    }
+   callback();
+  }
+ };
+ var validatePass2 = (rule, value, callback) => {
+   if (value === '') {
+     callback(new Error('请再次输入密码'));
+   } else if (value !== this.pwd.newPass) {
+     callback(new Error('两次输入密码不一致!'));
+   } else {
+     callback();
+   }
+ };
         return {
             collapse: false,
             fullscreen: false,
-            username: 'admin',
-            message: 2
+            username: JSON.parse(localStorage.getItem("user")).user.nickname,
+            message: 2,
+            changePwdVisiable:false,
+            pwd:{
+                oldPass:'',
+                newPass:'',
+                newPassAgain:''
+            },
+            pwdRules:{
+                oldPass:[{required: true, message: '请输入旧密码', trigger: 'blur' }],
+                newPass:[{required: true, message: '请输入新密码', trigger: 'blur' },
+                { validator: validatePass, trigger: 'blur' },{
+                    min: 6, max: 16, message: '长度在 6 到 16 个字符'
+                }],
+                newPassAgain:[{required: true, message: '请再一次输入新密码', trigger: 'blur' },
+                { validator: validatePass2, trigger: 'blur', required: true },{
+                    min: 6, max: 16, message: '长度在 6 到 16 个字符'
+                }]
+            },
         };
     },
     methods: {
+        handleChangePwd(){
+                this.$refs.pwdform.validate(valid =>{
+                    if(valid){
+                        var uid = JSON.parse(localStorage.getItem("user"))['userAuth']['id']
+                        pwdRest({
+                            uid:uid,
+                            newPass:this.pwd.newPass,
+                            oldPass:this.pwd.oldPass
+                        }).then(res => {
+                            console.log(res)
+                            if(res.success==true){
+                                this.$message.success("修改密码成功")
+                                this.changePwdVisiable = false
+                            }else{
+                                this.$message.error(res.error)
+                                this.changePwdVisiable = false
+                            }
+                        })
+                    }else{
+                        alert("表单验证失败")
+                    }
+                })
+        },
+        changePwd(){
+            this.changePwdVisiable = true
+        },
         handleLoginOut(){
             localStorage.clear();
             window.location.reload()

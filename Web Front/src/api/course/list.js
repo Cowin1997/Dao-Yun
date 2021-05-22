@@ -26,4 +26,18 @@ export function updateCourse(data) {
     })
     }
 
+export function addCourse(data) {
+  return request({
+      url: '/api/course',
+      method: 'post',
+      data: data
+  })
+  }
 
+
+  export function delCourse(param) {
+    return request({
+        url: '/api/course/'+param,
+        method: 'delete'
+    })
+    }

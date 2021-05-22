@@ -9,6 +9,8 @@ import cn.edu.fzu.daoyun.constant.ResultCodeEnum;
 import cn.edu.fzu.daoyun.entity.StudentDO;
 import cn.edu.fzu.daoyun.entity.TeacherDO;
 import cn.edu.fzu.daoyun.exception.BadRequestException;
+import cn.edu.fzu.daoyun.query.AddStudentQuery;
+import cn.edu.fzu.daoyun.query.AddTeacherQuery;
 import cn.edu.fzu.daoyun.service.TeacherService;
 import cn.edu.fzu.daoyun.service.impl.TeacherServiceImpl;
 import io.swagger.annotations.Api;
@@ -45,8 +47,8 @@ public class TeacherController {
     }
     @AnonymousPostMapping(value = "")
     @ApiOperation(value = "addTeacher",notes = "添加教师")
-    public Result<Boolean> addTeacher(@RequestBody TeacherDO teacher){
-        Boolean isSuccess = this.teacherService.addTeacherByTid(teacher);
+    public Result<Boolean> addTeacher(@RequestBody AddTeacherQuery query){
+        Boolean isSuccess = this.teacherService.addTeacher(query);
         if(isSuccess==true){
             return Result.success(ResultCodeEnum.ADD_SUCCESS);
         }

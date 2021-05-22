@@ -26,6 +26,9 @@
         <el-form-item>
             <el-button type="success" @click="searchBy()">查询</el-button>
         </el-form-item>
+        <el-form-item>
+             <el-button type="primary" :disabled="!hasPerm('teacher:add')" plain @click="teacher={gender:'男',enabled:true};addVisible=true;">+ 新增</el-button>
+        </el-form-item>
        </div>
       </el-form>
 
@@ -87,7 +90,59 @@
 
 
 
-
+<!-- 添加弹出框 -->
+    <el-dialog title="教师添加" :visible.sync="addVisible" width="40%">
+        <el-form :model="teacher" label-width="100px" :rules="addRules" ref="addform">
+            <el-form-item label="用户名" prop="accountName">
+                <el-input v-model="teacher.accountName"></el-input>
+            </el-form-item>
+             <el-form-item label="电话" prop="phone">
+                <el-input v-model="teacher.phone"></el-input>
+            </el-form-item>
+            <el-form-item label="教工号" prop="tid">
+                <el-input v-model="teacher.tid"></el-input>
+            </el-form-item>
+            <el-form-item label="姓名" prop="name">
+                <el-input v-model="teacher.name"></el-input>
+            </el-form-item>
+            <el-form-item label="性别">
+                <template>
+                    <el-radio v-model="teacher.gender" label="男">男</el-radio>
+                    <el-radio v-model="teacher.gender" label="女">女</el-radio>
+                 </template>
+            </el-form-item>
+            <el-form-item label="角色类型" prop="role">
+                <el-select v-model="teacher.role" placeholder="请选择角色类型" @focus="loadingRoleList">
+                  <el-option :disabled="item.name!='教师'" v-for="item in roleList" :key="item.id" :label="item.name" :value="item.id" ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="学校" >
+            <el-select  filterable v-model="teacher.school_code" placeholder="请选择学校"  @focus="loadingSchoolList">
+                <el-option v-for="item in schoolList" :key="item.id" :label="item.schName" :value="item.schCode" ></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="学院">
+            <el-select v-model="teacher.college_code"  filterable placeholder="请选择学院" @focus="loadingCollegeList(teacher.school_code)">
+                <el-option v-for="item in collegeList" :key="item.id" :label="item.colName" :value="item.colCode" ></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="专业">
+            <el-select v-model="teacher.major_code" filterable placeholder="请选择专业"  @focus="loadingMajorList(teacher.school_code,teacher.college_code)">
+                <el-option v-for="item in majorList" :key="item.value" :label="item.majName" :value="item.majCode" ></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="状态" prop="enabled">
+              <template >
+                <el-radio v-model="teacher.enabled" :label="true">启用</el-radio>
+                <el-radio v-model="teacher.enabled" :label="false">禁用</el-radio>
+                </template>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="addVisible = false">取 消</el-button>
+            <el-button type="primary" @click="handleCreate()">确 定</el-button>
+        </span>
+    </el-dialog>
 
 
       
@@ -106,7 +161,8 @@
 
 <script>
 import { getSchoolList, getCollegeList,getMajList}  from '@/api/student/list'
-import { getTeacherList,updateTeacher,searchTeacher,deleteTeacher }  from '@/api/teacher/list'
+import { getTeacherList,updateTeacher,searchTeacher,deleteTeacher,addTeacher }  from '@/api/teacher/list'
+import { getRoleList }  from '@/api/sys/role'
 export default {
   data(){
     return {
@@ -130,10 +186,54 @@ export default {
             phone:[{required: true, message: '请输入学生手机号', trigger: 'blur'},
                     {pattern: '1[0-9]{10}$', message: '请输入手机号', trigger: 'blur'}]
       },
+      addVisible:false,
+      addRules:{
+               tid: [{required: true, message: '请输入学生学号', trigger: 'blur' }],
+               name:[{required: true, message: '请输入学生姓名', trigger: 'blur' }],
+               phone:[{required: true, message: '请输入学生手机号', trigger: 'blur'},
+                {pattern: '1[0-9]{10}$', message: '请输入手机号', trigger: 'blur'}],
+                role:[{required: true, message: '请选择学生学号', trigger: 'blur' }],
+                accountName:[{required: true, message: '请输入账户名', trigger: 'blur'}],
+                enabled:[{required: true, message: '请选择账号状态', trigger: 'blur'}]
+            },
+      roleList:[],
 
     }
   },
   methods:{
+      handleCreate(){
+            this.$refs.addform.validate( valid => {
+                if(valid){
+                    this.$confirm('此操作将同时以电话号码为登录账户, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then( () => {
+                        console.log(this.teacher)
+                        //确定
+                        addTeacher(this.teacher).then(res => {
+                            console.log(res)
+                            if(res.success==true){
+                                this.$message.success("添加成功,默认密码为123456")
+                                this.addVisible = false
+                            }else{
+                                this.$message.error(res.error)
+                                this.addVisible = false
+                            }
+                        })
+                    }).catch( () => {
+                        //取消
+                    } )
+                }else{
+                    alert("表单验证失败")
+                }
+            })
+        },
+     loadingRoleList(){ //加载角色列表
+        getRoleList({page:1,size:50}).then(res => {
+          this.roleList = res.data.pageData
+        })
+    },
         handleDelete(bol,index,row){
             if(bol==true){
                 deleteTeacher(row.tid).then(res => {

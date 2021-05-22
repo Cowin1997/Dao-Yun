@@ -19,10 +19,12 @@ import cn.edu.fzu.daoyun.service.CourseService;
 import cn.edu.fzu.daoyun.service.TeacherService;
 import cn.edu.fzu.daoyun.service.impl.CourseServiceImpl;
 import cn.edu.fzu.daoyun.service.impl.TeacherServiceImpl;
+import cn.edu.fzu.daoyun.utils.ShortUUIDUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -40,10 +42,13 @@ public class CourseController {
     private TeacherServiceImpl teacherService;
     @AnonymousPostMapping(value = "")
     @ApiOperation(value = "addCourse",notes = "添加班课")
-    public Result<Boolean> addCourse(@RequestBody CourseDO course){
+    public Result addCourse(@RequestBody CourseDO course){
+
+        course.setCid(ShortUUIDUtils.generateShortUuid());
+
         Boolean isSuccess = this.courseService.addCourse(course);
         if(isSuccess==true){
-            return Result.success(ResultCodeEnum.ADD_SUCCESS);
+            return Result.success(ResultCodeEnum.ADD_SUCCESS,course.getCid());
         }
         return Result.failure(ResultCodeEnum.ADD_FAILURE);
     }
@@ -122,19 +127,34 @@ public class CourseController {
 
     @AnonymousGetMapping(value = "/list")
     @ApiOperation(value = "getCourseList",notes = "获取课表列表")
-    public Result<Page<CourseDTO2>> getCourseList(@RequestParam(value = "sch") Integer sch,
-                                               @RequestParam(value = "col") Integer col,
-                                               @RequestParam(value = "maj") Integer maj,
+    public Result<Page<CourseDTO2>> getCourseList(@RequestParam(value = "sch",required = false) Integer sch,
+                                               @RequestParam(value = "col",required = false) Integer col,
+                                               @RequestParam(value = "maj",required = false) Integer maj,
                                                @RequestParam(value = "page") Integer page,
-                                               @RequestParam(value = "size") Integer size){
+                                               @RequestParam(value = "size") Integer size,
+                                                  @RequestParam(value = "search",required = false) String search ){
 
-        if(sch>0 && col>0 && maj>0 && page >0 && size >0){
-            Page<CourseDTO2> pageData = this.courseService.getCourseListByOrg(sch, col, maj, page, size);
-            return Result.success(ResultCodeEnum.SUCCESS,pageData);
+        if(page >0 && size >0){
+            if(search==null){
+                Page<CourseDTO2> pageData = this.courseService.getCourseListByOrg(sch, col, maj, page, size);
+                return Result.success(ResultCodeEnum.SUCCESS,pageData);
+            }else{
+                Page<CourseDTO2> pageData = this.courseService.getCourseListByLike(page, size,search);
+                return Result.success(ResultCodeEnum.SUCCESS,pageData);
+            }
+
         }
         throw new BadRequestException("请求参数错误");
     }
-
+    @DeleteMapping(value = "/{cid}")
+    @ApiOperation(value = "通过课程号,删除课程",notes = "通过课程号,删除课程")
+    public Result<Boolean> delCourseBycid(@PathVariable(value = "cid",required = true) Integer cid){
+        Boolean isSuccess = this.courseService.deleteCourse(cid);
+        if(isSuccess==true){
+            return Result.success(ResultCodeEnum.DEL_SUCCESS);
+        }
+        return Result.failure(ResultCodeEnum.DEL_FAILURE);
+    }
 
 }
 

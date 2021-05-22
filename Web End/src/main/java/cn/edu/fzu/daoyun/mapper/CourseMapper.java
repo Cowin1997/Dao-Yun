@@ -49,12 +49,18 @@ public interface CourseMapper {
     @Delete("delete from select_course where course_cid=#{cid} and student_sid=#{sid};")
     public Boolean deleteCourse(Integer cid,Integer sid);
 
+    @Delete("delete from course where cid=#{cid};")
+    public Boolean delCourse(Integer cid);
 
     @Select("select count(*) from course where school_code=#{sch} and college_code = #{col} and major_code=#{maj};")
     public Integer getCourseListTotalByOrg(Integer sch,Integer col,Integer maj);
 
     @Select("select * from course where school_code=#{sch} and college_code = #{col} and major_code=#{maj} limit #{from},#{to};")
     public List<CourseDO> getCourseListByOrg(Integer sch,Integer col,Integer maj,Integer from,Integer to);
+
+    @Select("select * from course where cid like '%${search}%' or coursename like '%${search}%' limit #{from},#{to};")
+    public List<CourseDO> getCourseListByLike(Integer from, Integer to,String search);
+
 
     @Update("update course set enabled = #{enabled} where cid =#{cid};")
     public Boolean updateStatus(Integer cid, Boolean enabled);

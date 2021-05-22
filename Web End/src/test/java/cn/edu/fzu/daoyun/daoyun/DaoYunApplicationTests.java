@@ -90,8 +90,8 @@ class DaoYunApplicationTests {
 
     @Test
     void test001(){
-        String pwd =  this.passwordEncoder.encode("123456");
-        System.out.println(pwd);
+      //  String pwd =  this.passwordEncoder.encode("123456");
+        System.out.println(this.passwordEncoder.matches("123456",this.passwordEncoder.encode("123456")));
     }
 
 }

@@ -205,8 +205,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.DaoYunApplicationTests.tetttt" />
         <item itemvalue="JUnit.DaoYunApplicationTests.test001" />
+        <item itemvalue="JUnit.DaoYunApplicationTests.tetttt" />
         <item itemvalue="JUnit.DaoYunApplicationTests.contextLoads" />
         <item itemvalue="JUnit.DaoYunApplicationTests.testCaptcha" />
         <item itemvalue="JUnit.DaoYunApplicationTests.testRedis01" />
@@ -242,7 +242,7 @@
       <workItem from="1620806173698" duration="8167000" />
       <workItem from="1620870552486" duration="16483000" />
       <workItem from="1620973488871" duration="1422000" />
-      <workItem from="1620981400647" duration="80946000" />
+      <workItem from="1620981400647" duration="89763000" />
     </task>
     <servers />
   </component>

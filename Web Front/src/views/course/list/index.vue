@@ -19,6 +19,18 @@
         <el-form-item>
             <el-button type="primary" @click="search()">查询</el-button>
         </el-form-item>
+        <div class='el-form-item el-form-item--small' >
+        <el-form-item>
+            <el-input placeholder="请输入班课号或班课名进行模糊搜索" v-model="searchInput" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="success" @click="searchBy()">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+             <el-button type="primary" :disabled="!hasPerm('course:add')" plain @click="course={enabled:true};addVisible=true;">+ 新增</el-button>
+        </el-form-item>
+       </div>
+      </el-form>
       </el-form>
 
 
@@ -44,7 +56,7 @@
             <el-table-column label="操作" style="width: 20%;" align="center" >
                 <template slot-scope="scope">
                     <el-button type="text" icon="el-icon-edit" :disabled="!hasPerm('course:edit')" @click="handleEdit(scope.$index,scope.row)">编辑</el-button>
-                    <el-popconfirm title="删除该学生将同时删除该学生的所有相关信息, 确定删除吗？" @confirm="handleDelete(true,scope.$index,scope.row)"  @cancel="handleDelete(false,scope.$index,scope.row)">
+                    <el-popconfirm title="删除该课程将同时删除该课程的所有相关信息, 确定删除吗？" @confirm="handleDelete(true,scope.$index,scope.row)"  @cancel="handleDelete(false,scope.$index,scope.row)">
                         <el-button icon="el-icon-delete" :disabled="!hasPerm('course:del')" slot="reference" style="margin-left: 10px"  type="danger" size="small"   >删除</el-button>
                     </el-popconfirm>
                 </template>
@@ -68,6 +80,7 @@
             <el-form-item label="任课教师工号" prop="teacher_tid">
                 <el-input v-model="course.teacher_tid"></el-input>
             </el-form-item>
+
             <el-form-item label="当前班课是否可加入"  >
                   <el-switch
                     v-model="course.enabled"
@@ -82,6 +95,47 @@
         </span>
     </el-dialog>
 
+
+    <!-- 添加弹出框 -->
+    <el-dialog title="班课添加" :visible.sync="addVisible" width="40%">
+        <el-form :model="course" label-width="150px" :rules="addRules" ref="addform">
+            <el-form-item label="班课名" prop="coursename">
+                <el-input v-model="course.coursename"></el-input>
+            </el-form-item>
+            <el-form-item label="班课信息" prop="detailinfo">
+                <el-input v-model="course.detailinfo"></el-input>
+            </el-form-item>
+            <el-form-item label="任课教师工号" prop="teacher_tid">
+                <el-input v-model="course.teacher_tid"></el-input>
+            </el-form-item>
+                        <el-form-item label="学校" >
+            <el-select  filterable v-model="course.school_code" placeholder="请选择学校"  @focus="loadingSchoolList">
+                <el-option v-for="item in schoolList" :key="item.id" :label="item.schName" :value="item.schCode" ></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="学院">
+            <el-select v-model="course.college_code"  filterable placeholder="请选择学院" @focus="loadingCollegeList(course.school_code)">
+                <el-option v-for="item in collegeList" :key="item.id" :label="item.colName" :value="item.colCode" ></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="专业">
+            <el-select v-model="course.major_code" filterable placeholder="请选择专业"  @focus="loadingMajorList(course.school_code,course.college_code)">
+                <el-option v-for="item in majorList" :key="item.value" :label="item.majName" :value="item.majCode" ></el-option>
+            </el-select>
+        </el-form-item>
+            <el-form-item label="当前班课是否可加入"  >
+                  <el-switch
+                    v-model="course.enabled"
+                    active-color="#409EFF"
+                    inactive-color="#F56C6C"
+                  />
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="editVisible = false">取 消</el-button>
+            <el-button type="primary" @click="handleCreate()" >确 定</el-button>
+        </span>
+    </el-dialog>
 
 
 
@@ -104,7 +158,7 @@
 
 <script>
 import { getSchoolList, getCollegeList,getMajList}  from '@/api/student/list'
-import { getCourseList, updateCourseStatus, updateCourse} from '@/api/course/list'
+import { getCourseList, updateCourseStatus, updateCourse,addCourse,delCourse} from '@/api/course/list'
 
 
 
@@ -127,8 +181,16 @@ export default {
       editVisible:false,
       course:{},
       editRules:{
-
-      }
+        cid: [{required: true, message: '请输入班课号', trigger: 'blur' }],
+            coursename:[{required: true, message: '请输入班课名', trigger: 'blur' }],
+            teacher_tid:[{required: true, message: '请输入任课教师教工号', trigger: 'blur'}]
+      },
+      searchInput:'',
+      addRules:{
+            coursename:[{required: true, message: '请输入班课名', trigger: 'blur' }],
+            teacher_tid:[{required: true, message: '请输入任课教师教工号', trigger: 'blur'}]
+      },
+      addVisible:false
 
 
 
@@ -139,23 +201,66 @@ export default {
     }
   },
   methods:{
+    handleCreate(){
+     addCourse(this.course).then(res => {
+       console.log(res)
+        if(res.success == true){
+          this.$message.success("添加成功,班课号为："+res.data)
+          // this.course['cid'] = res.data
+          // this.courseList.push(this.course)
+          this.addVisible = false
+        }else{
+           this.$message.error(res.error)
+          this.addVisible = false
+        }
+     })
+    },
+    searchBy(){
+      getCourseList({page:this.currentPage,size:this.pageSize,search:this.searchInput}).then(res => {
+        console.log(res)
+        if(res.success==true){
+          this.courseList = res.data.pageData;
+          this.totalSize = res.data.totalSize;
+        }else{
+          this.$message.error("请求数据失败")
+        }
+      })
+    },
     handleDelete(bol,index,row){
       this.currentIndex = index;
       if(bol){
-
+        delCourse(row.cid).then( res => {
+            if(res.success===true){
+                    this.$message.success("删除成功")
+                    this.courseList.splice(index,1)
+                    this.editVisible = false
+                  }else{
+                    this.$message.error(res.error)
+                    this.editVisible = false
+        }
+        })
       }
     },
     handleUpdate(){
-      updateCourse(this.course).then( res => {
-        console.log(res)
-        if(res.success===true){
-          this.$message.success("更新成功")
-          this.editVisible = false
-        }else{
-          this.$message.error(res.error)
-          this.editVisible = false
+      this.$refs.editform.validate( valid => {
+        if(valid){
+          updateCourse(this.course).then( res => {
+                  console.log(res)
+                  if(res.success===true){
+                    this.$message.success("更新成功")
+                    this.editVisible = false
+                  }else{
+                    this.$message.error(res.error)
+                    this.editVisible = false
         }
       } )
+        }else{
+          alert("表单验证失败")
+        }
+      })
+
+
+      
     },
     handleEdit(index,row){
       this.currentIndex = index
